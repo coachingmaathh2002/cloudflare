@@ -1,0 +1,601 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Link } from "react-router-dom";
+import {
+  BookOpen,
+  Award,
+  Target,
+  ChevronRight,
+  CheckCircle2,
+  PlayCircle,
+  FileText,
+  Star,
+  Quote,
+  GraduationCap,
+  MapPin,
+  Users,
+} from "lucide-react";
+
+const bannerData = [
+  {
+    id: 1,
+    image: "/carousel/slide1.webp",
+    badge: "🚀 নতুন ব্যাচ শুরু হচ্ছে!",
+    title: (
+      <>
+        টার্গেট <span className="text-yellow-400 drop-shadow-lg">JEE 2027</span>{" "}
+        <br className="hidden md:block" /> ক্র্যাশ কোর্সে ভর্তি শুরু!
+      </>
+    ),
+    subtitle:
+      "৫০০+ ভিডিও লেকচার, মক টেস্ট এবং ডাউট ক্লিয়ারিং সেশন নিয়ে এখনই শুরু করো সম্পূর্ণ প্রস্তুতি।",
+    cta: "আজই এনরোল করো",
+    gradient: "from-[#1e1b4b] via-[#4338ca] to-transparent",
+  },
+  {
+    id: 2,
+    image:
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2000&auto=format&fit=crop",
+    badge: "🏆 SLST MATHEMATICS",
+    title: (
+      <>
+        <span className="text-emerald-400 drop-shadow-lg">SLST Mathematics</span>-এর{" "}
+        <br className="hidden md:block" /> নতুন লাইভ ব্যাচ
+      </>
+    ),
+    subtitle:
+      "সম্পূর্ণ সিলেবাস কভারেজ, চ্যাপ্টার-ভিত্তিক নোটস, এবং ১০০% পরীক্ষার প্রস্তুতির জন্য মক টেস্ট সিরিজ।",
+    cta: "জয়েন করো লাইভ কোর্স",
+    gradient: "from-[#064e3b] via-[#059669] to-transparent",
+  },
+  {
+    id: 3,
+    image:
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2000&auto=format&fit=crop",
+    badge: "📢 স্পেশাল অফার",
+    title: (
+      <>
+        <span className="text-fuchsia-400 drop-shadow-lg">CSIR NET ও GATE</span>:{" "}
+        <br className="hidden md:block" /> নিশ্চিত সাফল্যের লক্ষ্যে!
+      </>
+    ),
+    subtitle:
+      "পিওর এবং অ্যাপ্লায়েড ম্যাথমেটিক্স এর স্পেশাল কোর্স। স্কলারশিপ টেস্টের মাধ্যমে ভর্তি হলে পাও ৫০% পর্যন্ত ছাড়!",
+    cta: "টেস্টের জন্য রেজিস্টার করো",
+    gradient: "from-[#4c1d95] via-[#9333ea] to-transparent",
+  },
+  {
+    id: 4,
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000&auto=format&fit=crop",
+    badge: "🎓 বিএসসি ও এমএসসি (B.Sc & M.Sc)",
+    title: (
+      <>
+        অনার্স ও পাসের জন্য <br className="hidden md:block" /> <span className="text-rose-400 drop-shadow-lg">স্পেশাল গাইডিং ব্যাচ</span>
+      </>
+    ),
+    subtitle: "WBSU, CU, BU সহ সকল ইউনিভার্সিটির সিলেবাস অনুযায়ী স্পেশাল অফলাইন ও অনলাইন ব্যাচ।",
+    cta: "বিস্তারিত জানুন",
+    gradient: "from-[#7f1d1d] via-[#dc2626] to-transparent",
+  },
+  {
+    id: 5,
+    image: "https://images.unsplash.com/photo-1427504494785-319ce83d506c?q=80&w=2000&auto=format&fit=crop",
+    badge: "📚 মাধ্যমিক প্রস্তুতি",
+    title: (
+      <>
+        নবম ও দশম শ্রেণীর <br className="hidden md:block" /> <span className="text-cyan-400 drop-shadow-lg">গণিতের ফাউন্ডেশন ব্যাচ</span>
+      </>
+    ),
+    subtitle: "WBBSE স্পেশাল: বেসিক থেকে অ্যাডভান্স কনসেপ্ট, শর্টকাট ট্রিক্স এবং পরীক্ষার সেরা প্রস্তুতি।",
+    cta: "অ্যাডমিশন শুরু হয়েছে",
+    gradient: "from-[#083344] via-[#0891b2] to-transparent",
+  },
+  {
+    id: 6,
+    image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2000&auto=format&fit=crop",
+    badge: "✨ নতুন সেমিস্টার সিস্টেম",
+    title: (
+      <>
+        একাদশ শ্রেণী (<span className="text-orange-400 drop-shadow-lg">1st & 2nd Sem</span>) <br className="hidden md:block" /> WBCHSE স্পেশাল গাইডেন্স
+      </>
+    ),
+    subtitle: "নতুন প্যাটার্নের সাথে মিল রেখে সম্পূর্ণ স্টাডি মেটেরিয়াল এবং বিষয়ভিত্তিক মক টেস্ট।",
+    cta: "সিলেবাস জানুন",
+    gradient: "from-[#7c2d12] via-[#ea580c] to-transparent",
+  },
+  {
+    id: 7,
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000&auto=format&fit=crop",
+    badge: "🎯 উচ্চমাধ্যমিক স্পেশাল",
+    title: (
+      <>
+        দ্বাদশ শ্রেণী (<span className="text-pink-400 drop-shadow-lg">3rd & 4th Sem</span>) <br className="hidden md:block" /> মিশন বোর্ড এক্সাম
+      </>
+    ),
+    subtitle: "বোর্ড এক্সাম এবং জয়েন্ট (WBJEE/JEE) এর জন্য একদম পারফেক্ট ম্যাথমেটিক্স স্ট্র্যাটেজি।",
+    cta: "জয়েন করো আজই",
+    gradient: "from-[#831843] via-[#db2777] to-transparent",
+  }
+];
+
+const testimonials = [
+  {
+    name: "Arijit Das",
+    exam: "Cracked JEE Advanced (AIR 2530)",
+    text: "Raj sir's approach to calculus entirely changed how I view mathematics. The chapter-wise mock tests match our actual exam level perfectly.",
+    rating: 5,
+  },
+  {
+    name: "Sneha Roy",
+    exam: "UGC CSIR NET JRF",
+    text: "The abstract algebra and real analysis live classes were a lifesaver. Sir explains the most complex theorems with such ease and clarity.",
+    rating: 5,
+  },
+  {
+    name: "Soumya Banerjee",
+    exam: "WBJEE Rank 102",
+    text: "I was extremely weak in Coordinate Geometry before joining. Thanks to Sir's unique problem-solving techniques, it became my strongest area.",
+    rating: 5,
+  },
+];
+
+export default function Home() {
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % bannerData.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="w-full flex-1">
+      {/* Banner Section */}
+      <section className="pt-6 pb-2 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative w-full h-[450px] md:h-[500px] rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(147,51,234,0.2)]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentBanner}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              className="absolute inset-0"
+            >
+              <img
+                src={bannerData[currentBanner].image}
+                alt="Coaching Banner"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop";
+                }}
+                className="w-full h-full object-cover mix-blend-luminosity opacity-50 transition-opacity duration-1000"
+              />
+              {/* Overlay mask */}
+              <div
+                className={`absolute inset-0 bg-gradient-to-r ${bannerData[currentBanner].gradient} opacity-90 transition-all duration-1000`}
+              ></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090014] via-[#090014]/20 to-transparent"></div>
+              {/* Banner Text Overlay */}
+              <div className="absolute inset-0 p-6 md:p-12 w-full h-full flex flex-col justify-end pb-12 md:pb-16 z-10">
+                <div className="max-w-3xl">
+                  <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black border border-white/20 px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-4 inline-block shadow-[0_0_15px_rgba(234,179,8,0.5)]">
+                    {bannerData[currentBanner].badge}
+                  </span>
+                  <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white uppercase tracking-tight leading-[1.1] drop-shadow-2xl mb-4">
+                    {bannerData[currentBanner].title}
+                  </h2>
+                  <p className="text-gray-200 text-sm md:text-lg mb-6 md:mb-8 font-medium leading-relaxed max-w-xl">
+                    {bannerData[currentBanner].subtitle}
+                  </p>
+                  <Link
+                    to="/courses"
+                    className="inline-flex items-center gap-2 bg-white text-[#090014] px-6 py-3 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                  >
+                    {bannerData[currentBanner].cta}{" "}
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Banner Navigation Dots */}
+          <div className="absolute bottom-6 right-6 flex gap-2 z-20">
+            {bannerData.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentBanner(idx)}
+                className={`h-2 rounded-full transition-all ${idx === currentBanner ? "w-8 bg-purple-400" : "w-2 bg-white/30 hover:bg-white/50"}`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Hero Section */}
+      <section className="relative overflow-hidden pt-12 pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="lg:col-span-8"
+            >
+              <div className="inline-flex gap-2 mb-6">
+                <span className="bg-purple-500/10 text-purple-400 px-2 flex items-center py-1 rounded text-[10px] font-bold border border-purple-500/20 uppercase tracking-widest backdrop-blur-md">
+                  Premium Coaching
+                </span>
+                <span className="bg-white/5 text-gray-300 px-2 py-1 rounded text-[10px] font-bold border border-white/10 uppercase tracking-widest backdrop-blur-md">
+                  Live Classes
+                </span>
+              </div>
+              <h1 className="font-display text-4xl lg:text-5xl tracking-tight mb-4 leading-tight text-white uppercase">
+                Master{" "}
+                <span className="bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">
+                  Mathematics
+                </span>{" "}
+                <br />
+                with Absolute Confidence
+              </h1>
+              <p className="text-gray-400 text-sm lg:text-base mb-8 max-w-xl leading-relaxed">
+                Join the elite circle of toppers. Expert coaching for JEE Mains,
+                SLST Mathematics, Engineering Mathematics, and Advanced
+                Competitive Exams with personalized analytics.
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/courses"
+                  className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 text-white font-bold py-2.5 px-6 rounded-md transition-all shadow-[0_0_20px_rgba(147,51,234,0.3)] flex items-center gap-2 text-sm border border-white/10 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-white/20 w-1/2 -skew-x-12 -ml-16 group-hover:ml-[150%] transition-all duration-700"></div>
+                  <PlayCircle className="h-4 w-4 relative z-10" />
+                  <span className="relative z-10">Start Learning</span>
+                </Link>
+                <Link
+                  to="/mock-test"
+                  className="bg-white/5 border border-white/10 hover:bg-white/10 text-purple-300 font-bold py-2.5 px-6 rounded-md transition-all flex items-center gap-2 text-sm backdrop-blur-md"
+                >
+                  <Target className="h-4 w-4" />
+                  Mock Tests
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:col-span-4"
+            >
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-xl text-center shadow-2xl">
+                  <p className="text-3xl font-bold text-purple-400 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
+                    500+
+                  </p>
+                  <p className="text-[10px] text-purple-200/50 uppercase tracking-widest font-bold">
+                    Video Lectures
+                  </p>
+                </div>
+                <div className="bg-zinc-900/50 border border-zinc-800/50 p-6 rounded-2xl text-center">
+                  <p className="text-3xl font-bold text-violet-400 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
+                    50+
+                  </p>
+                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">
+                    Mock Tests
+                  </p>
+                </div>
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-xl col-span-2 text-center shadow-2xl">
+                  <p className="text-3xl font-bold text-white italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
+                    10k+
+                  </p>
+                  <p className="text-[10px] text-purple-200/50 uppercase tracking-widest font-bold">
+                    Practice Questions
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Raj Sir Section */}
+      <section className="py-16 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-1 rounded-3xl shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden rounded-3xl bg-[#090014]/60">
+              <div className="md:col-span-5 relative p-8 md:p-12 border-b md:border-b-0 md:border-r border-white/10 flex flex-col items-center justify-center text-center">
+                <div className="w-40 h-40 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 p-1 mb-6 shadow-[0_0_30px_rgba(147,51,234,0.3)]">
+                  <div className="w-full h-full rounded-full bg-[#0b001a] flex items-center justify-center border-4 border-[#090014] overflow-hidden">
+                    <img
+                      src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop"
+                      alt="Raj Sir"
+                      className="w-full h-full object-cover opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
+                    />
+                  </div>
+                </div>
+                <h3 className="font-display text-3xl text-white font-bold tracking-tight mb-2 uppercase">
+                  Raj Sir
+                </h3>
+                <p className="text-purple-400 font-bold text-xs uppercase tracking-widest mb-4">
+                  Mentor & Founder
+                </p>
+                <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium">
+                  <Award className="h-4 w-4 text-violet-400" /> 9+ Years Experience
+                </div>
+              </div>
+              <div className="md:col-span-7 p-8 md:p-12 relative z-10">
+                <h4 className="flex items-center gap-3 text-lg font-bold text-white mb-6 uppercase tracking-wider">
+                  <GraduationCap className="h-6 w-6 text-purple-400" />
+                  Credentials & Qualifications
+                </h4>
+
+                <ul className="space-y-4 mb-8">
+                  <li className="flex items-start gap-4">
+                    <div className="shrink-0 mt-0.5 bg-white/10 p-1.5 rounded text-purple-300">
+                      <BookOpen className="h-3 w-3" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-gray-200">
+                        BSc in Mathematics
+                      </p>
+                      <p className="text-[11px] text-gray-500 uppercase tracking-wider font-semibold">
+                        Bankura Christian College
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <div className="shrink-0 mt-0.5 text-zinc-500">
+                      <BookOpen className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium text-white">
+                        MSc in Pure Mathematics
+                      </p>
+                      <p className="text-xs text-zinc-500 mt-1 font-medium">
+                        The University of Burdwan
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <div className="shrink-0 mt-0.5 bg-purple-500/20 p-1.5 rounded text-purple-400">
+                      <CheckCircle2 className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-base font-medium text-white">
+                        GATE Qualification
+                      </p>
+                      <p className="text-[11px] text-purple-400/80 uppercase tracking-wider font-bold">
+                        UGC CSIR NET JRF Certified
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+
+                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3 border-b border-white/5 pb-2">
+                  Areas of Expertise
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Class 9 to 12 (WB, CBSE, ICSE)",
+                    "WBJEE & JEE Mains",
+                    "UG Math Honours",
+                    "Engineering Mathematics",
+                    "NSOU UG & PG Courses",
+                  ].map((subject, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-white/5 border border-white/10 text-gray-300 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider"
+                    >
+                      {subject}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Categories */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xs font-bold text-purple-200/60 uppercase tracking-widest">
+              Premium Curriculum
+            </h3>
+            <Link
+              to="/courses"
+              className="text-purple-400 text-xs font-bold hover:text-purple-300"
+            >
+              View All Courses →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
+            <CourseCard
+              title="JEE Mains Mathematics"
+              subtitle="Limit, Continuity, Differentiability, Algebra & Coordinate Geometry modules."
+              icon="∫"
+              stats="12/20 Lessons"
+              progress={60}
+              active
+            />
+            <CourseCard
+              title="SLST Mathematics"
+              subtitle="Real Analysis, Abstract Algebra, Mechanics and Previous Year Questions."
+              icon="Σ"
+              stats="15/15 Lessons"
+              progress={100}
+              completed
+            />
+            <CourseCard
+              title="Advanced Mathematics"
+              subtitle="Higher Math Foundations, Application based problems for GATE/NET."
+              icon="⌬"
+              stats="0/15 Lessons"
+              progress={0}
+              enrolling
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-12 bg-[#05000a] w-full border-y border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 right-1/2 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+          <div className="text-center mb-10">
+            <h3 className="text-sm font-bold text-purple-400 uppercase tracking-widest mb-2">
+              Success Stories
+            </h3>
+            <h2 className="font-display text-4xl text-white font-bold uppercase tracking-tight">
+              Our Proud Achievers
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((testi, i) => (
+              <div
+                key={i}
+                className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl relative"
+              >
+                <Quote className="absolute top-6 right-6 h-8 w-8 text-white/5" />
+                <div className="flex gap-1 mb-4 text-violet-400">
+                  {[...Array(testi.rating)].map((_, idx) => (
+                    <Star key={idx} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                  "{testi.text}"
+                </p>
+                <div className="mt-auto border-t border-white/10 pt-4 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/30 to-violet-500/30 border border-white/10 flex items-center justify-center uppercase font-bold text-purple-300">
+                    {testi.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-white uppercase">
+                      {testi.name}
+                    </p>
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-purple-400">
+                      {testi.exam}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Bottom Banner */}
+      <section className="py-12 my-8 border-t border-white/10 bg-white/[0.02] w-full backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-violet-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative z-10">
+                <p className="text-purple-400 font-bold text-[10px] uppercase tracking-widest mb-2">
+                  New Exam Live
+                </p>
+                <h4 className="text-xl font-bold mb-1 text-white drop-shadow-md">
+                  SLST Sunday Mock Marathon
+                </h4>
+                <p className="text-xs text-purple-200/70 font-medium">
+                  30 Questions • 60 Minutes • Negative Marking
+                </p>
+              </div>
+              <Link
+                to="/mock-test"
+                className="bg-white text-[#090014] px-6 py-2.5 rounded-lg font-extrabold text-xs shadow-[0_0_20px_rgba(255,255,255,0.2)] shrink-0 whitespace-nowrap hover:bg-gray-200 transition-colors relative z-10"
+              >
+                Attempt Now
+              </Link>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="flex-1 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-purple-500/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
+                <FileText className="text-purple-400 h-8 w-8 mb-3" />
+                <p className="text-sm font-bold text-white">PDF Notes</p>
+                <p className="text-[10px] text-purple-200/50 mt-1 uppercase tracking-widest font-bold">
+                  450+ High Quality
+                </p>
+              </div>
+              <div className="flex-1 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-violet-500/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
+                <PlayCircle className="text-violet-400 h-8 w-8 mb-3" />
+                <p className="text-sm font-bold text-white">Video Lectures</p>
+                <p className="text-[10px] text-purple-200/50 mt-1 uppercase tracking-widest font-bold">
+                  24/7 Access
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function CourseCard({
+  title,
+  subtitle,
+  icon,
+  stats,
+  progress,
+  active,
+  completed,
+  enrolling,
+}: any) {
+  return (
+    <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl relative overflow-hidden group hover:border-purple-500/30 hover:bg-white/10 transition-all flex flex-col h-full shadow-2xl">
+      <div className="flex justify-between items-start mb-5 relative z-10">
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl font-serif italic border border-white/10 shadow-inner ${active ? "bg-gradient-to-br from-purple-500/20 to-violet-600/20 text-purple-400" : completed ? "bg-green-500/10 text-green-400" : "bg-white/5 text-gray-300"}`}>
+          {icon}
+        </div>
+        {active && (
+          <span className="bg-purple-500/20 text-purple-300 text-[10px] font-bold px-2.5 py-1 rounded border border-purple-500/30 uppercase tracking-widest shadow-sm">
+            Active
+          </span>
+        )}
+        {completed && (
+          <span className="bg-green-500/10 text-green-400 text-[10px] font-bold px-2.5 py-1 rounded border border-green-500/20 uppercase tracking-widest shadow-sm">
+            Chapterwise
+          </span>
+        )}
+        {enrolling && (
+          <span className="bg-white/5 text-gray-300 text-[10px] font-bold px-2.5 py-1 rounded border border-white/10 uppercase tracking-widest shadow-sm">
+            Enrolling
+          </span>
+        )}
+      </div>
+      <h4 className="font-bold text-base mb-2 relative z-10 text-white drop-shadow-sm">
+        {title}
+      </h4>
+      <p className="text-xs text-purple-200/70 mb-6 leading-relaxed relative z-10 flex-1">
+        {subtitle}
+      </p>
+
+      <div className="flex flex-col gap-3 pt-5 border-t border-white/10 mt-auto relative z-10">
+        <div className="flex items-center justify-between">
+          <div className="text-[10px] font-bold text-purple-200/50 uppercase tracking-widest">
+            {stats}
+          </div>
+          <div className="text-[10px] font-bold text-purple-400">
+            {progress}%
+          </div>
+        </div>
+        <div className="w-full bg-white/10 h-1 rounded-sm overflow-hidden border border-white/5">
+          <div
+            className={`h-full rounded-sm ${completed ? "bg-green-400" : "bg-gradient-to-r from-purple-500 to-violet-500"}`}
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+      </div>
+    </div>
+  );
+}

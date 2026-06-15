@@ -1,0 +1,6 @@
+{
+  "name": "RAJ SIR MATH CLASSES",
+  "description": "Premium educational platform for JEE Mains, SLST Mathematics, and Advanced Mathematics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
