@@ -14,15 +14,15 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-[#090014]/60 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 shrink-0 shadow-2xl">
+    <nav className="bg-slate-950/70 backdrop-blur-[12px] border-b border-white/5 sticky top-0 z-50 shrink-0 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between h-16 w-full">
           <div className="flex items-center gap-4">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-violet-600 rounded-lg flex items-center justify-center font-bold text-xl italic border border-white/20 text-white shadow-[0_0_15px_rgba(147,51,234,0.5)]">Σ</div>
+              <div className="w-10 h-10 bg-gradient-to-br from-pink-600 to-violet-600 rounded-lg flex items-center justify-center font-bold text-xl italic border border-white/20 text-slate-50 shadow-[0_0_15px_rgba(219,39,119,0.5)]">Σ</div>
               <div className="flex flex-col">
-                <span className="font-display font-medium text-base tracking-tight leading-none uppercase bg-gradient-to-r from-purple-400 to-violet-300 bg-clip-text text-transparent">RAJ SIR</span>
-                <span className="text-[10px] text-purple-200/50 font-medium tracking-widest uppercase mt-0.5">MATH CLASSES</span>
+                <span className="font-display font-medium text-base tracking-tight leading-none uppercase bg-gradient-to-r from-pink-400 to-violet-300 bg-clip-text text-transparent">RAJ SIR</span>
+                <span className="text-[10px] text-pink-200/50 font-medium tracking-widest uppercase mt-0.5">MATH CLASSES</span>
               </div>
             </Link>
           </div>
@@ -34,7 +34,7 @@ export default function Navbar() {
                 <Link 
                   key={link.name} 
                   to={link.path}
-                  className="px-3 py-2 text-gray-400 hover:bg-white/5 hover:text-white rounded-md transition-colors text-sm font-semibold flex items-center gap-2"
+                  className="px-3 py-2 text-slate-400 hover:bg-slate-800/60 hover:text-slate-50 rounded-md transition-colors text-sm font-semibold flex items-center gap-2"
                 >
                   {link.name}
                 </Link>
@@ -42,9 +42,9 @@ export default function Navbar() {
             </div>
             <Link 
               to="/dashboard"
-              className="bg-white/5 border border-white/10 hover:border-purple-500/50 hover:bg-white/10 text-white font-bold py-1.5 px-4 rounded-lg transition-all shadow-lg backdrop-blur-md flex items-center gap-2 text-xs"
+              className="bg-slate-800/60 border border-white/10 hover:border-pink-600/50 hover:bg-white/10 text-slate-50 font-bold py-1.5 px-4 rounded-lg transition-all shadow-lg backdrop-blur-md flex items-center gap-2 text-xs"
             >
-              <LayoutDashboard className="h-4 w-4 text-purple-400" />
+              <LayoutDashboard className="h-4 w-4 text-pink-400" />
               Student Login
             </Link>
           </div>
@@ -53,7 +53,7 @@ export default function Navbar() {
           <div className="md:flex hidden md:hidden items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-400 hover:text-white focus:outline-none"
+              className="text-slate-400 hover:text-slate-50 focus:outline-none"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -61,7 +61,7 @@ export default function Navbar() {
           <div className="flex md:hidden items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-400 hover:text-white focus:outline-none"
+              className="text-slate-400 hover:text-slate-50 focus:outline-none"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -71,13 +71,13 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#090014]/95 backdrop-blur-xl border-b border-white/10 absolute w-full">
+        <div className="md:hidden bg-slate-950/95 backdrop-blur-xl border-b border-white/10 absolute w-full">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-xl">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                className="block px-3 py-2.5 rounded-md text-sm font-semibold text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
+                className="block px-3 py-2.5 rounded-md text-sm font-semibold text-slate-400 hover:text-slate-50 hover:bg-slate-800/60 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}

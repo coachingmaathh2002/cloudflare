@@ -153,7 +153,7 @@ export default function Home() {
     <div className="w-full flex-1">
       {/* Banner Section */}
       <section className="pt-6 pb-2 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative w-full h-[450px] md:h-[500px] rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(147,51,234,0.2)]">
+        <div className="relative w-full h-[450px] md:h-[500px] rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(219,39,119,0.2)]">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentBanner}
@@ -183,15 +183,15 @@ export default function Home() {
                   <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black border border-white/20 px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-4 inline-block shadow-[0_0_15px_rgba(234,179,8,0.5)]">
                     {bannerData[currentBanner].badge}
                   </span>
-                  <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white uppercase tracking-tight leading-[1.1] drop-shadow-2xl mb-4">
+                  <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-slate-50 uppercase tracking-tight leading-[1.1] drop-shadow-2xl mb-4">
                     {bannerData[currentBanner].title}
                   </h2>
-                  <p className="text-gray-200 text-sm md:text-lg mb-6 md:mb-8 font-medium leading-relaxed max-w-xl">
+                  <p className="text-slate-200 text-sm md:text-lg mb-6 md:mb-8 font-medium leading-relaxed max-w-xl">
                     {bannerData[currentBanner].subtitle}
                   </p>
                   <Link
                     to="/courses"
-                    className="inline-flex items-center gap-2 bg-white text-[#090014] px-6 py-3 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                    className="inline-flex items-center gap-2 bg-white text-[#090014] px-6 py-3 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-slate-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                   >
                     {bannerData[currentBanner].cta}{" "}
                     <ChevronRight className="h-4 w-4" />
@@ -207,7 +207,7 @@ export default function Home() {
               <button
                 key={idx}
                 onClick={() => setCurrentBanner(idx)}
-                className={`h-2 rounded-full transition-all ${idx === currentBanner ? "w-8 bg-purple-400" : "w-2 bg-white/30 hover:bg-white/50"}`}
+                className={`h-2 rounded-full transition-all ${idx === currentBanner ? "w-8 bg-pink-400" : "w-2 bg-white/30 hover:bg-slate-800/600"}`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -226,22 +226,22 @@ export default function Home() {
               className="lg:col-span-8"
             >
               <div className="inline-flex gap-2 mb-6">
-                <span className="bg-purple-500/10 text-purple-400 px-2 flex items-center py-1 rounded text-[10px] font-bold border border-purple-500/20 uppercase tracking-widest backdrop-blur-md">
+                <span className="bg-pink-600/10 text-pink-400 px-2 flex items-center py-1 rounded text-[10px] font-bold border border-pink-600/20 uppercase tracking-widest backdrop-blur-md">
                   Premium Coaching
                 </span>
-                <span className="bg-white/5 text-gray-300 px-2 py-1 rounded text-[10px] font-bold border border-white/10 uppercase tracking-widest backdrop-blur-md">
+                <span className="bg-slate-800/60 text-slate-300 px-2 py-1 rounded text-[10px] font-bold border border-white/10 uppercase tracking-widest backdrop-blur-md">
                   Live Classes
                 </span>
               </div>
-              <h1 className="font-display text-4xl lg:text-5xl tracking-tight mb-4 leading-tight text-white uppercase">
+              <h1 className="font-display text-4xl lg:text-5xl tracking-tight mb-4 leading-tight text-slate-50 uppercase">
                 Master{" "}
-                <span className="bg-gradient-to-r from-purple-400 to-violet-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-pink-400 to-violet-400 bg-clip-text text-transparent">
                   Mathematics
                 </span>{" "}
                 <br />
                 with Absolute Confidence
               </h1>
-              <p className="text-gray-400 text-sm lg:text-base mb-8 max-w-xl leading-relaxed">
+              <p className="text-slate-400 text-sm lg:text-base mb-8 max-w-xl leading-relaxed">
                 Join the elite circle of toppers. Expert coaching for JEE Mains,
                 SLST Mathematics, Engineering Mathematics, and Advanced
                 Competitive Exams with personalized analytics.
@@ -250,14 +250,14 @@ export default function Home() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   to="/courses"
-                  className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 text-white font-bold py-2.5 px-6 rounded-md transition-all shadow-[0_0_20px_rgba(147,51,234,0.3)] flex items-center gap-2 text-sm border border-white/10 relative overflow-hidden group">
+                  className="bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-slate-50 font-bold py-2.5 px-6 rounded-md transition-all shadow-[0_0_20px_rgba(219,39,119,0.3)] flex items-center gap-2 text-sm border border-white/10 relative overflow-hidden group">
                   <div className="absolute inset-0 bg-white/20 w-1/2 -skew-x-12 -ml-16 group-hover:ml-[150%] transition-all duration-700"></div>
                   <PlayCircle className="h-4 w-4 relative z-10" />
                   <span className="relative z-10">Start Learning</span>
                 </Link>
                 <Link
                   to="/mock-test"
-                  className="bg-white/5 border border-white/10 hover:bg-white/10 text-purple-300 font-bold py-2.5 px-6 rounded-md transition-all flex items-center gap-2 text-sm backdrop-blur-md"
+                  className="bg-slate-800/60 border border-white/10 hover:bg-white/10 text-pink-300 font-bold py-2.5 px-6 rounded-md transition-all flex items-center gap-2 text-sm backdrop-blur-md"
                 >
                   <Target className="h-4 w-4" />
                   Mock Tests
@@ -272,27 +272,27 @@ export default function Home() {
               className="lg:col-span-4"
             >
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-xl text-center shadow-2xl">
-                  <p className="text-3xl font-bold text-purple-400 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-5 rounded-xl text-center shadow-2xl">
+                  <p className="text-3xl font-bold text-pink-400 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
                     500+
                   </p>
-                  <p className="text-[10px] text-purple-200/50 uppercase tracking-widest font-bold">
+                  <p className="text-[10px] text-pink-200/50 uppercase tracking-widest font-bold">
                     Video Lectures
                   </p>
                 </div>
-                <div className="bg-zinc-900/50 border border-zinc-800/50 p-6 rounded-2xl text-center">
+                <div className="bg-slate-900/50 border border-slate-800/50 p-6 rounded-2xl text-center">
                   <p className="text-3xl font-bold text-violet-400 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
                     50+
                   </p>
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">
+                  <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
                     Mock Tests
                   </p>
                 </div>
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-xl col-span-2 text-center shadow-2xl">
-                  <p className="text-3xl font-bold text-white italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-5 rounded-xl col-span-2 text-center shadow-2xl">
+                  <p className="text-3xl font-bold text-slate-50 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
                     10k+
                   </p>
-                  <p className="text-[10px] text-purple-200/50 uppercase tracking-widest font-bold">
+                  <p className="text-[10px] text-pink-200/50 uppercase tracking-widest font-bold">
                     Practice Questions
                   </p>
                 </div>
@@ -305,13 +305,13 @@ export default function Home() {
       {/* About Raj Sir Section */}
       <section className="py-16 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-1 rounded-3xl shadow-2xl relative overflow-hidden">
+          <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-1 rounded-3xl shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden rounded-3xl bg-[#090014]/60">
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-pink-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden rounded-3xl bg-slate-950/60">
               <div className="md:col-span-5 relative p-8 md:p-12 border-b md:border-b-0 md:border-r border-white/10 flex flex-col items-center justify-center text-center">
-                <div className="w-40 h-40 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 p-1 mb-6 shadow-[0_0_30px_rgba(147,51,234,0.3)]">
-                  <div className="w-full h-full rounded-full bg-[#0b001a] flex items-center justify-center border-4 border-[#090014] overflow-hidden">
+                <div className="w-40 h-40 rounded-full bg-gradient-to-br from-pink-600 to-violet-600 p-1 mb-6 shadow-[0_0_30px_rgba(219,39,119,0.3)]">
+                  <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center border-4 border-[#090014] overflow-hidden">
                     <img
                       src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop"
                       alt="Raj Sir"
@@ -319,65 +319,65 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <h3 className="font-display text-3xl text-white font-bold tracking-tight mb-2 uppercase">
+                <h3 className="font-display text-3xl text-slate-50 font-bold tracking-tight mb-2 uppercase">
                   Raj Sir
                 </h3>
-                <p className="text-purple-400 font-bold text-xs uppercase tracking-widest mb-4">
+                <p className="text-pink-400 font-bold text-xs uppercase tracking-widest mb-4">
                   Mentor & Founder
                 </p>
-                <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium">
+                <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
                   <Award className="h-4 w-4 text-violet-400" /> 9+ Years Experience
                 </div>
               </div>
               <div className="md:col-span-7 p-8 md:p-12 relative z-10">
-                <h4 className="flex items-center gap-3 text-lg font-bold text-white mb-6 uppercase tracking-wider">
-                  <GraduationCap className="h-6 w-6 text-purple-400" />
+                <h4 className="flex items-center gap-3 text-lg font-bold text-slate-50 mb-6 uppercase tracking-wider">
+                  <GraduationCap className="h-6 w-6 text-pink-400" />
                   Credentials & Qualifications
                 </h4>
 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 bg-white/10 p-1.5 rounded text-purple-300">
+                    <div className="shrink-0 mt-0.5 bg-white/10 p-1.5 rounded text-pink-300">
                       <BookOpen className="h-3 w-3" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-gray-200">
+                      <p className="text-sm font-bold text-slate-200">
                         BSc in Mathematics
                       </p>
-                      <p className="text-[11px] text-gray-500 uppercase tracking-wider font-semibold">
+                      <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
                         Bankura Christian College
                       </p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 text-zinc-500">
+                    <div className="shrink-0 mt-0.5 text-slate-500">
                       <BookOpen className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-base font-medium text-white">
+                      <p className="text-base font-medium text-slate-50">
                         MSc in Pure Mathematics
                       </p>
-                      <p className="text-xs text-zinc-500 mt-1 font-medium">
+                      <p className="text-xs text-slate-500 mt-1 font-medium">
                         The University of Burdwan
                       </p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 bg-purple-500/20 p-1.5 rounded text-purple-400">
+                    <div className="shrink-0 mt-0.5 bg-pink-600/20 p-1.5 rounded text-pink-400">
                       <CheckCircle2 className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-base font-medium text-white">
+                      <p className="text-base font-medium text-slate-50">
                         GATE Qualification
                       </p>
-                      <p className="text-[11px] text-purple-400/80 uppercase tracking-wider font-bold">
+                      <p className="text-[11px] text-pink-400/80 uppercase tracking-wider font-bold">
                         UGC CSIR NET JRF Certified
                       </p>
                     </div>
                   </li>
                 </ul>
 
-                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3 border-b border-white/5 pb-2">
+                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 border-b border-white/5 pb-2">
                   Areas of Expertise
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -390,7 +390,7 @@ export default function Home() {
                   ].map((subject, idx) => (
                     <span
                       key={idx}
-                      className="bg-white/5 border border-white/10 text-gray-300 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider"
+                      className="bg-slate-800/60 border border-white/10 text-slate-300 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider"
                     >
                       {subject}
                     </span>
@@ -406,18 +406,18 @@ export default function Home() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xs font-bold text-purple-200/60 uppercase tracking-widest">
+            <h3 className="text-xs font-bold text-pink-200/60 uppercase tracking-widest">
               Premium Curriculum
             </h3>
             <Link
               to="/courses"
-              className="text-purple-400 text-xs font-bold hover:text-purple-300"
+              className="text-pink-400 text-xs font-bold hover:text-pink-300"
             >
               View All Courses →
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-50">
             <CourseCard
               title="JEE Mains Mathematics"
               subtitle="Limit, Continuity, Differentiability, Algebra & Coordinate Geometry modules."
@@ -447,14 +447,14 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-12 bg-[#05000a] w-full border-y border-white/5 relative overflow-hidden">
-        <div className="absolute top-0 right-1/2 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <section className="py-12 bg-slate-950 w-full border-y border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 right-1/2 w-[500px] h-[500px] bg-pink-900/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="text-center mb-10">
-            <h3 className="text-sm font-bold text-purple-400 uppercase tracking-widest mb-2">
+            <h3 className="text-sm font-bold text-pink-400 uppercase tracking-widest mb-2">
               Success Stories
             </h3>
-            <h2 className="font-display text-4xl text-white font-bold uppercase tracking-tight">
+            <h2 className="font-display text-4xl text-slate-50 font-bold uppercase tracking-tight">
               Our Proud Achievers
             </h2>
           </div>
@@ -463,26 +463,26 @@ export default function Home() {
             {testimonials.map((testi, i) => (
               <div
                 key={i}
-                className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl relative"
+                className="bg-slate-800/60 backdrop-blur-md border border-white/10 p-8 rounded-2xl relative"
               >
-                <Quote className="absolute top-6 right-6 h-8 w-8 text-white/5" />
+                <Quote className="absolute top-6 right-6 h-8 w-8 text-slate-50/5" />
                 <div className="flex gap-1 mb-4 text-violet-400">
                   {[...Array(testi.rating)].map((_, idx) => (
                     <Star key={idx} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                <p className="text-slate-300 text-sm leading-relaxed mb-6">
                   "{testi.text}"
                 </p>
                 <div className="mt-auto border-t border-white/10 pt-4 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/30 to-violet-500/30 border border-white/10 flex items-center justify-center uppercase font-bold text-purple-300">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-600/30 to-violet-600/30 border border-white/10 flex items-center justify-center uppercase font-bold text-pink-300">
                     {testi.name.charAt(0)}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-white uppercase">
+                    <p className="text-sm font-bold text-slate-50 uppercase">
                       {testi.name}
                     </p>
-                    <p className="text-[10px] uppercase font-bold tracking-wider text-purple-400">
+                    <p className="text-[10px] uppercase font-bold tracking-wider text-pink-400">
                       {testi.exam}
                     </p>
                   </div>
@@ -497,39 +497,39 @@ export default function Home() {
       <section className="py-12 my-8 border-t border-white/10 bg-white/[0.02] w-full backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-violet-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-8 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-600/10 to-violet-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="relative z-10">
-                <p className="text-purple-400 font-bold text-[10px] uppercase tracking-widest mb-2">
+                <p className="text-pink-400 font-bold text-[10px] uppercase tracking-widest mb-2">
                   New Exam Live
                 </p>
-                <h4 className="text-xl font-bold mb-1 text-white drop-shadow-md">
+                <h4 className="text-xl font-bold mb-1 text-slate-50 drop-shadow-md">
                   SLST Sunday Mock Marathon
                 </h4>
-                <p className="text-xs text-purple-200/70 font-medium">
+                <p className="text-xs text-pink-200/70 font-medium">
                   30 Questions • 60 Minutes • Negative Marking
                 </p>
               </div>
               <Link
                 to="/mock-test"
-                className="bg-white text-[#090014] px-6 py-2.5 rounded-lg font-extrabold text-xs shadow-[0_0_20px_rgba(255,255,255,0.2)] shrink-0 whitespace-nowrap hover:bg-gray-200 transition-colors relative z-10"
+                className="bg-white text-[#090014] px-6 py-2.5 rounded-lg font-extrabold text-xs shadow-[0_0_20px_rgba(255,255,255,0.2)] shrink-0 whitespace-nowrap hover:bg-slate-200 transition-colors relative z-10"
               >
                 Attempt Now
               </Link>
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-1 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-purple-500/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
-                <FileText className="text-purple-400 h-8 w-8 mb-3" />
-                <p className="text-sm font-bold text-white">PDF Notes</p>
-                <p className="text-[10px] text-purple-200/50 mt-1 uppercase tracking-widest font-bold">
+              <div className="flex-1 bg-slate-800/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-pink-600/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
+                <FileText className="text-pink-400 h-8 w-8 mb-3" />
+                <p className="text-sm font-bold text-slate-50">PDF Notes</p>
+                <p className="text-[10px] text-pink-200/50 mt-1 uppercase tracking-widest font-bold">
                   450+ High Quality
                 </p>
               </div>
-              <div className="flex-1 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-violet-500/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
+              <div className="flex-1 bg-slate-800/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-violet-600/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
                 <PlayCircle className="text-violet-400 h-8 w-8 mb-3" />
-                <p className="text-sm font-bold text-white">Video Lectures</p>
-                <p className="text-[10px] text-purple-200/50 mt-1 uppercase tracking-widest font-bold">
+                <p className="text-sm font-bold text-slate-50">Video Lectures</p>
+                <p className="text-[10px] text-pink-200/50 mt-1 uppercase tracking-widest font-bold">
                   24/7 Access
                 </p>
               </div>
@@ -552,13 +552,13 @@ function CourseCard({
   enrolling,
 }: any) {
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-6 rounded-2xl relative overflow-hidden group hover:border-purple-500/30 hover:bg-white/10 transition-all flex flex-col h-full shadow-2xl">
+    <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl relative overflow-hidden group hover:border-pink-600/30 hover:bg-white/10 transition-all flex flex-col h-full shadow-2xl">
       <div className="flex justify-between items-start mb-5 relative z-10">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl font-serif italic border border-white/10 shadow-inner ${active ? "bg-gradient-to-br from-purple-500/20 to-violet-600/20 text-purple-400" : completed ? "bg-green-500/10 text-green-400" : "bg-white/5 text-gray-300"}`}>
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl font-serif italic border border-white/10 shadow-inner ${active ? "bg-gradient-to-br from-pink-600/20 to-violet-600/20 text-pink-400" : completed ? "bg-green-500/10 text-green-400" : "bg-slate-800/60 text-slate-300"}`}>
           {icon}
         </div>
         {active && (
-          <span className="bg-purple-500/20 text-purple-300 text-[10px] font-bold px-2.5 py-1 rounded border border-purple-500/30 uppercase tracking-widest shadow-sm">
+          <span className="bg-pink-600/20 text-pink-300 text-[10px] font-bold px-2.5 py-1 rounded border border-pink-600/30 uppercase tracking-widest shadow-sm">
             Active
           </span>
         )}
@@ -568,30 +568,30 @@ function CourseCard({
           </span>
         )}
         {enrolling && (
-          <span className="bg-white/5 text-gray-300 text-[10px] font-bold px-2.5 py-1 rounded border border-white/10 uppercase tracking-widest shadow-sm">
+          <span className="bg-slate-800/60 text-slate-300 text-[10px] font-bold px-2.5 py-1 rounded border border-white/10 uppercase tracking-widest shadow-sm">
             Enrolling
           </span>
         )}
       </div>
-      <h4 className="font-bold text-base mb-2 relative z-10 text-white drop-shadow-sm">
+      <h4 className="font-bold text-base mb-2 relative z-10 text-slate-50 drop-shadow-sm">
         {title}
       </h4>
-      <p className="text-xs text-purple-200/70 mb-6 leading-relaxed relative z-10 flex-1">
+      <p className="text-xs text-pink-200/70 mb-6 leading-relaxed relative z-10 flex-1">
         {subtitle}
       </p>
 
       <div className="flex flex-col gap-3 pt-5 border-t border-white/10 mt-auto relative z-10">
         <div className="flex items-center justify-between">
-          <div className="text-[10px] font-bold text-purple-200/50 uppercase tracking-widest">
+          <div className="text-[10px] font-bold text-pink-200/50 uppercase tracking-widest">
             {stats}
           </div>
-          <div className="text-[10px] font-bold text-purple-400">
+          <div className="text-[10px] font-bold text-pink-400">
             {progress}%
           </div>
         </div>
         <div className="w-full bg-white/10 h-1 rounded-sm overflow-hidden border border-white/5">
           <div
-            className={`h-full rounded-sm ${completed ? "bg-green-400" : "bg-gradient-to-r from-purple-500 to-violet-500"}`}
+            className={`h-full rounded-sm ${completed ? "bg-green-400" : "bg-gradient-to-r from-pink-600 to-violet-600"}`}
             style={{ width: `${progress}%` }}
           ></div>
         </div>
