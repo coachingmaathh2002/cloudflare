@@ -112,7 +112,7 @@ const bannerData = [
         দ্বাদশ শ্রেণী (<span className="text-pink-400 drop-shadow-lg">3rd & 4th Sem</span>) <br className="hidden md:block" /> মিশন বোর্ড এক্সাম
       </>
     ),
-    subtitle: "বোর্ড এক্সাম এবং জয়েন্ট (WBJEE/JEE) এর জন্য একদম পারফেক্ট ম্যাথমেটিক্স স্ট্র্যাটেজি।",
+    subtitle: "বোর্ড এক্সাম এবং জয়েন্ট (WBJEE/JEE MAINS) এর জন্য একদম পারফেক্ট ম্যাথমেটিক্স স্ট্র্যাটেজি।",
     cta: "জয়েন করো আজই",
     gradient: "from-[#831843] via-[#db2777] to-transparent",
   }

@@ -9,8 +9,8 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Courses', path: '/courses' },
+    { name: 'Free Notes', path: '/notes' },
     { name: 'Mock Tests', path: '/mock-test' },
-    { name: 'Dashboard', path: '/dashboard' },
   ];
 
   return (

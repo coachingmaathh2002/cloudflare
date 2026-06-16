@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Courses from './pages/Courses';
 import Dashboard from './pages/Dashboard';
 import MockTestApp from './pages/MockTestApp';
+import Notes from './pages/Notes';
 
 export default function App() {
   return (
@@ -31,6 +32,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/courses" element={<Courses />} />
+              <Route path="/notes" element={<Notes />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/mock-test" element={<MockTestApp />} />
               <Route path="/mock-test/:testId" element={<MockTestApp />} />

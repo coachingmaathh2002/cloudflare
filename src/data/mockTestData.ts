@@ -37,6 +37,35 @@ const REAL_ANALYSIS_POOL: Question[] = [
   { question: "Any monotonic bounded sequence in $\\mathbb{R}$...", options: ["Diverges", "Oscillates", "Converges", "Has no limit"], correctAnswer: 2, explanation: "Monotone Convergence Theorem." }
 ];
 
+
+const REAL_ANALYSIS_POOL_2: Question[] = [
+  { question: "Let $f,g:[a,b] \to \mathbb{R}$ be continuous. If $\int_a^b f(x)dx = \int_a^b g(x)dx$, then:", options: ["$f(x) = g(x)$ for some $x$", "$f(x) = g(x)$ for all $x$", "$f(x) \neq g(x)$ everywhere", "None of these"], correctAnswer: 0, explanation: "By Mean Value Theorem for Integrals." },
+  { question: "Which sets are not countable?", options: ["$\mathbb{Q}$", "$\mathbb{Z} \times \mathbb{Z}$", "The set of algebraic numbers", "The Cantor set"], correctAnswer: 3, explanation: "The Cantor set is uncountable." },
+  { question: "Every infinite bounded subset of $\mathbb{R}$ has:", options: ["A limit point in $\mathbb{R}$", "A maximum", "A minimum", "Both min and max"], correctAnswer: 0, explanation: "Bolzano-Weierstrass theorem." },
+  { question: "For $A \subset \mathbb{R}$, $A$ is open if and only if:", options: ["$A$ contains all its limit points", "Every point of $A$ is an interior point", "$A$ is finite", "$A$ is bounded"], correctAnswer: 1, explanation: "Definition of an open set in standard metric topology." },
+  { question: "A convergent sequence in a metric space is:", options: ["Always Cauchy", "Sometimes Cauchy", "Never Cauchy", "Bounded but not Cauchy"], correctAnswer: 0, explanation: "Every convergent sequence is Cauchy." },
+  { question: "The improper integral $\int_1^\infty \frac{1}{x^p} dx$ converges for:", options: ["$p > 1$", "$p \ge 1$", "$p < 1$", "$p \le 1$"], correctAnswer: 0, explanation: "p-test for integrals." },
+  { question: "If $\lim_{n \to \infty} a_n = L$, then every subsequence of $a_n$ converges to:", options: ["$L$", "0", "$\infty$", "Does not necessarily converge"], correctAnswer: 0, explanation: "Subsequences of a convergent sequence have the same limit." },
+  { question: "A continuous image of a connected set is:", options: ["Connected", "Compact", "Closed", "Open"], correctAnswer: 0, explanation: "Continuity preserves connectedness." },
+  { question: "The intersection of an arbitrary family of closed sets is:", options: ["Open", "Closed", "Neither", "Both"], correctAnswer: 1, explanation: "Arbitrary intersection of closed sets is closed." },
+  { question: "A sequence of functions $\{f_n\}$ converges uniformly on $E$ if:", options: ["$\sup_{x \in E} |f_n(x) - f(x)| \to 0$", "$\inf_{x \in E} |f_n(x) - f(x)| \to 0$", "$f_n(x) \to f(x)$ for each $x$", "It converges pointwise"], correctAnswer: 0, explanation: "By definition of uniform convergence." }
+];
+
+
+const REAL_ANALYSIS_POOL_3: Question[] = [
+  { question: "A function $f: [a,b] \to \mathbb{R}$ of bounded variation must be:", options: ["Continuous", "Differentiable", "Riemann Integrable", "Monotonic"], correctAnswer: 2, explanation: "Functions of bounded variation are Riemann Integrable." },
+  { question: "The union of two countable sets is:", options: ["Finite", "Uncountable", "Countable", "Empty"], correctAnswer: 2, explanation: "The union of two countable sets is countable." },
+  { question: "Any open interval $(a,b)$ in $\mathbb{R}$ is homeomorphic to:", options: ["$[a,b]$", "$\mathbb{R}$", "$(0, \infty)$ only", "None of these"], correctAnswer: 1, explanation: "$(a,b)$ and $\mathbb{R}$ are homeomorphic." },
+  { question: "A metric space is complete if:", options: ["Every sequence converges", "Every Cauchy sequence converges", "It is closed", "It is open"], correctAnswer: 1, explanation: "Definition of a complete metric space." },
+  { question: "The Riemann-Stieltjes integral $\int_a^b f d\alpha$ exists if $f$ is continuous and $\alpha$ is:", options: ["Monotonic", "Continuous", "Bounded", "None of these"], correctAnswer: 0, explanation: "It exists if $f$ is continuous and $\alpha$ is monotonically increasing." },
+  { question: "Which is a property of the Cantor set?", options: ["It has positive measure", "It is uncountable", "It is open", "It contains intervals"], correctAnswer: 1, explanation: "The Cantor set is a classic example of an uncountable set with measure zero." },
+  { question: "Let $f$ be continuous on $[0,1]$ and $f(x) \in \mathbb{Q}$ for all $x$. Then $f$ is:", options: ["A polynomial", "Constant", "Identity function", "Unbounded"], correctAnswer: 1, explanation: "Since the image of a connected set under a continuous function is connected, $f([0,1])$ must be a single rational point." },
+  { question: "The power series $\sum n! x^n$ has radius of convergence:", options: ["$1$", "$\infty$", "$0$", "$e$"], correctAnswer: 2, explanation: "By ratio test, limit is $\infty$, so radius is 0." },
+  { question: "A subset of $\mathbb{R}$ is compact if and only if it is:", options: ["Closed", "Bounded", "Closed and bounded", "Open"], correctAnswer: 2, explanation: "Heine-Borel Theorem." },
+  { question: "The limit inferior of the sequence $a_n = (-1)^n \frac{n+1}{n}$ is:", options: ["$1$", "$-1$", "$0$", "Does not exist"], correctAnswer: 1, explanation: "The subsequences converge to $1$ and $-1$. The limit inferior is the smallest limit point, which is $-1$." }
+];
+
+
 const DEFAULT_POOL = [
   {
     question: "If $f(x) = \\int_0^x e^{-t^2} dt$, find $f'(x)$.",
@@ -52,8 +81,14 @@ const DEFAULT_POOL = [
   }
 ];
 
-export function generateQuestionSet(topic: string, count: number = 30) {
-  let pool = topic === "Real Analysis" ? REAL_ANALYSIS_POOL : DEFAULT_POOL;
+export function generateQuestionSet(topic: string, count: number = 30, mockIndex: number = 0) {
+  let pool = DEFAULT_POOL;
+  if (topic === "Real Analysis") {
+    if (mockIndex === 0) pool = REAL_ANALYSIS_POOL;
+    else if (mockIndex === 1) pool = REAL_ANALYSIS_POOL_2;
+    else pool = REAL_ANALYSIS_POOL_3;
+  }
+
   
   const questions = [];
   for (let i = 0; i < count; i++) {
@@ -83,6 +118,6 @@ export function generateMocksForTopic(topic: string, count: number = 20) {
     title: `Mock Test ${i + 1}: ${topic}`,
     duration: 3600,
     totalQuestions: 30,
-    questions: (topic === "Real Analysis" && i > 0) ? [] : generateQuestionSet(topic, 30)
+    questions: (topic === "Real Analysis" && i > 2) ? [] : generateQuestionSet(topic, 30, i)
   }));
 }
