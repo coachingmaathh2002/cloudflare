@@ -136,16 +136,24 @@ export default function Notes() {
               </div>
             </div>
             
-            <div className="flex-1 w-full relative bg-slate-950">
+            <div className="flex-1 w-full relative bg-slate-950 overflow-hidden">
               <iframe 
                 src={selectedPdf.link} 
-                className="w-full h-full border-none"
+                className="w-full h-full border-none pointer-events-auto"
                 allow="autoplay"
                 title={selectedPdf.title}
               ></iframe>
               
-              {/* Optional overlay to prevent right clicks inside the iframe bounding box edge (Google drive preview prevents right click anyway, but it's a good touch) */}
-              <div className="absolute top-0 right-0 w-16 h-12 bg-transparent z-10" title="Pop-out disabled"></div>
+              {/* Overlay to block the pop-out button on Google Drive */}
+              <div 
+                className="absolute top-0 right-0 w-24 sm:w-32 h-14 bg-slate-950/40 backdrop-blur-md z-10 cursor-not-allowed flex items-center justify-center border-l border-b border-white/5 rounded-bl-xl" 
+                title="Pop-out disabled"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              >
+                <div className="flex flex-col items-center opacity-70">
+                  <span className="text-[10px] text-slate-300 font-bold uppercase tracking-widest leading-tight">Locked</span>
+                </div>
+              </div>
             </div>
             
             <div className="bg-slate-900 p-3 text-center border-t border-white/10 flex justify-between items-center px-6">
