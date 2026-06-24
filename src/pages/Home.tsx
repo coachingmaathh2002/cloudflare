@@ -153,61 +153,102 @@ export default function Home() {
     <div className="w-full flex-1">
       {/* Banner Section */}
       <section className="pt-6 pb-2 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative w-full h-[450px] md:h-[500px] rounded-3xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(219,39,119,0.2)]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentBanner}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              className="absolute inset-0"
-            >
-              <img
-                src={bannerData[currentBanner].image}
-                alt="Coaching Banner"
-                onError={(e) => {
-                  e.currentTarget.src =
-                    "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop";
-                }}
-                className="w-full h-full object-cover mix-blend-luminosity opacity-50 transition-opacity duration-1000"
-              />
-              {/* Overlay mask */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-r ${bannerData[currentBanner].gradient} opacity-90 transition-all duration-1000`}
-              ></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#090014] via-[#090014]/20 to-transparent"></div>
-              {/* Banner Text Overlay */}
-              <div className="absolute inset-0 p-6 md:p-12 w-full h-full flex flex-col justify-end pb-12 md:pb-16 z-10">
-                <div className="max-w-3xl">
-                  <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black border border-white/20 px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-widest mb-4 inline-block shadow-[0_0_15px_rgba(234,179,8,0.5)]">
-                    {bannerData[currentBanner].badge}
-                  </span>
-                  <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-slate-50 uppercase tracking-tight leading-[1.1] drop-shadow-2xl mb-4">
-                    {bannerData[currentBanner].title}
-                  </h2>
-                  <p className="text-slate-200 text-sm md:text-lg mb-6 md:mb-8 font-medium leading-relaxed max-w-xl">
-                    {bannerData[currentBanner].subtitle}
-                  </p>
-                  <Link
-                    to="/courses"
-                    className="inline-flex items-center gap-2 bg-white text-[#090014] px-6 py-3 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-slate-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-                  >
-                    {bannerData[currentBanner].cta}{" "}
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
+        <div className="relative w-full h-[500px] md:h-[600px] rounded-[32px] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(250,204,21,0.15)] group flex">
+          
+          <div className="relative flex-1 h-full overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentBanner}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8 }}
+                className="absolute inset-0"
+              >
+                <img
+                  src={bannerData[currentBanner].image}
+                  alt="Coaching Banner"
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop";
+                  }}
+                  className="w-full h-full object-cover mix-blend-luminosity opacity-40 transition-opacity duration-1000"
+                />
+                
+                {/* Math Pattern Overlay */}
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+                
+                {/* Overlay mask */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${bannerData[currentBanner].gradient} opacity-95 transition-all duration-1000`}
+                ></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] via-[#0B1120]/40 to-transparent"></div>
+                
+                {/* Banner Text Overlay */}
+                <div className="absolute inset-0 p-8 md:p-12 lg:p-16 w-full h-full flex flex-col justify-end pb-16 md:pb-20 z-10">
+                  <div className="max-w-3xl">
+                    <span className="bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-6 inline-flex items-center gap-2 shadow-[0_0_15px_rgba(250,204,21,0.3)] backdrop-blur-md">
+                      <Star className="w-4 h-4 fill-yellow-400" />
+                      {bannerData[currentBanner].badge}
+                    </span>
+                    <h2 className="font-display text-4xl md:text-5xl lg:text-7xl font-black text-slate-50 uppercase tracking-tight leading-[1.05] drop-shadow-2xl mb-6">
+                      {bannerData[currentBanner].title}
+                    </h2>
+                    <p className="text-slate-300 text-sm md:text-lg mb-8 md:mb-10 font-medium leading-relaxed max-w-2xl border-l-4 border-yellow-400 pl-4">
+                      {bannerData[currentBanner].subtitle}
+                    </p>
+                    <Link
+                      to="/courses"
+                      className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-900 px-8 py-4 rounded-xl font-black text-sm md:text-base uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:shadow-[0_0_30px_rgba(250,204,21,0.6)] hover:-translate-y-1"
+                    >
+                      {bannerData[currentBanner].cta}{" "}
+                      <ChevronRight className="h-5 w-5" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-          {/* Banner Navigation Dots */}
-          <div className="absolute bottom-6 right-6 flex gap-2 z-20">
+          {/* Side Navigation (Desktop) */}
+          <div className="hidden lg:flex w-[350px] bg-[#0B1120]/80 backdrop-blur-xl border-l border-white/10 flex-col z-20 shadow-[-20px_0_50px_rgba(0,0,0,0.5)]">
+            <div className="p-6 border-b border-white/10 bg-slate-900/50">
+              <h3 className="text-white font-black tracking-widest uppercase text-sm flex items-center gap-2">
+                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" /> Featured Programs
+              </h3>
+            </div>
+            <div className="flex-1 overflow-y-auto scrollbar-hide py-2 relative">
+              {/* Animated active background highlight could be complex, using border instead */}
+              {bannerData.map((banner, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentBanner(idx)}
+                  className={`w-full text-left px-6 py-5 transition-all border-l-4 flex flex-col justify-center ${idx === currentBanner ? "border-yellow-400 bg-white/10 shadow-inner" : "border-transparent hover:bg-white/[0.02] opacity-60 hover:opacity-100"}`}
+                >
+                  <p className={`text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-1.5 ${idx === currentBanner ? "text-yellow-400" : "text-slate-400"}`}>
+                    {idx === currentBanner && <ChevronRight className="w-3 h-3" />}
+                    {banner.badge}
+                  </p>
+                  <div className={`text-sm font-bold line-clamp-2 leading-snug [&_br]:hidden ${idx === currentBanner ? "text-white" : "text-slate-300"}`}>
+                    {banner.title}
+                  </div>
+                </button>
+              ))}
+            </div>
+            <div className="p-4 border-t border-white/10 text-center bg-slate-900/50">
+               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest flex items-center justify-center gap-1.5">
+                 <PlayCircle className="w-3 h-3" /> Auto-playing
+               </p>
+            </div>
+          </div>
+
+          {/* Banner Navigation Dots (Mobile Only) */}
+          <div className="absolute bottom-6 right-6 flex lg:hidden gap-3 z-20">
             {bannerData.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentBanner(idx)}
-                className={`h-2 rounded-full transition-all ${idx === currentBanner ? "w-8 bg-pink-400" : "w-2 bg-white/30 hover:bg-slate-800/600"}`}
+                className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentBanner ? "w-10 bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" : "w-2.5 bg-white/30 hover:bg-white/60"}`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -221,8 +262,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-slate-900 to-[#0A0F1D] opacity-100 z-0"></div>
         
         {/* Glowing Accents */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-blue-600/20 via-transparent to-transparent opacity-60 z-0 blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-yellow-500/15 via-transparent to-transparent opacity-60 z-0 blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-pink-600/20 via-transparent to-transparent opacity-60 z-0 blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-violet-600/15 via-transparent to-transparent opacity-60 z-0 blur-3xl pointer-events-none"></div>
         
         {/* Floating Math Symbols */}
         <div className="absolute inset-0 overflow-hidden opacity-[0.04] text-white font-serif select-none pointer-events-none z-0">
@@ -251,8 +292,8 @@ export default function Home() {
               className="lg:col-span-8"
             >
               <div className="inline-flex gap-2 mb-6">
-                <span className="bg-yellow-400/10 text-yellow-400 px-3 flex items-center py-1.5 rounded-full text-[10px] sm:text-xs font-bold border border-yellow-400/20 uppercase tracking-widest backdrop-blur-md shadow-[0_0_15px_rgba(250,204,21,0.2)]">
-                  <Star className="w-3 h-3 mr-1.5 fill-yellow-400" /> Premium Coaching
+                <span className="bg-pink-600/10 text-pink-400 px-3 flex items-center py-1.5 rounded-full text-[10px] sm:text-xs font-bold border border-pink-600/20 uppercase tracking-widest backdrop-blur-md shadow-[0_0_15px_rgba(219,39,119,0.2)]">
+                  <Star className="w-3 h-3 mr-1.5 fill-pink-400" /> Premium Coaching
                 </span>
                 <span className="bg-slate-800/60 text-slate-300 px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold border border-white/10 uppercase tracking-widest backdrop-blur-md">
                   Live Classes
@@ -260,7 +301,7 @@ export default function Home() {
               </div>
               <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl tracking-tight mb-4 leading-none text-slate-50 uppercase drop-shadow-2xl font-black">
                 Master{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500 drop-shadow-[0_0_30px_rgba(250,204,21,0.3)]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-violet-400 drop-shadow-[0_0_30px_rgba(219,39,119,0.3)]">
                   Mathematics
                 </span>{" "}
                 <br />
@@ -270,20 +311,20 @@ export default function Home() {
                 Join the elite circle of toppers. Expert coaching for JEE Mains,
                 SLST Mathematics, Engineering Mathematics, and Advanced
                 Competitive Exams with personalized analytics.
-                <span className="block mt-4 text-yellow-400 font-bold uppercase tracking-wider text-xs sm:text-sm">EASY TO LEARN, EASY TO SCORE!</span>
+                <span className="block mt-4 text-pink-400 font-bold uppercase tracking-wider text-xs sm:text-sm">EASY TO LEARN, EASY TO SCORE!</span>
               </p>
 
               <div className="flex flex-wrap gap-4 sm:gap-6">
                 <Link
                   to="/courses"
-                  className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-900 font-black py-3.5 px-8 rounded-xl transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:shadow-[0_0_30px_rgba(250,204,21,0.6)] flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest relative overflow-hidden group">
+                  className="bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-slate-50 font-black py-3.5 px-8 rounded-xl transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(219,39,119,0.4)] hover:shadow-[0_0_30px_rgba(219,39,119,0.6)] flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest relative overflow-hidden group">
                   <div className="absolute inset-0 bg-white/30 w-1/2 -skew-x-12 -ml-16 group-hover:ml-[150%] transition-all duration-700"></div>
-                  <PlayCircle className="h-5 w-5 relative z-10 fill-slate-900 text-yellow-400" />
+                  <PlayCircle className="h-5 w-5 relative z-10" />
                   <span className="relative z-10">Start Learning</span>
                 </Link>
                 <Link
                   to="/mock-test"
-                  className="bg-slate-800/80 border border-white/10 hover:border-yellow-400/50 hover:bg-slate-800 text-yellow-400 font-bold py-3.5 px-8 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest backdrop-blur-md shadow-lg"
+                  className="bg-slate-800/80 border border-white/10 hover:border-pink-500/50 hover:bg-slate-800 text-pink-300 font-bold py-3.5 px-8 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest backdrop-blur-md shadow-lg"
                 >
                   <Target className="h-5 w-5" />
                   Mock Tests
@@ -299,25 +340,25 @@ export default function Home() {
               className="lg:col-span-4"
             >
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl text-center shadow-xl hover:shadow-[0_0_30px_rgba(250,204,21,0.15)] hover:border-yellow-400/30 transition-all group">
-                  <p className="text-4xl sm:text-5xl font-black text-yellow-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl text-center shadow-xl hover:shadow-[0_0_30px_rgba(219,39,119,0.15)] hover:border-pink-400/30 transition-all group">
+                  <p className="text-4xl sm:text-5xl font-black text-pink-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
                     500+
                   </p>
                   <p className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-widest font-bold">
                     Video Lectures
                   </p>
                 </div>
-                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl text-center shadow-xl hover:shadow-[0_0_30px_rgba(56,189,248,0.15)] hover:border-sky-400/30 transition-all group">
-                  <p className="text-4xl sm:text-5xl font-black text-sky-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl text-center shadow-xl hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] hover:border-violet-400/30 transition-all group">
+                  <p className="text-4xl sm:text-5xl font-black text-violet-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
                     50+
                   </p>
                   <p className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-widest font-bold">
                     Mock Tests
                   </p>
                 </div>
-                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl col-span-2 text-center shadow-xl hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] hover:border-pink-400/30 transition-all group relative overflow-hidden">
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl col-span-2 text-center shadow-xl hover:shadow-[0_0_30px_rgba(255,255,255,0.05)] hover:border-white/30 transition-all group relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  <p className="text-4xl sm:text-5xl font-black text-pink-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
+                  <p className="text-4xl sm:text-5xl font-black text-slate-50 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
                     10,000+
                   </p>
                   <p className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-widest font-bold">
@@ -535,45 +576,56 @@ export default function Home() {
       </section>
 
       {/* Featured Bottom Banner */}
-      <section className="py-12 my-8 border-t border-white/10 bg-white/[0.02] w-full backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <section className="py-12 my-8 border-t border-white/10 bg-[#0B1120] w-full backdrop-blur-sm relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 to-amber-500/5"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-8 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-600/10 to-violet-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="bg-slate-800/80 backdrop-blur-xl border border-white/10 hover:border-yellow-400/30 p-8 rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl relative overflow-hidden group transition-all">
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              {/* Background Accent */}
+              <div className="absolute -right-8 -top-8 w-32 h-32 bg-yellow-400/20 rounded-full blur-2xl group-hover:bg-yellow-400/30 transition-colors"></div>
+
               <div className="relative z-10">
-                <p className="text-pink-400 font-bold text-[10px] uppercase tracking-widest mb-2">
-                  New Exam Live
+                <p className="text-yellow-400 font-bold text-[10px] uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                  <Star className="w-3 h-3 fill-yellow-400" /> New Exam Live
                 </p>
-                <h4 className="text-xl font-bold mb-1 text-slate-50 drop-shadow-md">
+                <h4 className="text-2xl font-black mb-2 text-slate-50 drop-shadow-md">
                   SLST Sunday Mock Marathon
                 </h4>
-                <p className="text-xs text-pink-200/70 font-medium">
+                <p className="text-xs text-slate-300 font-bold tracking-wider uppercase">
                   30 Questions • 60 Minutes • Negative Marking
                 </p>
               </div>
               <Link
                 to="/mock-test"
-                className="bg-white text-[#090014] px-6 py-2.5 rounded-lg font-extrabold text-xs shadow-[0_0_20px_rgba(255,255,255,0.2)] shrink-0 whitespace-nowrap hover:bg-slate-200 transition-colors relative z-10"
+                className="bg-yellow-400 hover:bg-yellow-300 text-slate-900 px-6 py-3 rounded-xl font-black text-sm uppercase tracking-widest shadow-[0_0_20px_rgba(250,204,21,0.3)] hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] shrink-0 whitespace-nowrap transition-all group-hover:-translate-y-1 relative z-10 flex items-center gap-2"
               >
-                Attempt Now
+                Attempt Now <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
 
             <div className="flex gap-4">
-              <div className="flex-1 bg-slate-800/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-pink-600/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
-                <FileText className="text-pink-400 h-8 w-8 mb-3" />
-                <p className="text-sm font-bold text-slate-50">PDF Notes</p>
-                <p className="text-[10px] text-pink-200/50 mt-1 uppercase tracking-widest font-bold">
-                  450+ High Quality
+              <Link to="/notes" className="flex-1 bg-slate-800/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:border-sky-400/30 hover:bg-slate-800 transition-all group shadow-xl hover:-translate-y-1 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-sky-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="w-14 h-14 rounded-2xl bg-sky-400/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <FileText className="text-sky-400 h-7 w-7" />
+                </div>
+                <p className="text-base font-black text-slate-50">PDF Notes</p>
+                <p className="text-[10px] text-slate-400 mt-2 uppercase tracking-widest font-bold group-hover:text-sky-400 transition-colors">
+                  Premium Library
                 </p>
-              </div>
-              <div className="flex-1 bg-slate-800/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center hover:border-violet-600/30 hover:bg-white/10 transition-all cursor-pointer shadow-xl">
-                <PlayCircle className="text-violet-400 h-8 w-8 mb-3" />
-                <p className="text-sm font-bold text-slate-50">Video Lectures</p>
-                <p className="text-[10px] text-pink-200/50 mt-1 uppercase tracking-widest font-bold">
+              </Link>
+              <Link to="/courses" className="flex-1 bg-slate-800/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:border-pink-400/30 hover:bg-slate-800 transition-all group shadow-xl hover:-translate-y-1 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-pink-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="w-14 h-14 rounded-2xl bg-pink-400/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <PlayCircle className="text-pink-400 h-7 w-7" />
+                </div>
+                <p className="text-base font-black text-slate-50">Video Lectures</p>
+                <p className="text-[10px] text-slate-400 mt-2 uppercase tracking-widest font-bold group-hover:text-pink-400 transition-colors">
                   24/7 Access
                 </p>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
