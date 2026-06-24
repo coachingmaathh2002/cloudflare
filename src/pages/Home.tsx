@@ -216,89 +216,117 @@ export default function Home() {
       </section>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-16">
+      <section className="relative overflow-hidden py-20 lg:py-32">
+        {/* Background Base */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-slate-900 to-[#0A0F1D] opacity-100 z-0"></div>
+        
+        {/* Glowing Accents */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-blue-600/20 via-transparent to-transparent opacity-60 z-0 blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-yellow-500/15 via-transparent to-transparent opacity-60 z-0 blur-3xl pointer-events-none"></div>
+        
+        {/* Floating Math Symbols */}
+        <div className="absolute inset-0 overflow-hidden opacity-[0.04] text-white font-serif select-none pointer-events-none z-0">
+          <span className="absolute top-20 left-[10%] text-5xl font-black">∫f(x)dx</span>
+          <span className="absolute bottom-20 right-[15%] text-3xl font-black">sin²θ + cos²θ = 1</span>
+          <span className="absolute top-1/3 left-[20%] text-8xl font-black">∑</span>
+          <span className="absolute top-10 right-[25%] text-6xl font-black">π</span>
+          <span className="absolute bottom-1/4 left-[30%] text-4xl font-black">e^&#123;iπ&#125; + 1 = 0</span>
+          <span className="absolute top-1/2 right-[10%] text-7xl font-black">∞</span>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.15 } }
+            }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+              }}
               className="lg:col-span-8"
             >
               <div className="inline-flex gap-2 mb-6">
-                <span className="bg-pink-600/10 text-pink-400 px-2 flex items-center py-1 rounded text-[10px] font-bold border border-pink-600/20 uppercase tracking-widest backdrop-blur-md">
-                  Premium Coaching
+                <span className="bg-yellow-400/10 text-yellow-400 px-3 flex items-center py-1.5 rounded-full text-[10px] sm:text-xs font-bold border border-yellow-400/20 uppercase tracking-widest backdrop-blur-md shadow-[0_0_15px_rgba(250,204,21,0.2)]">
+                  <Star className="w-3 h-3 mr-1.5 fill-yellow-400" /> Premium Coaching
                 </span>
-                <span className="bg-slate-800/60 text-slate-300 px-2 py-1 rounded text-[10px] font-bold border border-white/10 uppercase tracking-widest backdrop-blur-md">
+                <span className="bg-slate-800/60 text-slate-300 px-3 py-1.5 rounded-full text-[10px] sm:text-xs font-bold border border-white/10 uppercase tracking-widest backdrop-blur-md">
                   Live Classes
                 </span>
               </div>
-              <h1 className="font-display text-4xl lg:text-5xl tracking-tight mb-4 leading-tight text-slate-50 uppercase">
+              <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl tracking-tight mb-4 leading-none text-slate-50 uppercase drop-shadow-2xl font-black">
                 Master{" "}
-                <span className="bg-gradient-to-r from-pink-400 to-violet-400 bg-clip-text text-transparent">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500 drop-shadow-[0_0_30px_rgba(250,204,21,0.3)]">
                   Mathematics
                 </span>{" "}
                 <br />
-                with Absolute Confidence
+                with Confidence
               </h1>
-              <p className="text-slate-400 text-sm lg:text-base mb-8 max-w-xl leading-relaxed">
+              <p className="text-slate-300 text-base sm:text-lg lg:text-xl mb-10 max-w-2xl leading-relaxed font-medium">
                 Join the elite circle of toppers. Expert coaching for JEE Mains,
                 SLST Mathematics, Engineering Mathematics, and Advanced
                 Competitive Exams with personalized analytics.
+                <span className="block mt-4 text-yellow-400 font-bold uppercase tracking-wider text-xs sm:text-sm">EASY TO LEARN, EASY TO SCORE!</span>
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 sm:gap-6">
                 <Link
                   to="/courses"
-                  className="bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-slate-50 font-bold py-2.5 px-6 rounded-md transition-all shadow-[0_0_20px_rgba(219,39,119,0.3)] flex items-center gap-2 text-sm border border-white/10 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-white/20 w-1/2 -skew-x-12 -ml-16 group-hover:ml-[150%] transition-all duration-700"></div>
-                  <PlayCircle className="h-4 w-4 relative z-10" />
+                  className="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-900 font-black py-3.5 px-8 rounded-xl transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:shadow-[0_0_30px_rgba(250,204,21,0.6)] flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-white/30 w-1/2 -skew-x-12 -ml-16 group-hover:ml-[150%] transition-all duration-700"></div>
+                  <PlayCircle className="h-5 w-5 relative z-10 fill-slate-900 text-yellow-400" />
                   <span className="relative z-10">Start Learning</span>
                 </Link>
                 <Link
                   to="/mock-test"
-                  className="bg-slate-800/60 border border-white/10 hover:bg-white/10 text-pink-300 font-bold py-2.5 px-6 rounded-md transition-all flex items-center gap-2 text-sm backdrop-blur-md"
+                  className="bg-slate-800/80 border border-white/10 hover:border-yellow-400/50 hover:bg-slate-800 text-yellow-400 font-bold py-3.5 px-8 rounded-xl transition-all hover:-translate-y-1 flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest backdrop-blur-md shadow-lg"
                 >
-                  <Target className="h-4 w-4" />
+                  <Target className="h-5 w-5" />
                   Mock Tests
                 </Link>
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              variants={{
+                hidden: { opacity: 0, scale: 0.95 },
+                visible: { opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.2, ease: "easeOut" } }
+              }}
               className="lg:col-span-4"
             >
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-5 rounded-xl text-center shadow-2xl">
-                  <p className="text-3xl font-bold text-pink-400 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl text-center shadow-xl hover:shadow-[0_0_30px_rgba(250,204,21,0.15)] hover:border-yellow-400/30 transition-all group">
+                  <p className="text-4xl sm:text-5xl font-black text-yellow-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
                     500+
                   </p>
-                  <p className="text-[10px] text-pink-200/50 uppercase tracking-widest font-bold">
+                  <p className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-widest font-bold">
                     Video Lectures
                   </p>
                 </div>
-                <div className="bg-slate-900/50 border border-slate-800/50 p-6 rounded-2xl text-center">
-                  <p className="text-3xl font-bold text-violet-400 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl text-center shadow-xl hover:shadow-[0_0_30px_rgba(56,189,248,0.15)] hover:border-sky-400/30 transition-all group">
+                  <p className="text-4xl sm:text-5xl font-black text-sky-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
                     50+
                   </p>
-                  <p className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+                  <p className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-widest font-bold">
                     Mock Tests
                   </p>
                 </div>
-                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-5 rounded-xl col-span-2 text-center shadow-2xl">
-                  <p className="text-3xl font-bold text-slate-50 italic font-serif tracking-tighter leading-none mb-1 shadow-sm">
-                    10k+
+                <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-6 rounded-2xl col-span-2 text-center shadow-xl hover:shadow-[0_0_30px_rgba(236,72,153,0.15)] hover:border-pink-400/30 transition-all group relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <p className="text-4xl sm:text-5xl font-black text-pink-400 tracking-tighter leading-none mb-3 drop-shadow-md group-hover:scale-110 transition-transform">
+                    10,000+
                   </p>
-                  <p className="text-[10px] text-pink-200/50 uppercase tracking-widest font-bold">
+                  <p className="text-[10px] sm:text-xs text-slate-300 uppercase tracking-widest font-bold">
                     Practice Questions
                   </p>
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -350,28 +378,41 @@ export default function Home() {
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 text-slate-500">
-                      <BookOpen className="h-5 w-5" />
+                    <div className="shrink-0 mt-0.5 bg-white/10 p-1.5 rounded text-pink-300">
+                      <BookOpen className="h-3 w-3" />
                     </div>
                     <div>
-                      <p className="text-base font-medium text-slate-50">
+                      <p className="text-sm font-bold text-slate-200">
                         MSc in Pure Mathematics
                       </p>
-                      <p className="text-xs text-slate-500 mt-1 font-medium">
+                      <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
                         The University of Burdwan
                       </p>
                     </div>
                   </li>
                   <li className="flex items-start gap-4">
                     <div className="shrink-0 mt-0.5 bg-pink-600/20 p-1.5 rounded text-pink-400">
-                      <CheckCircle2 className="h-5 w-5" />
+                      <CheckCircle2 className="h-3 w-3" />
                     </div>
                     <div>
-                      <p className="text-base font-medium text-slate-50">
-                        GATE Qualification
+                      <p className="text-sm font-bold text-slate-200">
+                        GATE
                       </p>
                       <p className="text-[11px] text-pink-400/80 uppercase tracking-wider font-bold">
-                        UGC CSIR NET JRF Certified
+                        Qualified
+                      </p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-4">
+                    <div className="shrink-0 mt-0.5 bg-pink-600/20 p-1.5 rounded text-pink-400">
+                      <CheckCircle2 className="h-3 w-3" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-200">
+                        CSIR NET Mathematical Sciences (LS)
+                      </p>
+                      <p className="text-[11px] text-pink-400/80 uppercase tracking-wider font-bold">
+                        Qualified
                       </p>
                     </div>
                   </li>

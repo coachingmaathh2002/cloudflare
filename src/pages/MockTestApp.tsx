@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { MixedLatex } from '../components/LatexRenderer';
-import { CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, Flag, Award, AlertCircle, BookOpen, Target, ArrowLeft } from 'lucide-react';
-import { SLST_TOPICS, generateMocksForTopic, generateQuestionSet } from '../data/mockTestData';
+import { CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, Flag, Award, AlertCircle, BookOpen, Target, ArrowLeft, BrainCircuit, Maximize, Minimize } from 'lucide-react';
+import { EXAM_CATEGORIES, TOPICS_BY_CATEGORY, generateMocksForTopic, generateQuestionSet } from '../data/mockTestData';
 
-type ViewState = 'topics' | 'mocks' | 'test' | 'results';
+type ViewState = 'categories' | 'topics' | 'mocks' | 'test' | 'results';
 
 export default function MockTestApp() {
-  const [view, setView] = useState<ViewState>('topics');
+  const [view, setView] = useState<ViewState>('categories');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
   const [selectedMock, setSelectedMock] = useState<any | null>(null);
   
@@ -14,6 +16,8 @@ export default function MockTestApp() {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(3600);
+
+  const [focusMode, setFocusMode] = useState(false);
 
   // Auto-submit test when time is up
   useEffect(() => {
@@ -31,6 +35,11 @@ export default function MockTestApp() {
     }, 1000);
     return () => clearInterval(timer);
   }, [view, isSubmitted]);
+
+  const handleCategorySelect = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setView('topics');
+  };
 
   const handleTopicSelect = (topic: string) => {
     setSelectedTopic(topic);
@@ -70,37 +79,121 @@ export default function MockTestApp() {
     return score;
   };
 
-  if (view === 'topics') {
+  if (view === 'categories') {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-12 w-full">
-        <div className="mb-8 block text-center">
-          <span className="bg-pink-600/10 text-pink-400 px-3 py-1 rounded-full text-xs font-bold border border-pink-600/20 uppercase tracking-widest">
-            SLST Mathematics
-          </span>
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-slate-50 mt-4 uppercase tracking-tight">Select Subject Topic</h1>
-          <p className="text-slate-400 mt-3 max-w-2xl mx-auto">Access our highly curated mock test series. 20 Full-length mock tests for each topic with detailed solutions.</p>
+      <div className="max-w-7xl mx-auto px-4 py-12 w-full flex flex-col min-h-[calc(100vh-100px)]">
+        <div className="mb-12 text-center mt-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-sm font-bold uppercase tracking-widest mb-4">
+            <Award className="w-4 h-4" /> Raj Sir Math Classes
+          </div>
+          <h1 className="text-4xl md:text-6xl font-display font-black text-slate-50 mt-4 uppercase tracking-tight drop-shadow-lg">
+            Master <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">Exams</span>
+          </h1>
+          <p className="text-slate-300 mt-4 max-w-2xl mx-auto font-medium text-lg">Choose your target examination to access highly curated mock tests.</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {SLST_TOPICS.map((topic, idx) => (
-            <button 
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } }
+          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {EXAM_CATEGORIES.map((cat, index) => {
+            const themes = [
+              { borderHover: 'hover:border-yellow-400/50', iconColor: 'text-yellow-400', iconBg: 'bg-yellow-400/10', gradient: 'from-yellow-400/20 to-amber-500/5', bgHover: 'hover:bg-yellow-400/5', iconFill: 'fill-yellow-400/20' },
+              { borderHover: 'hover:border-cyan-400/50', iconColor: 'text-cyan-400', iconBg: 'bg-cyan-400/10', gradient: 'from-cyan-400/20 to-blue-500/5', bgHover: 'hover:bg-cyan-400/5', iconFill: 'fill-cyan-400/20' },
+              { borderHover: 'hover:border-pink-400/50', iconColor: 'text-pink-400', iconBg: 'bg-pink-400/10', gradient: 'from-pink-400/20 to-rose-500/5', bgHover: 'hover:bg-pink-400/5', iconFill: 'fill-pink-400/20' },
+              { borderHover: 'hover:border-emerald-400/50', iconColor: 'text-emerald-400', iconBg: 'bg-emerald-400/10', gradient: 'from-emerald-400/20 to-teal-500/5', bgHover: 'hover:bg-emerald-400/5', iconFill: 'fill-emerald-400/20' },
+            ];
+            const theme = themes[index % themes.length];
+            return (
+              <motion.button 
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                key={cat.id} 
+                onClick={() => handleCategorySelect(cat.id)}
+                className={`relative bg-gradient-to-br from-[#0B1120] via-slate-900 to-[#0A0F1D] border border-white/10 shadow-xl ${theme.borderHover} hover:-translate-y-1 ${theme.bgHover} transition-all duration-300 rounded-[32px] p-6 text-left group flex flex-col h-full overflow-hidden`}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${theme.gradient} opacity-0 group-hover:opacity-100 transition-opacity`}></div>
+                
+                {/* Background abstract element */}
+                <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-colors pointer-events-none"></div>
+                <div className="absolute inset-0 overflow-hidden opacity-[0.03] text-white font-serif select-none pointer-events-none">
+                  <span className="absolute top-4 left-4 text-3xl">∑</span>
+                  <span className="absolute bottom-10 right-4 text-xl">π</span>
+                </div>
+
+                <div className={`w-16 h-16 ${theme.iconBg} ${theme.iconColor} ${theme.iconFill} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner border border-white/10 relative z-10`}>
+                  <BrainCircuit className="h-8 w-8 drop-shadow-md" />
+                </div>
+                <h3 className={`text-2xl font-black mb-2 leading-tight drop-shadow-sm font-display relative z-10 text-white group-hover:${theme.iconColor} transition-colors uppercase tracking-tight`}>{cat.name}</h3>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-8 relative z-10 line-clamp-3 leading-relaxed">{cat.description}</p>
+                
+                <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-slate-300 relative z-10">
+                  <span className={`bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 group-hover:bg-white/10 transition-colors`}>{TOPICS_BY_CATEGORY[cat.id]?.length || 0} Topics</span>
+                  <div className={`w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors ${theme.iconColor}`}>
+                    <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                </div>
+              </motion.button>
+            )
+          })}
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (view === 'topics') {
+    const category = EXAM_CATEGORIES.find(c => c.id === selectedCategory);
+    const topics = selectedCategory ? TOPICS_BY_CATEGORY[selectedCategory] || [] : [];
+    
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-12 w-full flex flex-col min-h-[calc(100vh-100px)]">
+        <button onClick={() => setView('categories')} className="flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-bold uppercase text-xs tracking-widest mb-6 w-fit h-fit transition-colors bg-yellow-400/10 px-4 py-2 rounded-xl border border-yellow-400/20 shadow-inner hover:bg-yellow-400/20">
+          <ArrowLeft className="h-4 w-4" /> Back to Categories
+        </button>
+        <div className="mb-12 block text-center">
+          <span className="bg-yellow-400/10 text-yellow-400 px-3 py-1 rounded-full text-xs font-bold border border-yellow-400/20 uppercase tracking-widest shadow-inner">
+            {category?.name || 'Topics'}
+          </span>
+          <h1 className="text-4xl md:text-5xl font-display font-black text-slate-50 mt-4 uppercase tracking-tight drop-shadow-lg">Select Subject <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">Topic</span></h1>
+          <p className="text-slate-300 mt-4 max-w-2xl mx-auto font-medium">Access our highly curated mock test series. Full-length mock tests for each topic with detailed solutions.</p>
+        </div>
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.05 } }
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
+          {topics.map((topic, idx) => (
+            <motion.button 
+              variants={{
+                hidden: { opacity: 0, scale: 0.95 },
+                visible: { opacity: 1, scale: 1 }
+              }}
               key={idx} 
               onClick={() => handleTopicSelect(topic)}
-              className="relative bg-white/[0.03] backdrop-blur-[40px] border border-white/[0.08] shadow-[0_8px_32px_0_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:border-pink-500/30 hover:bg-white/[0.06] transition-all duration-300 rounded-[32px] p-6 text-left group flex flex-col h-full overflow-hidden"
+              className="relative bg-gradient-to-br from-[#0B1120] via-slate-900 to-[#0A0F1D] border border-white/10 shadow-xl hover:border-yellow-400/50 hover:bg-yellow-400/5 transition-all duration-300 rounded-[24px] p-6 text-left group flex flex-col h-full overflow-hidden hover:-translate-y-1"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 bg-pink-500/10 text-pink-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-pink-500/20 transition-all shadow-inner border border-pink-500/20 relative z-10">
-                <BookOpen className="h-7 w-7 drop-shadow-md" />
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="w-12 h-12 bg-slate-800/80 text-yellow-400 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-yellow-400/10 transition-all shadow-inner border border-white/10 group-hover:border-yellow-400/30 relative z-10">
+                <BookOpen className="h-6 w-6 drop-shadow-md" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2 line-clamp-2 leading-tight drop-shadow-sm font-display relative z-10">{topic}</h3>
-              <div className="mt-auto pt-6 flex items-center justify-between text-xs font-bold uppercase tracking-widest text-slate-400 relative z-10">
-                <span className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/5">20 Mocks</span>
-                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-pink-500/50 transition-colors">
-                  <ChevronRight className="h-4 w-4 text-pink-400 group-hover:translate-x-0.5 transition-transform" />
+              <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 leading-tight drop-shadow-sm font-display relative z-10 group-hover:text-yellow-400 transition-colors">{topic}</h3>
+              <div className="mt-auto pt-6 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-slate-400 relative z-10 border-t border-white/5">
+                <span className="bg-white/5 px-3 py-1 rounded-lg border border-white/10 group-hover:text-yellow-400 transition-colors">20 Mocks</span>
+                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-yellow-400/50 transition-colors">
+                  <ChevronRight className="h-4 w-4 text-slate-400 group-hover:text-yellow-400 group-hover:translate-x-0.5 transition-all" />
                 </div>
               </div>
-            </button>
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -170,6 +263,35 @@ export default function MockTestApp() {
                </div>
              </div>
 
+             <div className="bg-slate-900/50 backdrop-blur-md p-8 rounded-[32px] border border-violet-500/30 mb-12 shadow-2xl relative overflow-hidden">
+               <div className="absolute top-0 right-0 bg-gradient-to-l from-pink-500 to-violet-500 text-white px-4 py-1 rounded-bl-lg text-[10px] font-bold uppercase tracking-widest shadow-lg z-10">
+                 Live Leaderboard
+               </div>
+               <h3 className="text-sm font-bold text-slate-300 mb-6 uppercase tracking-widest flex items-center gap-2">
+                 <Award className="h-5 w-5 text-violet-400" /> Global Ranking
+               </h3>
+               <div className="space-y-3">
+                 {[
+                   { name: 'Arindam Ghosh', score: 112, me: false },
+                   { name: 'Sneha Banerjee', score: 108, me: false },
+                   { name: 'You', score: score, me: true },
+                   { name: 'Rahul Das', score: score - 5, me: false }
+                 ].sort((a, b) => b.score - a.score).map((user, idx) => (
+                   <div key={idx} className={`flex items-center justify-between p-4 rounded-2xl border ${user.me ? 'bg-pink-500/10 border-pink-500/30 shadow-[0_0_15px_rgba(219,39,119,0.2)]' : 'bg-white/[0.03] border-white/10'}`}>
+                     <div className="flex items-center gap-4">
+                       <span className={`font-bold font-serif italic text-lg ${idx === 0 ? 'text-yellow-400' : idx === 1 ? 'text-slate-300' : idx === 2 ? 'text-amber-600' : 'text-slate-500'}`}>
+                         #{idx + 1}
+                       </span>
+                       <span className={`font-bold ${user.me ? 'text-pink-400' : 'text-slate-200'}`}>
+                         {user.name}
+                       </span>
+                     </div>
+                     <span className="font-black text-white">{user.score}</span>
+                   </div>
+                 ))}
+               </div>
+             </div>
+
              <h3 className="text-sm font-bold text-slate-300 mb-8 border-b border-white/10 pb-4 uppercase tracking-widest flex items-center gap-2"><Target className="h-4 w-4 text-pink-400" /> Detailed Review</h3>
              
              <div className="space-y-6">
@@ -233,7 +355,7 @@ export default function MockTestApp() {
   const q = selectedMock.questions[currentQuestion];
 
   return (
-    <div className="w-full py-6 px-4 sm:px-6 flex-1 flex flex-col items-center">
+    <div className={`w-full py-6 px-4 sm:px-6 flex-1 flex flex-col items-center ${focusMode ? 'fixed inset-0 z-[100] bg-slate-950 overflow-y-auto' : ''}`}>
       <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-5 flex-1 min-h-0">
         
         {/* Main Test Area */}
@@ -241,9 +363,32 @@ export default function MockTestApp() {
           {/* Header */}
           <div className="bg-white/[0.03] backdrop-blur-[40px] shadow-[0_8px_32px_0_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.1)] p-4 sm:p-5 rounded-[32px] border border-white/[0.08] flex justify-between items-center z-10 relative">
             <h2 className="font-bold text-white text-sm sm:text-base font-display whitespace-nowrap overflow-hidden text-ellipsis mr-4">{selectedMock.title}</h2>
-            <div className="flex items-center gap-2 bg-white/[0.06] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] text-white font-mono font-bold px-4 py-2 rounded-2xl border border-white/[0.08] text-sm shrink-0">
-              <Clock className="h-4 w-4 text-pink-400" />
-              <span className={timeLeft < 300 ? 'text-red-400 font-black animate-pulse' : ''}>{formatTime(timeLeft)}</span>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setFocusMode(!focusMode)} 
+                className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
+                title="Toggle Focus Mode"
+              >
+                {focusMode ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
+              </button>
+              <div className="flex items-center gap-2 bg-white/[0.06] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] text-white font-mono font-bold px-4 py-2 rounded-2xl border border-white/[0.08] text-sm shrink-0">
+                <Clock className="h-4 w-4 text-pink-400" />
+                <motion.span 
+                  animate={timeLeft < 300 ? { 
+                    scale: [1, 1.15, 1], 
+                    color: ['#f87171', '#ef4444', '#f87171'],
+                    textShadow: ['0px 0px 8px rgba(239, 68, 68, 0.4)', '0px 0px 16px rgba(239, 68, 68, 0.8)', '0px 0px 8px rgba(239, 68, 68, 0.4)']
+                  } : {}}
+                  transition={timeLeft < 300 ? { 
+                    duration: 0.8, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  } : {}}
+                  className={timeLeft < 300 ? 'text-red-400 font-black' : ''}
+                >
+                  {formatTime(timeLeft)}
+                </motion.span>
+              </div>
             </div>
           </div>
 

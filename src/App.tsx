@@ -7,6 +7,7 @@ import Courses from './pages/Courses';
 import Dashboard from './pages/Dashboard';
 import MockTestApp from './pages/MockTestApp';
 import Notes from './pages/Notes';
+import Pricing from './pages/Pricing';
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/mock-test" element={<MockTestApp />} />
               <Route path="/mock-test/:testId" element={<MockTestApp />} />
+              <Route path="/pricing" element={<Pricing />} />
             </Routes>
           </div>
         </main>

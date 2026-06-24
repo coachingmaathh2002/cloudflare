@@ -11,6 +11,7 @@ export default function Navbar() {
     { name: 'Courses', path: '/courses' },
     { name: 'Free Notes', path: '/notes' },
     { name: 'Mock Tests', path: '/mock-test' },
+    { name: 'Pro', path: '/pricing' },
   ];
 
   return (

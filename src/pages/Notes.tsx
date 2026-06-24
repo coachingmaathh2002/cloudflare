@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { BookOpen, Search, Filter, FileText, Maximize2, X } from 'lucide-react';
+import { BookOpen, Search, Filter, FileText, Maximize2, X, Star, Target, CheckCircle, Award } from 'lucide-react';
+import { motion } from 'motion/react';
+import { cn } from '../lib/utils';
 
 const noteCategories = ['All', 'Class 9', 'Class 10', 'Class 11', 'Class 12', 'JEE Mains', 'BSc Math', 'MSc Math PG', 'SLST Math', 'Engineering Mathematics'];
 
@@ -35,31 +37,39 @@ export default function Notes() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">
       <div className="mb-10 text-center">
-        <h1 className="font-display text-4xl lg:text-5xl font-bold text-slate-50 mb-4 tracking-tight uppercase">Our Notes Library</h1>
-        <p className="text-base text-slate-400 max-w-2xl mx-auto">Access high-quality, hand-written PDF notes. The notes open in a secure viewer without download options.</p>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-sm font-bold uppercase tracking-widest mb-4">
+          <Star className="w-4 h-4" /> Raj Sir Math Classes
+        </div>
+        <h1 className="font-display text-4xl lg:text-5xl font-black text-slate-50 mb-4 tracking-tight uppercase drop-shadow-lg">
+          Premium <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">Free Notes</span>
+        </h1>
+        <p className="text-base text-slate-300 max-w-2xl mx-auto font-medium">Access high-quality, hand-written PDF notes. The notes open in a secure viewer without download options.
+        <span className="block mt-2 text-yellow-400 font-bold uppercase tracking-wider text-sm">EASY TO LEARN, EASY TO SCORE!</span>
+        </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-8">
-        <div className="flex-1 relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 h-5 w-5" />
+      <div className="flex flex-col lg:flex-row gap-6 mb-8">
+        <div className="flex-1 relative group">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 h-5 w-5 group-focus-within:text-yellow-400 transition-colors" />
           <input 
             type="text" 
             placeholder="Search notes, formulas, or chapters..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-900/60 backdrop-blur-xl border border-white/10 text-slate-50 rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-pink-500/50 shadow-inner"
+            className="w-full bg-[#0B1120] border border-white/10 text-slate-50 rounded-2xl pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400/50 shadow-inner transition-all"
           />
         </div>
-        <div className="flex bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-xl p-1.5 overflow-x-auto scrollbar-hide">
+        <div className="flex bg-[#0B1120] border border-white/10 rounded-2xl p-2 overflow-x-auto scrollbar-hide shadow-inner">
           {noteCategories.map(cat => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`whitespace-nowrap px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+              className={cn(
+                "whitespace-nowrap px-4 py-2 rounded-xl text-sm font-bold transition-all uppercase tracking-wider",
                 selectedCategory === cat 
-                  ? 'bg-gradient-to-r from-pink-600 to-violet-600 text-white shadow-lg' 
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
-              }`}
+                  ? "bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-900 shadow-[0_0_15px_rgba(250,204,21,0.4)]"
+                  : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+              )}
             >
               {cat}
             </button>
@@ -67,69 +77,107 @@ export default function Notes() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredNotes.length > 0 ? filteredNotes.map((note: any) => (
-          <div key={note.id} className={`relative p-6 rounded-2xl transition-all group flex flex-col h-full shadow-lg ${note.isNew ? 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 border border-pink-400 overflow-hidden scale-[1.02] hover:scale-[1.05] z-10' : 'bg-slate-800/60 backdrop-blur-xl border border-white/10 hover:border-pink-500/30'}`}>
+      <motion.div 
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: 0.1 } }
+        }}
+        className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+      >
+        {filteredNotes.length > 0 ? filteredNotes.map((note: any, index: number) => (
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 }
+            }}
+            key={note.id} 
+            className="break-inside-avoid relative p-6 rounded-2xl transition-all group flex flex-col h-full shadow-xl bg-gradient-to-br from-[#0B1120] via-slate-900 to-[#0A0F1D] border border-white/10 hover:border-yellow-400/50 hover:-translate-y-1 overflow-hidden cursor-pointer"
+            onClick={() => setSelectedPdf({ title: note.title, link: getEmbedLink(note.driveLink) })}
+          >
+            {/* Glowing Accents */}
+            <div className={cn(
+              "absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-blue-600/20 via-transparent to-transparent opacity-50 transition-opacity group-hover:opacity-80"
+            )} />
+            <div className={cn(
+              "absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-yellow-500/10 via-transparent to-transparent opacity-50 transition-opacity group-hover:opacity-80"
+            )} />
+
             {note.isNew && (
-              <>
-                <div className="absolute inset-0 bg-noise mix-blend-overlay opacity-30"></div>
-                <div className="absolute top-0 right-0 p-12 bg-pink-400 rounded-full blur-3xl -mr-8 -mt-8 opacity-40 animate-pulse"></div>
-              </>
+              <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider rounded-bl-lg shadow-lg z-20 flex items-center gap-1 animate-pulse">
+                <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> New Release
+              </div>
             )}
+
+            {/* Background Math Symbols */}
+            <div className="absolute inset-0 overflow-hidden opacity-[0.03] text-white font-serif select-none pointer-events-none">
+              {index % 3 === 0 && <span className="absolute top-4 right-8 text-2xl">∫f(x)dx</span>}
+              {index % 3 === 1 && <span className="absolute bottom-6 right-4 text-xl">sin²θ+cos²θ=1</span>}
+              {index % 3 === 2 && <span className="absolute top-1/2 left-8 text-5xl">∑</span>}
+            </div>
+
             <div className="relative z-10 flex flex-col h-full">
-              <div className="flex justify-between items-start mb-4">
-                <div className={`p-3 rounded-xl border border-white/5 transition-colors ${note.isNew ? 'bg-white/20 shadow-inner' : 'bg-gradient-to-br from-pink-600/20 to-violet-600/20 group-hover:from-pink-600/40'}`}>
-                  <FileText className={`h-6 w-6 ${note.isNew ? 'text-white drop-shadow-md' : 'text-pink-400'}`} />
+              <div className="flex justify-between items-start mb-6">
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm border bg-slate-800/80 text-yellow-400 border-white/10 group-hover:bg-slate-700/80 transition-colors">
+                  <FileText className="h-6 w-6" />
                 </div>
-                <div className="flex items-center gap-2">
-                  {note.isNew && (
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#fff] bg-white/20 border border-white/30 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg animate-bounce">
-                      New Release
-                    </span>
-                  )}
-                  <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md border ${note.isNew ? 'text-white/90 bg-white/10 border-white/20' : 'text-slate-400 bg-white/5 border-white/5'}`}>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md text-slate-300 bg-white/5 border border-white/10 shadow-inner">
                     {note.category}
                   </span>
                 </div>
               </div>
               
-              <h3 className={`text-xl font-bold font-display leading-tight mb-2 ${note.isNew ? 'text-white filter drop-shadow-md' : 'text-slate-50'}`}>{note.title}</h3>
-              <p className={`text-sm mb-6 flex-grow ${note.isNew ? 'text-white/80 font-medium' : 'text-slate-400'}`}>By {note.author}</p>
+              <h3 className="text-xl font-bold font-display leading-tight mb-2 text-slate-50 group-hover:text-yellow-400/90 transition-colors">
+                {note.title}
+              </h3>
+              <p className="text-xs mb-6 flex-grow font-semibold uppercase tracking-wider text-slate-400">
+                By {note.author}
+              </p>
               
-              <button 
-                onClick={() => setSelectedPdf({ title: note.title, link: getEmbedLink(note.driveLink) })}
-                className={`w-full mt-auto font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest border ${note.isNew ? 'bg-white text-purple-700 border-white hover:bg-white/90 shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'bg-white/5 border-white/10 hover:border-pink-500/50 hover:bg-white/10 text-pink-400'}`}
-              >
-                <BookOpen className="h-4 w-4" /> View PDF
-              </button>
+              <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                  <CheckCircle className="w-3 h-3 text-green-400" /> Free Access
+                </div>
+                <button 
+                  className="font-bold py-2 px-4 rounded-lg transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-widest bg-yellow-400/10 text-yellow-400 border border-yellow-400/20 group-hover:bg-yellow-400 group-hover:text-slate-900 shadow-[0_0_15px_rgba(250,204,21,0)] group-hover:shadow-[0_0_15px_rgba(250,204,21,0.4)]"
+                >
+                  <BookOpen className="h-4 w-4" /> Read
+                </button>
+              </div>
             </div>
-          </div>
+          </motion.div>
         )) : (
           <div className="col-span-full py-20 text-center text-slate-500">
             <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-20" />
             <p className="text-lg">No notes found matching your criteria.</p>
           </div>
         )}
-      </div>
+      </motion.div>
 
       {/* PDF Viewer Modal */}
       {selectedPdf && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" onClick={() => setSelectedPdf(null)}></div>
+          <div className="absolute inset-0 bg-[#0B1120]/95 backdrop-blur-md" onClick={() => setSelectedPdf(null)}></div>
           
-          <div className="relative w-full max-w-5xl h-[85vh] bg-[#0f172a] rounded-2xl shadow-2xl border border-white/20 flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between p-4 bg-slate-900 border-b border-white/10">
+          <div className="relative w-full max-w-6xl h-[90vh] bg-[#0A0F1D] rounded-2xl shadow-2xl border border-yellow-400/20 flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between p-4 bg-slate-900/80 border-b border-white/10 backdrop-blur-md">
               <div className="flex items-center gap-3">
-                <div className="bg-pink-600/20 p-2 rounded-lg"><FileText className="h-5 w-5 text-pink-400" /></div>
+                <div className="bg-yellow-400/10 p-2 rounded-lg border border-yellow-400/20">
+                  <FileText className="h-5 w-5 text-yellow-400" />
+                </div>
                 <div>
                   <h3 className="font-bold text-slate-50 font-display">{selectedPdf.title}</h3>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Secure PDF Viewer</p>
+                  <div className="flex items-center gap-2">
+                    <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                    <p className="text-[10px] text-yellow-400/80 uppercase tracking-widest font-bold">Premium Secure Viewer</p>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <button 
                   onClick={() => setSelectedPdf(null)}
-                  className="bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white p-2 rounded-lg transition-colors"
+                  className="bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-400 p-2 rounded-lg transition-colors border border-transparent hover:border-red-500/30"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -150,15 +198,19 @@ export default function Notes() {
                 title="Pop-out disabled"
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
               >
-                <div className="flex flex-col items-center opacity-70">
-                  <span className="text-[10px] text-slate-300 font-bold uppercase tracking-widest leading-tight">Locked</span>
+                <div className="flex flex-col items-center opacity-70 text-yellow-400">
+                  <span className="text-[10px] font-bold uppercase tracking-widest leading-tight">Secured</span>
                 </div>
               </div>
             </div>
             
-            <div className="bg-slate-900 p-3 text-center border-t border-white/10 flex justify-between items-center px-6">
-               <span className="text-xs text-slate-500 font-medium">To protect intellectual property, downloads and printing are disabled.</span>
-               <span className="text-xs text-pink-400 font-bold uppercase tracking-widest flex items-center gap-1.5 opacity-60">Raj Sir Math Classes</span>
+            <div className="bg-slate-900/80 p-3 text-center border-t border-white/10 flex justify-between items-center px-6 backdrop-blur-md">
+               <span className="text-xs text-slate-400 font-medium flex items-center gap-2">
+                 <Target className="w-4 h-4 text-slate-500" /> To protect intellectual property, downloads and printing are disabled.
+               </span>
+               <span className="text-xs text-yellow-400 font-bold uppercase tracking-widest flex items-center gap-1.5 opacity-80">
+                 <Award className="w-4 h-4" /> Raj Sir Math Classes
+               </span>
             </div>
           </div>
         </div>
@@ -166,3 +218,4 @@ export default function Notes() {
     </div>
   );
 }
+

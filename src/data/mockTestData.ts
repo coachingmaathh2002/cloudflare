@@ -1,3 +1,10 @@
+export const EXAM_CATEGORIES = [
+  { id: 'slst', name: 'SLST Mathematics', description: 'Master SLST with chapter-wise and full-length mocks.' },
+  { id: 'jee', name: 'JEE Advanced', description: 'Tough level mock tests curated for JEE Advanced aspirants.' },
+  { id: 'jeemains', name: 'JEE Mains', description: 'Topic-wise mock tests perfectly aligned with the latest NTA pattern.' },
+  { id: 'btech', name: 'B.Tech Mathematics', description: 'Engineering mathematics tests covering Matrices, Calculus & more.' }
+];
+
 export const SLST_TOPICS = [
   "Classical Algebra",
   "Abstract Algebra",
@@ -11,6 +18,13 @@ export const SLST_TOPICS = [
   "Probability & Statistics",
   "Linear Programming",
 ];
+
+export const TOPICS_BY_CATEGORY: Record<string, string[]> = {
+  slst: SLST_TOPICS,
+  jee: ["Complex Numbers", "Conic Sections", "Definite Integration", "Probability", "Vectors & 3D Geometry"],
+  jeemains: ["Binomial Theorem", "Sequence & Series", "Matrices & Determinants", "Limits", "Application of Derivatives"],
+  btech: ["Engineering Calculus", "Linear Algebra", "Differential Equations", "Numerical Methods", "Complex Analysis"]
+};
 
 interface Question {
   question: string;
@@ -66,6 +80,89 @@ const REAL_ANALYSIS_POOL_3: Question[] = [
 ];
 
 
+const CLASSICAL_ALGEBRA_POOLS: Question[][] = [
+  // Mock Test 1
+  [
+    { question: "If $\\alpha, \\beta, \\gamma$ are roots of $x^3 - px^2 + qx - r = 0$, what is the value of $\\alpha^2 + \\beta^2 + \\gamma^2$?", options: ["$p^2 - 2q$", "$p^2 + 2q$", "$q^2 - 2pr$", "$p^2 - 2r$"], correctAnswer: 0, explanation: "We know $\\sum \\alpha^2 = (\\sum \\alpha)^2 - 2 \\sum \\alpha \\beta = p^2 - 2q$." }
+  ],
+  // Mock Test 2
+  [
+    { question: "The number of real roots of the equation $x^4 + x^2 + 1 = 0$ is:", options: ["0", "2", "4", "1"], correctAnswer: 0, explanation: "$x^4 + x^2 + 1 = (x^2 + x + 1)(x^2 - x + 1)$. The roots are complex." }
+  ],
+  // Mock Test 3
+  [
+    { question: "If $a, b, c$ are in Harmonic Progression (H.P.), then $\\frac{1}{a}, \\frac{1}{b}, \\frac{1}{c}$ are in:", options: ["A.P.", "G.P.", "H.P.", "None of the above"], correctAnswer: 0, explanation: "By definition, the reciprocals of terms in an H.P. form an A.P." }
+  ],
+  // Mock Test 4
+  [
+    { question: "The sum of the roots of the equation $2x^3 - 3x^2 + 4x - 5 = 0$ is:", options: ["$3/2$", "$-3/2$", "$2$", "$5/2$"], correctAnswer: 0, explanation: "Sum of roots is $-(\\text{coeff of } x^2) / (\\text{coeff of } x^3) = 3/2$." }
+  ],
+  // Mock Test 5
+  [
+    { question: "If $\\omega$ is a complex cube root of unity, then $1 + \\omega + \\omega^2$ equals:", options: ["0", "1", "$-1$", "$3$"], correctAnswer: 0, explanation: "The sum of the cube roots of unity is 0." }
+  ],
+  // Mock Test 6
+  [
+    { question: "By Descartes' Rule of Signs, the maximum number of positive real roots of $x^5 - 2x^3 + 3x - 4 = 0$ is:", options: ["3", "2", "1", "5"], correctAnswer: 0, explanation: "The signs are + - + -. There are 3 sign changes, so max 3 positive roots." }
+  ],
+  // Mock Test 7
+  [
+    { question: "Let $A$ be a square matrix of order $n$. Then $\\det(kA)$ is equal to:", options: ["$k^n \\det(A)$", "$k \\det(A)$", "$k^{n-1} \\det(A)$", "$n^k \\det(A)$"], correctAnswer: 0, explanation: "Multiplying a matrix of order $n$ by scalar $k$ multiplies its determinant by $k^n$." }
+  ],
+  // Mock Test 8
+  [
+    { question: "If the roots of $x^2 - px + q = 0$ are real and distinct, then:", options: ["$p^2 > 4q$", "$p^2 < 4q$", "$p^2 = 4q$", "$p^2 \\ge 4q$"], correctAnswer: 0, explanation: "Discriminant $\\Delta = p^2 - 4q > 0$ for real distinct roots." }
+  ],
+  // Mock Test 9
+  [
+    { question: "The value of $\\omega^n + \\omega^{n+1} + \\omega^{n+2}$, where $\\omega$ is a complex cube root of unity, is:", options: ["0", "1", "$\\omega$", "$\\omega^2$"], correctAnswer: 0, explanation: "$\\omega^n(1 + \\omega + \\omega^2) = \\omega^n(0) = 0$." }
+  ],
+  // Mock Test 10
+  [
+    { question: "Which inequality holds for any positive real numbers $a, b$?", options: ["A.M. $\\ge$ G.M.", "G.M. $\\ge$ A.M.", "A.M. $\\le$ H.M.", "None of these"], correctAnswer: 0, explanation: "Arithmetic Mean is always greater than or equal to Geometric Mean." }
+  ],
+  // Mock Test 11
+  [
+    { question: "If $A$ is a symmetric matrix, then $A^T$ equals:", options: ["$A$", "$-A$", "$I$", "$A^{-1}$"], correctAnswer: 0, explanation: "For a symmetric matrix, $A^T = A$." }
+  ],
+  // Mock Test 12
+  [
+    { question: "The minimum value of $x + \\frac{1}{x}$ for $x > 0$ is:", options: ["2", "1", "0", "$-2$"], correctAnswer: 0, explanation: "By AM-GM inequality, $(x + 1/x)/2 \\ge \\sqrt{x(1/x)} = 1$, so min is 2." }
+  ],
+  // Mock Test 13
+  [
+    { question: "What is the sum of the coefficients of the polynomial $(x-1)^n$?", options: ["0", "1", "$2^n$", "$n!$"], correctAnswer: 0, explanation: "Substitute $x=1$ to find the sum of coefficients, giving $(1-1)^n = 0$." }
+  ],
+  // Mock Test 14
+  [
+    { question: "For what values of $k$ will the equations $x+y+z=1$, $x+2y+3z=1$, $x+3y+kz=1$ have no solution?", options: ["$k=5$", "$k=0$", "$k=1$", "$k=-1$"], correctAnswer: 0, explanation: "The determinant of the coefficient matrix must be 0 for no unique solution, resolving to $k=5$." }
+  ],
+  // Mock Test 15
+  [
+    { question: "If $\\alpha, \\beta$ are the roots of $x^2 - 5x + 6 = 0$, then the quadratic equation with roots $\\alpha^2, \\beta^2$ is:", options: ["$x^2 - 13x + 36 = 0$", "$x^2 - 25x + 36 = 0$", "$x^2 + 13x + 36 = 0$", "$x^2 - 36x + 13 = 0$"], correctAnswer: 0, explanation: "Roots are 2 and 3. Squares are 4 and 9. Sum = 13, Product = 36." }
+  ],
+  // Mock Test 16
+  [
+    { question: "The discriminant of the cubic $x^3 + qx + r = 0$ is proportional to:", options: ["$4q^3 + 27r^2$", "$q^3 + r^2$", "$27q^3 + 4r^2$", "$q^2 + r^3$"], correctAnswer: 0, explanation: "The standard discriminant for $x^3+px+q=0$ is proportional to $4q^3 + 27r^2$." }
+  ],
+  // Mock Test 17
+  [
+    { question: "If a polynomial equation with real coefficients has a root $a+ib$, it must also have a root:", options: ["$a-ib$", "$-a+ib$", "$-a-ib$", "$1/(a+ib)$"], correctAnswer: 0, explanation: "Complex roots of polynomials with real coefficients appear in conjugate pairs." }
+  ],
+  // Mock Test 18
+  [
+    { question: "If $A$ and $B$ are square matrices of the same order, then $(AB)^T$ is equal to:", options: ["$B^T A^T$", "$A^T B^T$", "$A B^T$", "$A^T B$"], correctAnswer: 0, explanation: "By the reversal law of transposes." }
+  ],
+  // Mock Test 19
+  [
+    { question: "The rank of a non-zero skew-symmetric matrix over reals is always:", options: ["Even", "Odd", "1", "Depends on the matrix"], correctAnswer: 0, explanation: "The rank of a real skew-symmetric matrix is always an even number." }
+  ],
+  // Mock Test 20
+  [
+    { question: "A polynomial of odd degree with real coefficients must have at least how many real roots?", options: ["1", "0", "2", "3"], correctAnswer: 0, explanation: "Complex roots occur in pairs, so an odd degree polynomial must have at least one real root." }
+  ]
+];
+
 const DEFAULT_POOL = [
   {
     question: "If $f(x) = \\int_0^x e^{-t^2} dt$, find $f'(x)$.",
@@ -87,6 +184,9 @@ export function generateQuestionSet(topic: string, count: number = 30, mockIndex
     if (mockIndex === 0) pool = REAL_ANALYSIS_POOL;
     else if (mockIndex === 1) pool = REAL_ANALYSIS_POOL_2;
     else pool = REAL_ANALYSIS_POOL_3;
+  } else if (topic === "Classical Algebra") {
+    const specificQuestions = CLASSICAL_ALGEBRA_POOLS[mockIndex % 20] || [];
+    pool = [...specificQuestions, ...DEFAULT_POOL];
   }
 
   

@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar
+  RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar
 } from 'recharts';
 
 const performanceData = [
@@ -14,6 +14,15 @@ const performanceData = [
   { name: 'Test 3', score: 85, avg: 60 },
   { name: 'Test 4', score: 78, avg: 62 },
   { name: 'Test 5', score: 92, avg: 65 },
+];
+
+const radarData = [
+  { subject: 'Algebra', A: 120, B: 110, fullMark: 150 },
+  { subject: 'Calculus', A: 98, B: 130, fullMark: 150 },
+  { subject: 'Geometry', A: 86, B: 130, fullMark: 150 },
+  { subject: 'Trigo', A: 99, B: 100, fullMark: 150 },
+  { subject: 'Probability', A: 85, B: 90, fullMark: 150 },
+  { subject: 'Vectors', A: 65, B: 85, fullMark: 150 },
 ];
 
 const subjectData = [
@@ -111,33 +120,28 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Subject Strength */}
-                <div className="bg-slate-800/60 backdrop-blur-xl shadow-2xl p-5 rounded-2xl border border-white/10 overflow-hidden flex flex-col">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-5 flex items-center gap-2">
+                {/* Subject Strength Pro Radar */}
+                <div className="bg-slate-800/60 backdrop-blur-xl shadow-2xl p-5 rounded-2xl border border-pink-500/30 overflow-hidden flex flex-col relative">
+                  <div className="absolute top-0 right-0 bg-gradient-to-l from-pink-500 to-violet-500 text-white px-3 py-1 rounded-bl-lg text-[10px] font-bold uppercase tracking-widest shadow-lg z-10">
+                    Pro Analytics
+                  </div>
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                     <Target className="h-4 w-4 text-pink-400" />
-                    Chapter Wise Strength
+                    Skill Radar
                   </h3>
-                   <div className="mt-auto flex items-end gap-1.5 h-32 w-full pt-4 border-b border-white/10 pb-1">
-                      <div className="flex-1 flex flex-col justify-end group cursor-pointer h-full relative">
-                         <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-slate-50 bg-white/10 backdrop-blur-md px-2 py-0.5 rounded transition-opacity pointer-events-none shadow-xl border border-white/20">85%</div>
-                         <div className="w-full bg-gradient-to-t from-purple-/80 to-violet-600 rounded-t-sm transition-all group-hover:from-pink-600 group-hover:to-violet-600" style={{height: '85%'}}></div>
-                         <div className="text-[9px] text-center mt-2 text-pink-400/50 font-bold uppercase truncate px-1">Algebra</div>
-                      </div>
-                      <div className="flex-1 flex flex-col justify-end group cursor-pointer h-full relative">
-                         <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-slate-50 bg-white/10 backdrop-blur-md px-2 py-0.5 rounded transition-opacity pointer-events-none shadow-xl border border-white/20">70%</div>
-                         <div className="w-full bg-white/10 rounded-t-sm transition-all group-hover:bg-white/20" style={{height: '70%'}}></div>
-                         <div className="text-[9px] text-center mt-2 text-pink-400/50 font-bold uppercase truncate px-1">Calculus</div>
-                      </div>
-                      <div className="flex-1 flex flex-col justify-end group cursor-pointer h-full relative">
-                         <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-slate-50 bg-white/10 backdrop-blur-md px-2 py-0.5 rounded transition-opacity pointer-events-none shadow-xl border border-white/20">95%</div>
-                         <div className="w-full bg-pink-600 rounded-t-sm transition-all group-hover:bg-pink-600 shadow-[0_0_10px_rgba(192,132,252,0.3)]" style={{height: '95%'}}></div>
-                         <div className="text-[9px] text-center mt-2 text-pink-400/50 font-bold uppercase truncate px-1">3D Geo</div>
-                      </div>
-                      <div className="flex-1 flex flex-col justify-end group cursor-pointer h-full relative">
-                         <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-slate-50 bg-white/10 backdrop-blur-md px-2 py-0.5 rounded transition-opacity pointer-events-none shadow-xl border border-white/20">60%</div>
-                         <div className="w-full bg-slate-800/60 rounded-t-sm transition-all group-hover:bg-white/10" style={{height: '60%'}}></div>
-                         <div className="text-[9px] text-center mt-2 text-pink-400/50 font-bold uppercase truncate px-1">Trigo</div>
-                      </div>
+                   <div className="flex-1 w-full -ml-4 mt-2">
+                    <ResponsiveContainer width="100%" height={200}>
+                      <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
+                        <PolarGrid stroke="#e11d4830" />
+                        <PolarAngleAxis dataKey="subject" tick={{fill: '#fecdd380', fontSize: 10}} />
+                        <PolarRadiusAxis angle={30} domain={[0, 150]} tick={false} axisLine={false} />
+                        <Radar name="Student" dataKey="A" stroke="#f43f5e" fill="#f43f5e" fillOpacity={0.4} />
+                        <Radar name="Topper Avg" dataKey="B" stroke="#c084fc" fill="#c084fc" fillOpacity={0.2} />
+                        <Tooltip 
+                          contentStyle={{backgroundColor: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)', color: '#fff'}} 
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
                    </div>
                 </div>
               </div>

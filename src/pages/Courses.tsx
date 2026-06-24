@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { BookOpen, FileText, PlayCircle, Download, Clock, ChevronDown, GraduationCap, Calculator, TrendingUp, Compass, Award } from 'lucide-react';
+import { BookOpen, FileText, PlayCircle, Download, Clock, ChevronDown, GraduationCap, Calculator, TrendingUp, Compass, Award, Target, Star, CheckCircle } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 
 const courseData = [
   {
@@ -126,45 +127,114 @@ export default function Courses() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full">
       <div className="mb-10 text-center">
-        <h1 className="font-display text-4xl lg:text-5xl font-bold text-slate-50 mb-4 tracking-tight uppercase">Our Premium Courses</h1>
-        <p className="text-base text-slate-400 max-w-2xl mx-auto">Class 9 থেকে MSc পর্যন্ত প্রতিটি স্তরের জন্য সেরা ম্যাথমেটিক্স গাইডেন্স। Choose your goal and start learning.</p>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 text-sm font-bold uppercase tracking-widest mb-4">
+          <Award className="w-4 h-4" /> Raj Sir Math Classes
+        </div>
+        <h1 className="font-display text-4xl lg:text-5xl font-black text-slate-50 mb-4 tracking-tight uppercase drop-shadow-lg">
+          Masterclass <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">Programs</span>
+        </h1>
+        <p className="text-base text-slate-300 max-w-2xl mx-auto font-medium">Class 9 থেকে MSc পর্যন্ত প্রতিটি স্তরের জন্য সেরা ম্যাথমেটিক্স গাইডেন্স।
+        <span className="block mt-2 text-yellow-400 font-bold uppercase tracking-wider text-sm">EASY TO LEARN, EASY TO SCORE!</span>
+        </p>
       </div>
 
       {/* Colourful Posters Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <motion.div 
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: 0.1 } }
+        }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
+      >
         {courseData.map(course => {
           const Icon = course.icon;
           const isActive = activeTab === course.id;
           return (
-            <div
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+              }}
               key={course.id}
               onClick={() => setActiveTab(course.id)}
               className={cn(
-                "relative cursor-pointer rounded-2xl overflow-hidden transition-all duration-300 transform group",
-                isActive ? "scale-105 shadow-2xl ring-2 ring-white/50 z-10" : "hover:scale-105 hover:shadow-xl opacity-80 hover:opacity-100"
+                "group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 transform hover:-translate-y-1 shadow-xl",
+                isActive 
+                  ? `ring-4 ring-yellow-400 shadow-[0_0_30px_rgba(250,204,21,0.4)] z-10` 
+                  : "border border-white/10 hover:border-yellow-400/50 opacity-90 hover:opacity-100"
               )}
-              style={{ boxShadow: isActive ? `0 20px 40px ${course.glow}` : undefined }}
             >
-              <div className={cn("absolute inset-0 bg-gradient-to-br opacity-90", course.gradient)}></div>
-              <div className="absolute inset-0 bg-noise mix-blend-overlay"></div>
+              {/* Base Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0B1120] via-slate-900 to-[#0A0F1D] opacity-100" />
               
-              <div className="relative z-10 p-6 flex flex-col h-full min-h-[220px] justify-between">
-                <div className="flex justify-between items-start">
-                  <div className="bg-white/20 backdrop-blur-sm p-3 rounded-xl shadow-inner">
-                    <Icon className="h-7 w-7 text-white drop-shadow-md" />
+              {/* Glowing Accents */}
+              <div className={cn(
+                "absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-blue-600/30 via-transparent to-transparent opacity-50 transition-opacity",
+                isActive ? "opacity-100" : "group-hover:opacity-80"
+              )} />
+              <div className={cn(
+                "absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-yellow-500/20 via-transparent to-transparent opacity-50 transition-opacity",
+                isActive ? "opacity-100" : "group-hover:opacity-80"
+              )} />
+
+              {/* Background Math Symbols */}
+              <div className="absolute inset-0 overflow-hidden opacity-[0.04] text-white font-serif select-none pointer-events-none">
+                <span className="absolute top-4 left-4 text-2xl">∫f(x)dx</span>
+                <span className="absolute bottom-10 right-4 text-xl">sin²θ + cos²θ = 1</span>
+                <span className="absolute top-1/2 left-1/3 text-6xl">∑</span>
+                <span className="absolute top-8 right-12 text-3xl">πr²</span>
+                <span className="absolute bottom-4 left-1/4 text-2xl">a² + b² = c²</span>
+              </div>
+
+              {/* Ribbon/Badge */}
+              <div className="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider rounded-bl-lg shadow-lg z-20 flex items-center gap-1">
+                <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" /> Premium
+              </div>
+
+              <div className={cn(
+                "relative p-6 h-full flex flex-col justify-between z-10 border-l-4 transition-colors",
+                isActive ? "border-yellow-400" : "border-blue-500 group-hover:border-yellow-400"
+              )}>
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={cn(
+                      "w-12 h-12 rounded-lg flex items-center justify-center shadow-lg backdrop-blur-sm border transition-colors",
+                      isActive ? "bg-yellow-400 text-slate-900 border-yellow-400" : "bg-slate-800/80 text-yellow-400 border-white/10 group-hover:bg-slate-700/80"
+                    )}>
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded font-bold tracking-wider uppercase border border-blue-400 shadow-[0_0_10px_rgba(37,99,235,0.5)]">
+                      Admission Open
+                    </div>
                   </div>
-                  {isActive && <div className="bg-white text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase shadow-lg animate-pulse">Selected</div>}
-                </div>
-                
-                <div className="mt-6 filter drop-shadow-md">
-                  <h3 className="font-display text-2xl font-bold text-white leading-tight">{course.bengaliTitle}</h3>
-                  <p className="text-white/90 text-xs font-bold uppercase tracking-wider mt-2 mix-blend-overlay">{course.subtitle}</p>
+                  
+                  <h3 className={cn(
+                    "font-display text-2xl lg:text-3xl font-black tracking-tight uppercase leading-none mb-2",
+                    isActive ? "text-yellow-400" : "text-white group-hover:text-yellow-400/90"
+                  )}>
+                    {course.bengaliTitle}
+                  </h3>
+                  
+                  <p className="text-slate-300 text-xs font-semibold uppercase tracking-wider mt-3 line-clamp-2">
+                    {course.description}
+                  </p>
+                  
+                  {/* Mini Feature list */}
+                  <div className="mt-4 flex gap-4">
+                    <div className="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold uppercase tracking-wider">
+                      <CheckCircle className="w-3 h-3 text-green-400" /> Exam-Oriented
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[10px] text-slate-300 font-bold uppercase tracking-wider">
+                      <CheckCircle className="w-3 h-3 text-green-400" /> Doubt Clearing
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
 
       {/* Course Content */}
       <div className="bg-slate-800/60 backdrop-blur-xl shadow-2xl rounded-2xl border border-white/10 overflow-hidden shadow-lg" id="course-content">
