@@ -210,40 +210,8 @@ export default function Home() {
             </AnimatePresence>
           </div>
 
-          {/* Side Navigation (Desktop) */}
-          <div className="hidden lg:flex w-[350px] bg-[#0B1120]/80 backdrop-blur-xl border-l border-white/10 flex-col z-20 shadow-[-20px_0_50px_rgba(0,0,0,0.5)]">
-            <div className="p-6 border-b border-white/10 bg-slate-900/50">
-              <h3 className="text-white font-black tracking-widest uppercase text-sm flex items-center gap-2">
-                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" /> Featured Programs
-              </h3>
-            </div>
-            <div className="flex-1 overflow-y-auto scrollbar-hide py-2 relative">
-              {/* Animated active background highlight could be complex, using border instead */}
-              {bannerData.map((banner, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentBanner(idx)}
-                  className={`w-full text-left px-6 py-5 transition-all border-l-4 flex flex-col justify-center ${idx === currentBanner ? "border-yellow-400 bg-white/10 shadow-inner" : "border-transparent hover:bg-white/[0.02] opacity-60 hover:opacity-100"}`}
-                >
-                  <p className={`text-[10px] font-bold uppercase tracking-widest mb-2 flex items-center gap-1.5 ${idx === currentBanner ? "text-yellow-400" : "text-slate-400"}`}>
-                    {idx === currentBanner && <ChevronRight className="w-3 h-3" />}
-                    {banner.badge}
-                  </p>
-                  <div className={`text-sm font-bold line-clamp-2 leading-snug [&_br]:hidden ${idx === currentBanner ? "text-white" : "text-slate-300"}`}>
-                    {banner.title}
-                  </div>
-                </button>
-              ))}
-            </div>
-            <div className="p-4 border-t border-white/10 text-center bg-slate-900/50">
-               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest flex items-center justify-center gap-1.5">
-                 <PlayCircle className="w-3 h-3" /> Auto-playing
-               </p>
-            </div>
-          </div>
-
-          {/* Banner Navigation Dots (Mobile Only) */}
-          <div className="absolute bottom-6 right-6 flex lg:hidden gap-3 z-20">
+          {/* Banner Navigation Dots */}
+          <div className="absolute bottom-8 right-8 flex gap-3 z-20">
             {bannerData.map((_, idx) => (
               <button
                 key={idx}

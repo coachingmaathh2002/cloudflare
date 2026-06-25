@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Courses from './pages/Courses';
 import Dashboard from './pages/Dashboard';
 import MockTestApp from './pages/MockTestApp';
+import UpperPrimaryApp from './pages/UpperPrimaryApp';
 import Notes from './pages/Notes';
 import Pricing from './pages/Pricing';
 
@@ -37,6 +38,7 @@ export default function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/mock-test" element={<MockTestApp />} />
               <Route path="/mock-test/:testId" element={<MockTestApp />} />
+              <Route path="/upper-primary" element={<UpperPrimaryApp />} />
               <Route path="/pricing" element={<Pricing />} />
             </Routes>
           </div>
