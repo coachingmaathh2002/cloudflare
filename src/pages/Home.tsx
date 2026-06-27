@@ -18,6 +18,25 @@ import {
 
 const bannerData = [
   {
+    id: 'free_test',
+    image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=2000&auto=format&fit=crop",
+    badge: "🎁 সম্পূর্ণ বিনামূল্যে মক টেস্ট (100% FREE)",
+    title: (
+      <>
+        আপনার SLST Math প্রস্তুতি যাচাই করুন <br className="hidden md:block" />
+        <span className="inline-block mt-3 px-5 py-2 rounded-xl bg-gradient-to-r from-purple-500/30 to-fuchsia-500/30 border border-purple-400/50 shadow-[0_0_20px_rgba(168,85,247,0.4)] text-purple-300 drop-shadow-lg animate-pulse">
+          প্রতিদিন ফ্রি মক টেস্ট দিয়ে! ✨
+        </span>
+      </>
+    ),
+    subtitle:
+      "SLST Mathematics-এর সেরা প্রস্তুতির জন্য আজই আমাদের ফ্রি মক টেস্ট দিন। বিস্তারিত সমাধান, সঠিক উত্তর এবং নিজের স্কোর চেক করুন সম্পূর্ণ বিনামূল্যে! আমাদের কোচিং সেন্টারে আপনাকে স্বাগতম। 🎯",
+    cta: "🔥 এখনই মক টেস্ট দিন (Click Here)",
+    gradient: "from-[#1e1b4b] via-[#6d28d9] to-transparent",
+    link: "/free-daily-test",
+    iconColor: "text-purple-400"
+  },
+  {
     id: 1,
     image: "/carousel/slide1.webp",
     badge: "🚀 নতুন ব্যাচ শুরু হচ্ছে!",
@@ -198,7 +217,7 @@ export default function Home() {
                       {bannerData[currentBanner].subtitle}
                     </p>
                     <Link
-                      to="/courses"
+                      to={(bannerData[currentBanner] as any).link || "/courses"}
                       className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-900 px-8 py-4 rounded-xl font-black text-sm md:text-base uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:shadow-[0_0_30px_rgba(250,204,21,0.6)] hover:-translate-y-1"
                     >
                       {bannerData[currentBanner].cta}{" "}
@@ -282,7 +301,7 @@ export default function Home() {
                 <span className="block mt-4 text-pink-400 font-bold uppercase tracking-wider text-xs sm:text-sm">EASY TO LEARN, EASY TO SCORE!</span>
               </p>
 
-              <div className="flex flex-wrap gap-4 sm:gap-6">
+              <div className="flex flex-wrap gap-4 sm:gap-6 mb-8">
                 <Link
                   to="/courses"
                   className="bg-gradient-to-r from-pink-600 to-violet-600 hover:from-pink-500 hover:to-violet-500 text-slate-50 font-black py-3.5 px-8 rounded-xl transition-all hover:-translate-y-1 shadow-[0_0_20px_rgba(219,39,119,0.4)] hover:shadow-[0_0_30px_rgba(219,39,119,0.6)] flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest relative overflow-hidden group">
@@ -298,6 +317,29 @@ export default function Home() {
                   Mock Tests
                 </Link>
               </div>
+              
+              <Link to="/free-daily-test" className="inline-block relative mt-2">
+                <div className="absolute -top-3 -right-3 bg-gradient-to-r from-red-600 to-pink-600 text-white text-[10px] sm:text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-[0_0_15px_rgba(239,68,68,0.8)] border border-red-400 z-20 animate-pulse rotate-12">
+                  Free Test
+                </div>
+                <div className="relative group overflow-hidden rounded-2xl p-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-teal-500 shadow-[0_0_20px_rgba(52,211,153,0.3)] hover:shadow-[0_0_30px_rgba(52,211,153,0.6)] transition-all hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-400 to-teal-500 opacity-20 blur-xl group-hover:opacity-40 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.3)_50%,transparent_75%)] bg-[length:250%_250%,100%_100%] bg-[position:-100%_0,0_0] bg-no-repeat group-hover:animate-shine"></div>
+                  <div className="relative bg-slate-900/90 backdrop-blur-xl rounded-2xl px-6 py-4 flex items-center gap-4 border border-white/10 group-hover:bg-slate-900/80 transition-colors">
+                    <div className="bg-gradient-to-r from-green-400 to-teal-400 text-slate-900 p-2.5 rounded-xl font-bold shadow-[0_0_15px_rgba(52,211,153,0.5)]">
+                      <Target className="h-6 w-6" />
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-display font-black text-lg sm:text-xl text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-emerald-300 uppercase tracking-wider mb-1">
+                        Free daily test
+                      </h3>
+                      <p className="text-emerald-400/80 font-medium text-xs sm:text-sm uppercase tracking-widest flex items-center gap-2">
+                        SLST Math Exam <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse"></span> Live Now
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             </motion.div>
 
             <motion.div
