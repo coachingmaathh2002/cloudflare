@@ -22,7 +22,7 @@ export default function Latex({ children, displayMode = false, className }: Late
 
   return (
     <span className={cn("inline-block relative group", className)}>
-      <MathJax inline={!displayMode}>{content}</MathJax>
+      <MathJax inline={!displayMode} dynamic>{content}</MathJax>
       {displayMode && (
         <button
           onClick={handleCopy}
@@ -39,7 +39,7 @@ export default function Latex({ children, displayMode = false, className }: Late
 export function MixedLatex({ content, className }: { content: string, className?: string }) {
   return (
     <div className={cn("text-inherit leading-relaxed font-medium whitespace-pre-wrap", className)}>
-      <MathJax>{content}</MathJax>
+      <MathJax dynamic>{content}</MathJax>
     </div>
   );
 }
