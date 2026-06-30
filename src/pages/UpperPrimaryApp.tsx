@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Target, ChevronRight, ChevronLeft, Award, Star, ArrowLeft, CheckCircle2, XCircle, Clock, Maximize, Minimize } from 'lucide-react';
+import { BookOpen, Target, ChevronRight, ChevronLeft, Award, Star, ArrowLeft, CheckCircle2, XCircle, Clock, Maximize, Minimize, UserCheck, ShieldAlert, Key } from 'lucide-react';
 import { MixedLatex } from '../components/LatexRenderer';
 import { UPPER_PRIMARY_TOPICS, CDP_MOCKS } from '../data/upperPrimaryData';
 
-type ViewState = 'landing' | 'topics' | 'mocks' | 'test' | 'results';
+type ViewState = 'landing' | 'verify' | 'topics' | 'mocks' | 'test' | 'results';
+
+// NOTE: Replace this URL with your Google Sheet published CSV URL
+// Go to File -> Share -> Publish to web -> Link -> select the sheet and "Comma-separated values (.csv)"
+const STUDENT_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRRSfQqvIjS5rWy6FSjcgvA1swYQWwAs1Ba6W7sxfnCYxd3Kln7zV7Qy_7aoL0K-fUamd5BuIhQjVV/pub?output=csv';
 
 export default function UpperPrimaryApp() {
   const [view, setView] = useState<ViewState>('landing');
+  const [isVerified, setIsVerified] = useState(false);
+  const [verifyInput, setVerifyInput] = useState('');
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [verifyError, setVerifyError] = useState('');
+
   const [selectedTopic, setSelectedTopic] = useState<any>(null);
   const [selectedMock, setSelectedMock] = useState<any>(null);
   
@@ -16,6 +25,74 @@ export default function UpperPrimaryApp() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(3600);
   const [focusMode, setFocusMode] = useState(false);
+
+  useEffect(() => {
+    // Check if previously verified in this session
+    if (localStorage.getItem('upper_primary_verified') === 'true') {
+      setIsVerified(true);
+    }
+  }, []);
+
+  const handleVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!verifyInput.trim()) {
+      setVerifyError('Please enter your Mobile Number or Student ID');
+      return;
+    }
+    
+    setVerifyLoading(true);
+    setVerifyError('');
+
+    try {
+      const response = await fetch(`${STUDENT_SHEET_CSV_URL}&t=${Date.now()}`, {
+        cache: 'no-store'
+      });
+      if (!response.ok) throw new Error('Failed to fetch verification list');
+      
+      const csvText = await response.text();
+      const rows = csvText.split('\n').map(row => row.split(','));
+      
+      // Assume CSV format: Name, Mobile, StudentID
+      // Skip header row
+      const dataRows = rows.slice(1);
+      
+      const input = verifyInput.trim().toLowerCase();
+      let matched = false;
+
+      for (const row of dataRows) {
+        if (row.length >= 2) {
+          const mobile = row[1]?.trim().toLowerCase();
+          const studentId = row[2]?.trim().toLowerCase();
+          
+          if (input === mobile || input === studentId) {
+            matched = true;
+            break;
+          }
+        }
+      }
+
+      if (matched) {
+        setIsVerified(true);
+        localStorage.setItem('upper_primary_verified', 'true');
+        setView('topics');
+      } else {
+        setVerifyError('Verification failed. No matching Student ID or Mobile Number found.');
+      }
+    } catch (err) {
+      console.error(err);
+      setVerifyError('Could not connect to the verification database. Please try again later.');
+    } finally {
+      setVerifyLoading(false);
+    }
+  };
+
+  const proceedFromLanding = () => {
+    if (isVerified) {
+      setView('topics');
+    } else {
+      setView('verify');
+    }
+  };
 
   // Auto-submit test
   React.useEffect(() => {
@@ -96,7 +173,7 @@ export default function UpperPrimaryApp() {
                   Complete preparation with Mock Tests, Previous Year Questions, and Detailed Explanations for all subjects including CDP, Bengali, English, Math & Science, and Social Studies.
                 </p>
                 <button
-                  onClick={() => setView('topics')}
+                  onClick={proceedFromLanding}
                   className="inline-flex items-center gap-3 bg-gradient-to-r from-green-400 to-emerald-500 hover:from-green-300 hover:to-emerald-400 text-slate-900 px-8 py-4 rounded-xl font-black text-sm md:text-base uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(74,222,128,0.4)] hover:shadow-[0_0_30px_rgba(74,222,128,0.6)] hover:-translate-y-1"
                 >
                   View Topics & Mocks <ChevronRight className="h-5 w-5" />
@@ -105,6 +182,61 @@ export default function UpperPrimaryApp() {
             </div>
           </div>
         </section>
+      </div>
+    );
+  }
+
+  if (view === 'verify') {
+    return (
+      <div className="w-full flex-1 flex flex-col items-center justify-center p-4 min-h-[500px]">
+        <button onClick={() => setView('landing')} className="absolute top-8 left-8 flex items-center gap-2 text-green-400 hover:text-green-300 font-bold uppercase text-xs tracking-widest mb-6 w-fit h-fit transition-colors bg-white/5 px-4 py-2 rounded-xl border border-white/10 shadow-inner hover:bg-white/10">
+          <ArrowLeft className="h-4 w-4" /> Back Home
+        </button>
+        
+        <div className="max-w-md w-full bg-slate-800/80 backdrop-blur-xl border border-white/10 p-8 rounded-[32px] shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+          
+          <div className="w-16 h-16 bg-green-500/10 border border-green-500/20 text-green-400 rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-inner">
+            <UserCheck className="w-8 h-8 drop-shadow-md" />
+          </div>
+          
+          <h2 className="text-2xl font-display font-black text-white text-center mb-2 drop-shadow-md">Student Verification</h2>
+          <p className="text-slate-400 text-sm text-center mb-8 font-medium">Please verify your enrollment to access the Upper Primary mock tests.</p>
+          
+          <form onSubmit={handleVerify} className="space-y-6 relative z-10">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 ml-2">Mobile No. / Student ID</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+                  <Key className="h-5 w-5" />
+                </div>
+                <input 
+                  type="text" 
+                  value={verifyInput}
+                  onChange={(e) => setVerifyInput(e.target.value)}
+                  className="w-full bg-slate-900/50 border border-white/10 text-white rounded-xl pl-12 pr-4 py-4 outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/50 transition-all font-medium placeholder:text-slate-600 shadow-inner"
+                  placeholder="Enter registered mobile or ID..."
+                  required
+                />
+              </div>
+            </div>
+            
+            {verifyError && (
+              <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-xl text-xs font-bold flex items-start gap-3 shadow-inner">
+                <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
+                {verifyError}
+              </div>
+            )}
+            
+            <button 
+              type="submit"
+              disabled={verifyLoading}
+              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-widest border border-green-400/50 disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              {verifyLoading ? 'Verifying...' : 'Verify Identity'}
+            </button>
+          </form>
+        </div>
       </div>
     );
   }
