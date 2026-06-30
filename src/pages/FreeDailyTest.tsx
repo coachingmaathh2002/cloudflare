@@ -300,7 +300,7 @@ export default function FreeDailyTest() {
     setScore(newScore);
     
     // Save score to Google Sheets
-    const GOOGLE_SHEET_URL = import.meta.env.VITE_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbx2MAFZ0nlbrNjYcaG-hhaV8k6pdkPFVC_VFhJKy7efKu9G7OvWY2f2nWPJC3GnFiyooQ/exec";
+    const GOOGLE_SHEET_URL = (import.meta as any).env?.VITE_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbx2MAFZ0nlbrNjYcaG-hhaV8k6pdkPFVC_VFhJKy7efKu9G7OvWY2f2nWPJC3GnFiyooQ/exec";
     if (GOOGLE_SHEET_URL) {
       const data = new FormData();
       data.append('name', formData.name);

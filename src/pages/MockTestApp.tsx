@@ -19,6 +19,11 @@ export default function MockTestApp() {
 
   const [focusMode, setFocusMode] = useState(false);
 
+  const [showCodeModal, setShowCodeModal] = useState(false);
+  const [pendingMock, setPendingMock] = useState<any | null>(null);
+  const [testCodeInput, setTestCodeInput] = useState('');
+  const [testCodeError, setTestCodeError] = useState('');
+
   // Auto-submit test when time is up
   useEffect(() => {
     if (view !== 'test' || isSubmitted) return;
@@ -46,13 +51,34 @@ export default function MockTestApp() {
     setView('mocks');
   };
 
-  const handleMockSelect = (mock: any) => {
+  const startMockTest = (mock: any) => {
     setSelectedMock(mock);
     setCurrentQuestion(0);
     setSelectedAnswers({});
     setIsSubmitted(false);
     setTimeLeft(mock.duration);
     setView('test');
+  };
+
+  const handleMockSelect = (mock: any) => {
+    if (selectedCategory === 'slst') {
+      setPendingMock(mock);
+      setShowCodeModal(true);
+      setTestCodeInput('');
+      setTestCodeError('');
+    } else {
+      startMockTest(mock);
+    }
+  };
+
+  const handleCodeSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (testCodeInput.trim() === 'raj@9167') {
+      setShowCodeModal(false);
+      if (pendingMock) startMockTest(pendingMock);
+    } else {
+      setTestCodeError('Invalid test code');
+    }
   };
 
   const submitTest = () => {
@@ -234,6 +260,48 @@ export default function MockTestApp() {
             </div>
           ))}
         </div>
+
+        {/* Test Code Modal */}
+        {showCodeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+            <div className="bg-slate-900 border border-white/10 rounded-3xl p-8 max-w-sm w-full shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-[40px]"></div>
+              <h2 className="text-2xl font-bold text-white mb-2 font-display relative z-10">Enter Test Code</h2>
+              <p className="text-slate-400 text-sm mb-6 relative z-10">Please enter the test code provided by Raj Sir to start this mock test.</p>
+              
+              <form onSubmit={handleCodeSubmit} className="relative z-10">
+                <input 
+                  type="text" 
+                  value={testCodeInput}
+                  onChange={(e) => setTestCodeInput(e.target.value)}
+                  className="w-full bg-slate-800/50 border border-white/10 text-white rounded-xl px-4 py-3 outline-none focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/50 transition-all font-mono text-center tracking-widest uppercase mb-4"
+                  placeholder="CODE"
+                  autoFocus
+                />
+                
+                {testCodeError && (
+                  <p className="text-red-400 text-xs mb-4 text-center font-bold">{testCodeError}</p>
+                )}
+
+                <div className="flex gap-3">
+                  <button 
+                    type="button"
+                    onClick={() => setShowCodeModal(false)}
+                    className="flex-1 py-3 px-4 rounded-xl font-bold uppercase text-xs tracking-widest text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit"
+                    className="flex-1 py-3 px-4 rounded-xl font-bold uppercase text-xs tracking-widest text-white bg-pink-500 hover:bg-pink-600 transition-colors shadow-[0_0_20px_rgba(236,72,153,0.3)]"
+                  >
+                    Start Test
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
