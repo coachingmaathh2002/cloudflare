@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Target, ChevronRight, ChevronLeft, Award, Star, ArrowLeft, CheckCircle2, XCircle, Clock, Maximize, Minimize, UserCheck, ShieldAlert, Key } from 'lucide-react';
+import { BookOpen, Target, ChevronRight, ChevronLeft, Award, Star, ArrowLeft, CheckCircle2, XCircle, Clock, Maximize, Minimize, UserCheck, ShieldAlert, Key, LogOut } from 'lucide-react';
 import { MixedLatex } from '../components/LatexRenderer';
 import { UPPER_PRIMARY_TOPICS, CDP_MOCKS } from '../data/upperPrimaryData';
 
@@ -11,9 +12,12 @@ type ViewState = 'landing' | 'verify' | 'topics' | 'mocks' | 'test' | 'results';
 const STUDENT_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRRRSfQqvIjS5rWy6FSjcgvA1swYQWwAs1Ba6W7sxfnCYxd3Kln7zV7Qy_7aoL0K-fUamd5BuIhQjVV/pub?output=csv';
 
 export default function UpperPrimaryApp() {
+  const navigate = useNavigate();
   const [view, setView] = useState<ViewState>('landing');
   const [isVerified, setIsVerified] = useState(false);
-  const [verifyInput, setVerifyInput] = useState('');
+  const [verifyName, setVerifyName] = useState('');
+  const [verifyMobile, setVerifyMobile] = useState('');
+  const [verifyStudentId, setVerifyStudentId] = useState('');
   const [verifyLoading, setVerifyLoading] = useState(false);
   const [verifyError, setVerifyError] = useState('');
 
@@ -26,17 +30,10 @@ export default function UpperPrimaryApp() {
   const [timeLeft, setTimeLeft] = useState(3600);
   const [focusMode, setFocusMode] = useState(false);
 
-  useEffect(() => {
-    // Check if previously verified in this session
-    if (localStorage.getItem('upper_primary_verified') === 'true') {
-      setIsVerified(true);
-    }
-  }, []);
-
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!verifyInput.trim()) {
-      setVerifyError('Please enter your Mobile Number or Student ID');
+    if (!verifyName.trim() || !verifyMobile.trim() || !verifyStudentId.trim()) {
+      setVerifyError('Please enter Name, Mobile Number, and Student ID');
       return;
     }
     
@@ -56,15 +53,18 @@ export default function UpperPrimaryApp() {
       // Skip header row
       const dataRows = rows.slice(1);
       
-      const input = verifyInput.trim().toLowerCase();
+      const inputName = verifyName.trim().toLowerCase();
+      const inputMobile = verifyMobile.trim().toLowerCase();
+      const inputStudentId = verifyStudentId.trim().toLowerCase();
       let matched = false;
 
       for (const row of dataRows) {
-        if (row.length >= 2) {
+        if (row.length >= 3) {
+          const name = row[0]?.trim().toLowerCase();
           const mobile = row[1]?.trim().toLowerCase();
           const studentId = row[2]?.trim().toLowerCase();
           
-          if (input === mobile || input === studentId) {
+          if (inputName === name && inputMobile === mobile && inputStudentId === studentId) {
             matched = true;
             break;
           }
@@ -73,10 +73,9 @@ export default function UpperPrimaryApp() {
 
       if (matched) {
         setIsVerified(true);
-        localStorage.setItem('upper_primary_verified', 'true');
         setView('topics');
       } else {
-        setVerifyError('Verification failed. No matching Student ID or Mobile Number found.');
+        setVerifyError('Verification failed. Information does not match our records.');
       }
     } catch (err) {
       console.error(err);
@@ -189,7 +188,7 @@ export default function UpperPrimaryApp() {
   if (view === 'verify') {
     return (
       <div className="w-full flex-1 flex flex-col items-center justify-center p-4 min-h-[500px]">
-        <button onClick={() => setView('landing')} className="absolute top-8 left-8 flex items-center gap-2 text-green-400 hover:text-green-300 font-bold uppercase text-xs tracking-widest mb-6 w-fit h-fit transition-colors bg-white/5 px-4 py-2 rounded-xl border border-white/10 shadow-inner hover:bg-white/10">
+        <button onClick={() => navigate('/')} className="absolute top-8 left-8 flex items-center gap-2 text-green-400 hover:text-green-300 font-bold uppercase text-xs tracking-widest mb-6 w-fit h-fit transition-colors bg-white/5 px-4 py-2 rounded-xl border border-white/10 shadow-inner hover:bg-white/10">
           <ArrowLeft className="h-4 w-4" /> Back Home
         </button>
         
@@ -203,19 +202,53 @@ export default function UpperPrimaryApp() {
           <h2 className="text-2xl font-display font-black text-white text-center mb-2 drop-shadow-md">Student Verification</h2>
           <p className="text-slate-400 text-sm text-center mb-8 font-medium">Please verify your enrollment to access the Upper Primary mock tests.</p>
           
-          <form onSubmit={handleVerify} className="space-y-6 relative z-10">
+          <form onSubmit={handleVerify} className="space-y-4 relative z-10">
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 ml-2">Mobile No. / Student ID</label>
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 ml-2">Full Name</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+                  <UserCheck className="h-5 w-5" />
+                </div>
+                <input 
+                  type="text" 
+                  value={verifyName}
+                  onChange={(e) => setVerifyName(e.target.value)}
+                  className="w-full bg-slate-900/50 border border-white/10 text-white rounded-xl pl-12 pr-4 py-4 outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/50 transition-all font-medium placeholder:text-slate-600 shadow-inner"
+                  placeholder="Enter your name..."
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 ml-2">Mobile Number</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
                   <Key className="h-5 w-5" />
                 </div>
                 <input 
                   type="text" 
-                  value={verifyInput}
-                  onChange={(e) => setVerifyInput(e.target.value)}
+                  value={verifyMobile}
+                  onChange={(e) => setVerifyMobile(e.target.value)}
                   className="w-full bg-slate-900/50 border border-white/10 text-white rounded-xl pl-12 pr-4 py-4 outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/50 transition-all font-medium placeholder:text-slate-600 shadow-inner"
-                  placeholder="Enter registered mobile or ID..."
+                  placeholder="Enter registered mobile..."
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2 ml-2">Student ID</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+                  <Key className="h-5 w-5" />
+                </div>
+                <input 
+                  type="text" 
+                  value={verifyStudentId}
+                  onChange={(e) => setVerifyStudentId(e.target.value)}
+                  className="w-full bg-slate-900/50 border border-white/10 text-white rounded-xl pl-12 pr-4 py-4 outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/50 transition-all font-medium placeholder:text-slate-600 shadow-inner"
+                  placeholder="Enter Student ID..."
                   required
                 />
               </div>
@@ -245,9 +278,24 @@ export default function UpperPrimaryApp() {
     return (
       <div className="w-full flex-1">
         <section className="py-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <button onClick={() => setView('landing')} className="flex items-center gap-2 text-green-400 hover:text-green-300 font-bold uppercase text-xs tracking-widest mb-6 w-fit h-fit transition-colors bg-white/5 px-4 py-2 rounded-xl border border-white/10 shadow-inner hover:bg-white/10">
-            <ArrowLeft className="h-4 w-4" /> Back Home
-          </button>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-white tracking-tight">Upper Primary Modules</h2>
+            <button onClick={() => {
+              setIsVerified(false);
+              setVerifyName('');
+              setVerifyMobile('');
+              setVerifyStudentId('');
+              setView('landing');
+              setSelectedTopic(null);
+              setSelectedMock(null);
+              setSelectedAnswers({});
+              setCurrentQuestion(0);
+              setIsSubmitted(false);
+              navigate('/'); // Leave the specific page
+            }} className="flex items-center gap-2 text-red-400 hover:text-red-300 font-bold uppercase text-xs tracking-widest transition-colors bg-white/5 px-4 py-2 rounded-xl border border-white/10 shadow-inner hover:bg-white/10">
+              <ArrowLeft className="h-4 w-4" /> Back / Log Out
+            </button>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div className="bg-slate-800/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl flex flex-col items-center justify-center text-center shadow-xl hover:-translate-y-1 transition-transform">
