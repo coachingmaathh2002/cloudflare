@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BookOpen, Search, Filter, FileText, Maximize2, X, Star, Target, CheckCircle, Award } from 'lucide-react';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
+import { useSEO } from '../lib/useSEO';
 
 const noteCategories = ['All', 'Class 9', 'Class 10', 'Class 11', 'Class 12', 'JEE Mains', 'BSc Math', 'MSc Math PG', 'SLST Math', 'Engineering Mathematics'];
 
@@ -20,6 +21,11 @@ export default function Notes() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedPdf, setSelectedPdf] = useState<{ title: string, link: string } | null>(null);
+
+  useSEO(
+    "Free Math Study Notes & Formula PDFs | Raj Sir",
+    "Download free hand-written mathematics study notes, formula sheets, and solved solutions for Class 9 to 12, JEE Mains, BSc Math, Engineering Maths, and SLST Mathematics."
+  );
 
   const filteredNotes = initialNotes.filter(note => {
     const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase());

@@ -3,6 +3,7 @@ import {
   BookOpen, Award, Target, FileText, 
   TrendingUp, Clock, Calendar, CheckCircle2 
 } from 'lucide-react';
+import { useSEO } from '../lib/useSEO';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar
@@ -34,6 +35,11 @@ const subjectData = [
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
+
+  useSEO(
+    "Student Performance Dashboard | Raj Sir",
+    "Track your progress, mock test scores, average analytics, and customized subject proficiency charts with Raj Sir's Student Performance Dashboard."
+  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1">

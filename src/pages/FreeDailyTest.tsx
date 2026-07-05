@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Target, CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, ArrowLeft, PlayCircle, Lock, User, Phone, MapPin, Key } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MixedLatex } from '../components/LatexRenderer';
+import { useSEO } from '../lib/useSEO';
 
 const DAILY_TEST = {
   id: 'daily_slst_math',
@@ -197,6 +198,11 @@ type ViewState = 'registration' | 'details' | 'test' | 'results';
 
 export default function FreeDailyTest() {
   const [viewState, setViewState] = useState<ViewState>('registration');
+
+  useSEO(
+    "Free Daily Math Mock Test | SLST, JEE & WBJEE",
+    "Participate in our free daily mathematics mock tests for SLST and JEE Mains. Solve 30 challenging equations, view instant score reports, and access detailed explanation guides."
+  );
   const [formData, setFormData] = useState(() => {
     const saved = localStorage.getItem('dailyTestRegistration');
     if (saved) {

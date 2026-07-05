@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
+import { useSEO } from "../lib/useSEO";
 import {
   BookOpen,
   Award,
@@ -20,18 +21,18 @@ const bannerData = [
   {
     id: 'free_test',
     image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=2000&auto=format&fit=crop",
-    badge: "🎁 সম্পূর্ণ বিনামূল্যে মক টেস্ট (100% FREE)",
+    badge: "🎁 সম্পূর্ণ বিনামূল্যে মক টেস্ট",
     title: (
       <>
         আপনার SLST Math প্রস্তুতি যাচাই করুন <br className="hidden md:block" />
-        <span className="inline-block mt-3 px-5 py-2 rounded-xl bg-gradient-to-r from-purple-500/30 to-fuchsia-500/30 border border-purple-400/50 shadow-[0_0_20px_rgba(168,85,247,0.4)] text-purple-300 drop-shadow-lg animate-pulse">
-          প্রতিদিন ফ্রি মক টেস্ট দিয়ে! ✨
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-purple-400 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)]">
+          প্রতিদিন ফ্রি মক টেস্ট দিয়ে!
         </span>
       </>
     ),
     subtitle:
-      "SLST Mathematics-এর সেরা প্রস্তুতির জন্য আজই আমাদের ফ্রি মক টেস্ট দিন। বিস্তারিত সমাধান, সঠিক উত্তর এবং নিজের স্কোর চেক করুন সম্পূর্ণ বিনামূল্যে! আমাদের কোচিং সেন্টারে আপনাকে স্বাগতম। 🎯",
-    cta: "🔥 এখনই মক টেস্ট দিন (Click Here)",
+      "SLST Mathematics-এর সেরা প্রস্তুতির জন্য আজই আমাদের ফ্রি মক টেস্ট দিন। বিস্তারিত সমাধান ও স্কোর চেক করুন সম্পূর্ণ বিনামূল্যে।",
+    cta: "এখনই মক টেস্ট দিন",
     gradient: "from-[#1e1b4b] via-[#6d28d9] to-transparent",
     link: "/free-daily-test",
     iconColor: "text-purple-400"
@@ -161,6 +162,11 @@ const testimonials = [
 export default function Home() {
   const [currentBanner, setCurrentBanner] = useState(0);
 
+  useSEO(
+    "Best SLST Mathematics & JEE Mains Coaching",
+    "Master Mathematics for SLST, JEE Mains, WBJEE, GATE, and CSIR NET with Raj Sir. Access free daily mock tests, study materials, and premium video lectures."
+  );
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentBanner((prev) => (prev + 1) % bannerData.length);
@@ -171,86 +177,71 @@ export default function Home() {
   return (
     <div className="w-full flex-1">
       {/* Banner Section */}
-      <section className="pt-8 pb-4 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative w-full h-[550px] md:h-[650px] rounded-[40px] overflow-hidden border border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] group flex">
+      <section className="pt-6 pb-2 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative w-full h-[500px] md:h-[600px] rounded-[32px] overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(250,204,21,0.15)] group flex">
           
           <div className="relative flex-1 h-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentBanner}
-                initial={{ opacity: 0, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, filter: 'blur(10px)' }}
-                transition={{ duration: 1, ease: "easeInOut" }}
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8 }}
                 className="absolute inset-0"
               >
-                <motion.img
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 10, ease: "easeOut" }}
+                <img
                   src={bannerData[currentBanner].image}
                   alt="Coaching Banner"
                   onError={(e) => {
-                     // @ts-ignore
                     e.currentTarget.src =
                       "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop";
                   }}
-                  className="w-full h-full object-cover mix-blend-luminosity opacity-50"
+                  className="w-full h-full object-cover mix-blend-luminosity opacity-40 transition-opacity duration-1000"
                 />
                 
                 {/* Math Pattern Overlay */}
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20 mix-blend-overlay"></div>
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
                 
-                {/* Dynamic Gradient Overlay */}
+                {/* Overlay mask */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-tr ${bannerData[currentBanner].gradient} opacity-80 mix-blend-multiply`}
+                  className={`absolute inset-0 bg-gradient-to-r ${bannerData[currentBanner].gradient} opacity-95 transition-all duration-1000`}
                 ></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050B14] via-[#050B14]/80 to-transparent"></div>
-                
-                {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[100px] translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] via-[#0B1120]/40 to-transparent"></div>
                 
                 {/* Banner Text Overlay */}
-                <div className="absolute inset-0 p-8 md:p-16 lg:p-20 w-full h-full flex flex-col justify-end z-10">
-                  <motion.div 
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-                    className="max-w-4xl"
-                  >
-                    <span className="bg-white/10 text-white border border-white/20 px-5 py-2.5 rounded-full text-[11px] sm:text-sm font-bold uppercase tracking-[0.2em] mb-8 inline-flex items-center gap-2.5 shadow-xl backdrop-blur-md">
-                      <Star className={`w-4 h-4 ${(bannerData[currentBanner] as any).iconColor || 'fill-yellow-400 text-yellow-400'}`} />
+                <div className="absolute inset-0 p-8 md:p-12 lg:p-16 w-full h-full flex flex-col justify-end pb-16 md:pb-20 z-10">
+                  <div className="max-w-3xl">
+                    <span className="bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-6 inline-flex items-center gap-2 shadow-[0_0_15px_rgba(250,204,21,0.3)] backdrop-blur-md">
+                      <Star className="w-4 h-4 fill-yellow-400" />
                       {bannerData[currentBanner].badge}
                     </span>
-                    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight leading-[1.1] mb-6 drop-shadow-2xl">
+                    <h2 className="font-display text-4xl md:text-5xl lg:text-7xl font-black text-slate-50 uppercase tracking-tight leading-[1.05] drop-shadow-2xl mb-6">
                       {bannerData[currentBanner].title}
                     </h2>
-                    <p className="text-slate-200 text-base md:text-xl mb-10 font-medium leading-relaxed max-w-3xl border-l-4 border-yellow-400/80 pl-6 drop-shadow-md">
+                    <p className="text-slate-300 text-sm md:text-lg mb-8 md:mb-10 font-medium leading-relaxed max-w-2xl border-l-4 border-yellow-400 pl-4">
                       {bannerData[currentBanner].subtitle}
                     </p>
                     <Link
                       to={(bannerData[currentBanner] as any).link || "/courses"}
-                      className="group relative inline-flex items-center gap-3 bg-white text-slate-900 px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black text-sm md:text-lg uppercase tracking-widest overflow-hidden shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]"
+                      className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-900 px-8 py-4 rounded-xl font-black text-sm md:text-base uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:shadow-[0_0_30px_rgba(250,204,21,0.6)] hover:-translate-y-1"
                     >
-                      <span className="relative z-10 flex items-center gap-3">
-                        {bannerData[currentBanner].cta}{" "}
-                        <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
-                      </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-yellow-100 via-white to-yellow-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      {bannerData[currentBanner].cta}{" "}
+                      <ChevronRight className="h-5 w-5" />
                     </Link>
-                  </motion.div>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Minimal Banner Navigation Dots */}
-          <div className="absolute bottom-10 right-10 flex gap-3 z-20 bg-black/20 backdrop-blur-md px-4 py-3 rounded-full border border-white/10">
+          {/* Banner Navigation Dots */}
+          <div className="absolute bottom-8 right-8 flex gap-3 z-20">
             {bannerData.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentBanner(idx)}
-                className={`h-2 rounded-full transition-all duration-500 ${idx === currentBanner ? "w-12 bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]" : "w-2 bg-white/40 hover:bg-white/80"}`}
+                className={`h-2.5 rounded-full transition-all duration-300 ${idx === currentBanner ? "w-10 bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" : "w-2.5 bg-white/30 hover:bg-white/60"}`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}

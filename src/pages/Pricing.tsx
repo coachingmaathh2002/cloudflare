@@ -2,8 +2,14 @@ import React from 'react';
 import { CheckCircle2, Star, Zap } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
+import { useSEO } from '../lib/useSEO';
 
 export default function Pricing() {
+  useSEO(
+    "Premium Coaching Plans & Fees | Raj Sir",
+    "Compare and select the best premium math coaching plans with Raj Sir. Access advanced test analytics, personal guidance, live problem solving sessions, and exclusive materials."
+  );
+
   return (
     <div className="w-full flex-1 py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-pink-900/20 rounded-full blur-[150px] pointer-events-none"></div>

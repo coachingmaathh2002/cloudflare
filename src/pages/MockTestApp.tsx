@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { MixedLatex } from '../components/LatexRenderer';
 import { CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, Flag, Award, AlertCircle, BookOpen, Target, ArrowLeft, BrainCircuit, Maximize, Minimize } from 'lucide-react';
 import { EXAM_CATEGORIES, TOPICS_BY_CATEGORY, generateMocksForTopic, generateQuestionSet } from '../data/mockTestData';
+import { useSEO } from '../lib/useSEO';
 
 type ViewState = 'categories' | 'topics' | 'mocks' | 'test' | 'results';
 
@@ -10,6 +11,11 @@ export default function MockTestApp() {
   const [view, setView] = useState<ViewState>('categories');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+
+  useSEO(
+    "Online Math Mock Tests & Series | Raj Sir",
+    "Prepare for SLST Mathematics, JEE Mains, and WBJEE with our professional online mock tests. Test your limits, view solutions, and analyze your scores."
+  );
   const [selectedMock, setSelectedMock] = useState<any | null>(null);
   
   const [currentQuestion, setCurrentQuestion] = useState(0);

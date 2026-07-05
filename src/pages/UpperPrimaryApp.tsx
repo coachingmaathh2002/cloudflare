@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { BookOpen, Target, ChevronRight, ChevronLeft, Award, Star, ArrowLeft, CheckCircle2, XCircle, Clock, Maximize, Minimize, UserCheck, ShieldAlert, Key, LogOut } from 'lucide-react';
 import { MixedLatex } from '../components/LatexRenderer';
 import { UPPER_PRIMARY_TOPICS, CDP_MOCKS } from '../data/upperPrimaryData';
+import { useSEO } from '../lib/useSEO';
 
 type ViewState = 'landing' | 'verify' | 'topics' | 'mocks' | 'test' | 'results';
 
@@ -14,6 +15,11 @@ const STUDENT_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1v
 export default function UpperPrimaryApp() {
   const navigate = useNavigate();
   const [view, setView] = useState<ViewState>('landing');
+
+  useSEO(
+    "Upper Primary TET Math Coaching & Mocks | Raj Sir",
+    "Prepare for the West Bengal Upper Primary TET Mathematics examination with Raj Sir's specialized topic tests, free assessments, and structured study modules."
+  );
   const [isVerified, setIsVerified] = useState(false);
   const [verifyName, setVerifyName] = useState('');
   const [verifyMobile, setVerifyMobile] = useState('');

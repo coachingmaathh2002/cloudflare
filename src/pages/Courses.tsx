@@ -3,6 +3,7 @@ import { BookOpen, FileText, PlayCircle, Download, Clock, ChevronDown, Graduatio
 import { cn } from '../lib/utils';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { useSEO } from '../lib/useSEO';
 
 const courseData = [
   {
@@ -123,6 +124,11 @@ const courseData = [
 
 export default function Courses() {
   const [activeTab, setActiveTab] = useState('class12');
+
+  useSEO(
+    "Math Masterclass Courses | SLST, JEE Mains, WBJEE & NET",
+    "Enroll in Raj Sir's premium math coaching courses from Class 9 to MSc. Specialized batches for SLST Mathematics, JEE Mains, WBJEE, GATE, and CSIR NET with chapter-wise notes and mocks."
+  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1 w-full">
