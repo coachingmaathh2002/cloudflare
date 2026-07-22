@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
 import { useSEO } from "../lib/useSEO";
+import { cn } from "../lib/utils";
 import {
   BookOpen,
   Award,
@@ -10,6 +11,7 @@ import {
   ChevronLeft,
   School,
   CheckCircle2,
+  ShieldCheck,
   PlayCircle,
   FileText,
   Star,
@@ -940,115 +942,168 @@ export default function Home() {
       </section>
 
       {/* About Raj Sir Section */}
-      <section className="py-16 relative">
+      <section className="py-20 lg:py-28 relative overflow-hidden bg-[#020617] border-t border-white/10">
+        {/* Multi-color ambient background glows */}
+        <div className="absolute top-1/2 left-10 -translate-y-1/2 w-96 h-96 bg-pink-600/15 rounded-full blur-[140px] pointer-events-none"></div>
+        <div className="absolute top-1/3 right-10 w-96 h-96 bg-indigo-600/15 rounded-full blur-[140px] pointer-events-none"></div>
+        <div className="absolute bottom-10 left-1/3 w-80 h-80 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="bg-slate-800/60 backdrop-blur-xl border border-white/10 p-1 rounded-3xl shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-pink-600/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden rounded-3xl bg-slate-950/60">
-              <div className="md:col-span-5 relative p-8 md:p-12 border-b md:border-b-0 md:border-r border-white/10 flex flex-col items-center justify-center text-center">
-                <div className="w-40 h-40 rounded-full bg-gradient-to-br from-pink-600 to-violet-600 p-1 mb-6 shadow-[0_0_30px_rgba(219,39,119,0.3)]">
-                  <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center border-4 border-[#090014] overflow-hidden">
+          
+          {/* Header */}
+          <div className="text-center mb-12 sm:mb-16">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/15 via-purple-500/15 to-indigo-500/15 border border-pink-500/30 text-pink-300 text-xs font-black uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(219,39,119,0.25)]">
+              <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+              <span>MEET THE FOUNDER & MENTOR</span>
+            </span>
+
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-white font-black uppercase tracking-tight">
+              About <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 drop-shadow-md">Raj Sir</span>
+            </h2>
+            <p className="text-slate-300 text-sm sm:text-base mt-3 max-w-2xl mx-auto font-medium leading-relaxed">
+              Empowering thousands of mathematics aspirants with conceptual clarity, exam-oriented shortcuts, and unmatchable guidance.
+            </p>
+          </div>
+
+          <div className="glass-card rounded-[36px] p-2 sm:p-3 border border-white/15 shadow-[0_0_80px_rgba(0,0,0,0.8)] relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-950/95 to-indigo-950/40">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 p-6 sm:p-10 items-center">
+              
+              {/* Left Column: Portrait & Badge */}
+              <div className="lg:col-span-5 flex flex-col items-center justify-center text-center p-6 rounded-3xl bg-slate-900/80 border border-white/10 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-b from-pink-500/10 via-purple-500/5 to-transparent opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+
+                {/* Portrait with Glowing Gradient Rings */}
+                <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full p-1.5 bg-gradient-to-tr from-pink-500 via-purple-500 to-amber-400 shadow-[0_0_40px_rgba(219,39,119,0.4)] mb-6 z-10 group-hover:scale-105 transition-transform duration-500">
+                  <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden border-4 border-slate-950">
                     <img
                       src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop"
                       alt="Raj Sir"
-                      className="w-full h-full object-cover opacity-90 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500"
+                      className="w-full h-full object-cover transition-all duration-500"
                     />
                   </div>
+                  <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-emerald-400 to-teal-500 text-slate-950 p-2.5 rounded-2xl shadow-xl border-2 border-slate-950">
+                    <ShieldCheck className="w-5 h-5 stroke-[2.5]" />
+                  </div>
                 </div>
-                <h3 className="font-display text-3xl text-slate-50 font-bold tracking-tight mb-2 uppercase">
+
+                <h3 className="font-display text-3xl font-black text-white uppercase tracking-tight mb-1">
                   Raj Sir
                 </h3>
-                <p className="text-pink-400 font-bold text-xs uppercase tracking-widest mb-4">
+                
+                <span className="px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-widest text-pink-300 bg-pink-500/10 border border-pink-500/30 mb-6 inline-block">
                   Mentor & Founder
-                </p>
-                <div className="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
-                  <Award className="h-4 w-4 text-violet-400" /> 9+ Years Experience
+                </span>
+
+                {/* Experience Pills */}
+                <div className="grid grid-cols-2 gap-3 w-full z-10">
+                  <div className="bg-slate-950/80 border border-white/10 p-3 rounded-2xl flex flex-col items-center">
+                    <span className="text-xl font-black text-amber-400">9+ Years</span>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Experience</span>
+                  </div>
+                  <div className="bg-slate-950/80 border border-white/10 p-3 rounded-2xl flex flex-col items-center">
+                    <span className="text-xl font-black text-emerald-400">10,000+</span>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Students Mentored</span>
+                  </div>
                 </div>
               </div>
-              <div className="md:col-span-7 p-8 md:p-12 relative z-10">
-                <h4 className="flex items-center gap-3 text-lg font-bold text-slate-50 mb-6 uppercase tracking-wider">
-                  <GraduationCap className="h-6 w-6 text-pink-400" />
-                  Credentials & Qualifications
-                </h4>
 
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 bg-white/10 p-1.5 rounded text-pink-300">
-                      <BookOpen className="h-3 w-3" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-200">
-                        BSc in Mathematics
-                      </p>
-                      <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
-                        Bankura Christian College
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 bg-white/10 p-1.5 rounded text-pink-300">
-                      <BookOpen className="h-3 w-3" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-200">
-                        MSc in Pure Mathematics
-                      </p>
-                      <p className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
-                        The University of Burdwan
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 bg-pink-600/20 p-1.5 rounded text-pink-400">
-                      <CheckCircle2 className="h-3 w-3" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-200">
-                        GATE
-                      </p>
-                      <p className="text-[11px] text-pink-400/80 uppercase tracking-wider font-bold">
-                        Qualified
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="shrink-0 mt-0.5 bg-pink-600/20 p-1.5 rounded text-pink-400">
-                      <CheckCircle2 className="h-3 w-3" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-200">
-                        CSIR NET Mathematical Sciences (LS)
-                      </p>
-                      <p className="text-[11px] text-pink-400/80 uppercase tracking-wider font-bold">
-                        Qualified
-                      </p>
-                    </div>
-                  </li>
-                </ul>
-
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3 border-b border-white/5 pb-2">
-                  Areas of Expertise
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Class 9 to 12 (WB, CBSE, ICSE)",
-                    "WBJEE & JEE Mains",
-                    "UG Math Honours",
-                    "Engineering Mathematics",
-                    "NSOU UG & PG Courses",
-                  ].map((subject, idx) => (
-                    <span
-                      key={idx}
-                      className="bg-slate-800/60 border border-white/10 text-slate-300 px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-wider"
-                    >
-                      {subject}
-                    </span>
-                  ))}
+              {/* Right Column: Qualifications & Expertise */}
+              <div className="lg:col-span-7 flex flex-col justify-between z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 text-white flex items-center justify-center shadow-lg border border-white/20">
+                    <GraduationCap className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-black text-white uppercase tracking-wider font-display">
+                      Academic Qualifications & Credentials
+                    </h4>
+                    <p className="text-xs text-slate-400 font-medium">Certified Excellence in Advanced Higher Mathematics</p>
+                  </div>
                 </div>
+
+                {/* Qualification Cards Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-cyan-500/30 hover:border-cyan-500/60 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-cyan-500/10 rounded-full blur-xl"></div>
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shrink-0">
+                        <BookOpen className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-black text-white">BSc in Mathematics</p>
+                        <p className="text-xs text-slate-400 font-semibold mt-0.5">Bankura Christian College</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-purple-500/30 hover:border-purple-500/60 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-xl"></div>
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 shrink-0">
+                        <BookOpen className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-black text-white">MSc in Pure Mathematics</p>
+                        <p className="text-xs text-slate-400 font-semibold mt-0.5">The University of Burdwan</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-emerald-500/30 hover:border-emerald-500/60 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl"></div>
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                        <CheckCircle2 className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-black text-white">GATE Examination</p>
+                        <p className="text-xs text-emerald-400 font-bold uppercase tracking-wider mt-0.5">★ Qualified</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-amber-500/30 hover:border-amber-500/60 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full blur-xl"></div>
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+                        <Award className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-black text-white">CSIR NET Math Sciences</p>
+                        <p className="text-xs text-amber-400 font-bold uppercase tracking-wider mt-0.5">★ Qualified (LS)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Areas of Expertise */}
+                <div>
+                  <h5 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                    <Star className="w-3.5 h-3.5 text-pink-400 fill-pink-400" /> Key Teaching Domains
+                  </h5>
+                  <div className="flex flex-wrap gap-2.5">
+                    {[
+                      { name: "Class 9 to 12 (WB, CBSE, ICSE)", color: "from-pink-500/20 to-purple-500/20 border-pink-500/40 text-pink-300" },
+                      { name: "WBJEE & JEE Mains", color: "from-indigo-500/20 to-blue-500/20 border-indigo-500/40 text-indigo-300" },
+                      { name: "UG Math Honours", color: "from-purple-500/20 to-violet-500/20 border-purple-500/40 text-purple-300" },
+                      { name: "Engineering Mathematics", color: "from-emerald-500/20 to-teal-500/20 border-emerald-500/40 text-emerald-300" },
+                      { name: "NSOU UG & PG Courses", color: "from-amber-500/20 to-orange-500/20 border-amber-500/40 text-amber-300" },
+                    ].map((subject, idx) => (
+                      <span
+                        key={idx}
+                        className={`bg-gradient-to-r ${subject.color} border px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-sm backdrop-blur-md`}
+                      >
+                        {subject.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
               </div>
+
             </div>
           </div>
+
         </div>
       </section>
 
@@ -1335,105 +1390,101 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials & Proud Achievers Oval Posters */}
-      <section className="py-20 lg:py-28 bg-[#020617] w-full border-y border-white/5 relative overflow-hidden">
-        {/* Decorative Background Lighting */}
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-pink-900/10 rounded-full blur-[180px] pointer-events-none"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-amber-900/10 rounded-full blur-[150px] pointer-events-none"></div>
+      {/* Testimonials & Proud Achievers Hall of Fame */}
+      <section className="py-20 lg:py-28 bg-[#020617] w-full border-y border-white/10 relative overflow-hidden">
+        {/* Multi-layered Ambient Luxury Lighting */}
+        <div className="absolute top-1/4 right-1/4 w-[650px] h-[650px] bg-gradient-to-br from-amber-500/10 via-pink-500/5 to-transparent rounded-full blur-[180px] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-[550px] h-[550px] bg-gradient-to-tr from-violet-600/10 via-indigo-500/5 to-transparent rounded-full blur-[160px] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-          <div className="text-center mb-16">
-            <span className="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4 inline-flex items-center gap-2">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /> HALL OF FAME
+          
+          {/* Header */}
+          <div className="text-center mb-16 sm:mb-20">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-black uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 animate-spin-slow" />
+              <span>HALL OF ACADEMIC EXCELLENCE</span>
             </span>
-            <h2 className="font-display text-4xl md:text-6xl text-slate-50 font-black uppercase tracking-tight">
-              Our Proud Achievers
+
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-white font-black uppercase tracking-tight">
+              Our Proud <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-500 drop-shadow-md">Achievers</span>
             </h2>
-            <p className="text-slate-400 text-sm md:text-base mt-4 max-w-2xl mx-auto leading-relaxed">
-              Explore the stellar success stories of students mentored by Raj Sir. Auto-rotating certificate posters designed with academic excellence.
+
+            <p className="text-slate-300 text-sm md:text-base mt-4 max-w-2xl mx-auto font-medium leading-relaxed">
+              Explore the stellar success stories of students mentored by Raj Sir. Real rankers, real results, and inspiring journeys.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Interactive Success Story Carousel Poster (Oval Poster just like image) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
+            
+            {/* Left Column: Premium Certificate Poster Card */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              
-              {/* Outer Decorative Glow ring */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-amber-500/10 via-pink-500/10 to-violet-500/10 rounded-full blur-3xl opacity-80 pointer-events-none"></div>
-              
+              <div className="absolute -inset-4 bg-gradient-to-tr from-amber-500/20 via-yellow-500/10 to-pink-500/10 rounded-[40px] blur-3xl opacity-70 pointer-events-none"></div>
+
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTestimonial}
-                  initial={{ opacity: 0, scale: 0.93, rotate: -1 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.93, rotate: 1 }}
-                  transition={{ duration: 0.4 }}
-                  className="w-full max-w-[390px] sm:max-w-[420px] aspect-[3/4.2] rounded-[50%_50%_50%_50%_/_35%_35%_35%_35%] border-[10px] border-double border-amber-500/90 bg-gradient-to-b from-[#060b1e] via-[#10162f] to-[#2a1320] text-center shadow-[0_0_50px_rgba(245,158,11,0.3)] relative overflow-hidden flex flex-col items-center justify-between p-7 select-none"
+                  initial={{ opacity: 0, scale: 0.94, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.94, y: -10 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="w-full max-w-[380px] sm:max-w-[410px] aspect-[3/4.2] rounded-[36px] border-2 border-amber-500/50 bg-gradient-to-b from-slate-900/95 via-slate-950/98 to-amber-950/40 text-center shadow-[0_0_60px_rgba(245,158,11,0.25)] relative overflow-hidden flex flex-col items-center justify-between p-7 select-none backdrop-blur-2xl"
                 >
-                  {/* Subtle Poster Glass Shine */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-transparent pointer-events-none"></div>
-
-                  {/* Top Hanging Ring / Crown Ornament */}
-                  <div className="absolute top-2 w-8 h-8 rounded-full border-2 border-amber-500/60 flex items-center justify-center bg-transparent">
-                    <div className="w-4 h-4 rounded-full border border-amber-500/50"></div>
+                  {/* Metallic Shimmer Overlay */}
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-400/10 via-transparent to-transparent pointer-events-none"></div>
+                  
+                  {/* Top Certificate Header Badge */}
+                  <div className="mt-2 flex flex-col items-center z-10 w-full">
+                    <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-slate-950/80 border border-amber-500/40 shadow-inner">
+                      <Award className="w-3.5 h-3.5 text-amber-400" />
+                      <span className="text-[10px] font-black tracking-[0.2em] text-amber-300 uppercase">
+                        OFFICIAL CERTIFICATE
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Arched Certificate Ribbon Text */}
-                  <div className="mt-5 flex flex-col items-center z-10">
-                    <span className="text-amber-400 font-black tracking-[0.15em] text-[10px] sm:text-xs uppercase bg-amber-950/90 border border-amber-500/40 px-4 py-1 rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.4)]">
-                      ★ CONGRATULATIONS! ★
-                    </span>
-                    <h4 className="font-display font-black text-amber-200/50 text-[9px] tracking-[0.25em] uppercase mt-2.5">
-                      SUCCESS STUDENT
-                    </h4>
-                  </div>
-
-                  {/* Central Student Photo Circle with Laurel/Gold Ring */}
-                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full p-1 bg-gradient-to-b from-amber-300 via-yellow-400 to-amber-600 shadow-[0_8px_25px_rgba(0,0,0,0.6)] z-10">
+                  {/* Student Portrait Ring */}
+                  <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full p-1.5 bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 shadow-[0_10px_30px_rgba(0,0,0,0.8)] z-10 my-3">
                     <div className="w-full h-full rounded-full overflow-hidden border-2 border-slate-950 bg-slate-900">
                       <img
                         src={testimonials[activeTestimonial].image}
                         alt={testimonials[activeTestimonial].name}
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover grayscale-[15%] hover:grayscale-0 transition-all duration-500"
+                        className="w-full h-full object-cover grayscale-[10%] hover:grayscale-0 transition-all duration-500"
                       />
                     </div>
-                    {/* Golden Medal Badge at Bottom Right of Portrait */}
-                    <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-gradient-to-br from-amber-200 via-yellow-400 to-amber-600 border border-amber-100 flex items-center justify-center shadow-lg">
-                      <Award className="w-4.5 h-4.5 text-slate-950 stroke-[2.5]" />
+                    
+                    <div className="absolute -bottom-1 -right-1 w-9 h-9 rounded-full bg-gradient-to-br from-amber-200 via-amber-400 to-yellow-600 border-2 border-slate-950 flex items-center justify-center shadow-lg">
+                      <ShieldCheck className="w-5 h-5 text-slate-950 stroke-[2.5]" />
                     </div>
                   </div>
 
-                  {/* Horizontal Ribbony Name Banner */}
-                  <div className="w-[90%] bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-600 text-slate-950 font-display font-extrabold text-base sm:text-lg uppercase tracking-wider py-1.5 px-3 shadow-[0_6px_20px_rgba(0,0,0,0.5)] border-y border-amber-300/40 relative z-10 rounded-md">
-                    <div className="absolute -left-1 top-1.5 w-1 h-full bg-amber-800 -z-10 rounded-l"></div>
-                    <div className="absolute -right-1 top-1.5 w-1 h-full bg-amber-800 -z-10 rounded-r"></div>
-                    <span className="drop-shadow-[0_1px_1px_rgba(255,255,255,0.4)]">
+                  {/* Ribbon Name Banner */}
+                  <div className="w-[95%] bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 text-slate-950 font-display font-black text-base sm:text-lg uppercase tracking-wider py-2 px-4 shadow-[0_8px_25px_rgba(0,0,0,0.5)] border-y border-amber-200/60 relative z-10 rounded-xl">
+                    <span className="drop-shadow-[0_1px_2px_rgba(255,255,255,0.4)]">
                       {testimonials[activeTestimonial].name}
                     </span>
                   </div>
 
-                  {/* Exam details & Ranks */}
-                  <div className="flex flex-col items-center z-10 w-full px-2">
-                    <p className="font-display font-black text-white text-xs sm:text-sm tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-b from-slate-100 to-slate-300">
+                  {/* Exam & Rank Details */}
+                  <div className="flex flex-col items-center z-10 w-full px-2 my-2">
+                    <p className="font-display font-black text-white text-xs sm:text-sm tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100">
                       {testimonials[activeTestimonial].exam}
                     </p>
-                    {/* Gold Divider Line */}
-                    <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-amber-400/80 to-transparent my-1.5"></div>
-                    <p className="font-mono text-[11px] sm:text-xs font-bold tracking-widest text-amber-300 uppercase">
+                    <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent my-1.5"></div>
+                    <p className="font-mono text-xs font-extrabold tracking-widest text-amber-300 uppercase">
                       {testimonials[activeTestimonial].rank}
                     </p>
                   </div>
 
-                  {/* Motivational Motto footer */}
-                  <div className="border-t border-amber-500/20 w-[85%] pt-2.5 z-10">
-                    <p className="text-[8px] sm:text-[9px] font-black tracking-[0.2em] text-amber-400/80 uppercase">
+                  {/* Motto Footer */}
+                  <div className="border-t border-amber-500/20 w-[90%] pt-3 z-10">
+                    <p className="text-[9px] font-black tracking-[0.2em] text-amber-300/80 uppercase">
                       {testimonials[activeTestimonial].motto}
                     </p>
                   </div>
 
-                  {/* Triple Academic Symbol icons */}
-                  <div className="flex items-center gap-4 text-amber-500/30 pb-1 z-10">
+                  {/* Academic Icons */}
+                  <div className="flex items-center gap-5 text-amber-400/40 pt-1 z-10">
                     <GraduationCap className="w-4 h-4" />
                     <School className="w-4 h-4" />
                     <Award className="w-4 h-4" />
@@ -1441,14 +1492,16 @@ export default function Home() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Progress Slide dots inside Poster Card footer */}
+              {/* Progress Slide dots */}
               <div className="flex gap-2.5 mt-6">
                 {testimonials.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveTestimonial(idx)}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      activeTestimonial === idx ? "w-6 bg-amber-400" : "w-2 bg-slate-700 hover:bg-slate-500"
+                      activeTestimonial === idx 
+                        ? "w-8 bg-gradient-to-r from-amber-400 to-yellow-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" 
+                        : "w-2 bg-slate-800 hover:bg-slate-600"
                     }`}
                     aria-label={`Go to slide ${idx + 1}`}
                   />
@@ -1456,108 +1509,143 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Column: Detailed Comment Cards & Navigation & Thumbnail Bar */}
-            <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-8">
+            {/* Right Column: Quote Card & Quick Switch Achiever Grid */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-8">
               
-              {/* Core Student Testimonial Text with Speech Bubble Quote Look */}
-              <div className="bg-gradient-to-br from-slate-900/60 to-slate-950/60 backdrop-blur-2xl border border-white/10 p-6 sm:p-8 rounded-2xl sm:rounded-[32px] relative shadow-2xl overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl sm:rounded-[32px]"></div>
-                
-                <Quote className="absolute top-6 right-6 sm:top-8 sm:right-8 h-8 w-8 sm:h-10 sm:w-10 text-amber-500/10 group-hover:text-amber-500/15 transition-all duration-500" />
+              {/* Premium Quote Card */}
+              <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/15 relative shadow-2xl overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-950/95 to-indigo-950/40 backdrop-blur-2xl">
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                <Quote className="absolute top-6 right-6 sm:top-8 sm:right-8 h-10 w-10 sm:h-12 sm:w-12 text-amber-500/15" />
 
                 <div className="relative z-10">
-                  {/* Rating Stars */}
-                  <div className="flex gap-1.5 mb-4 sm:mb-5 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.4)]">
-                    {[...Array(testimonials[activeTestimonial].rating)].map((_, idx) => (
-                      <Star key={idx} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
-                    ))}
+                  {/* Rating Stars & Badge */}
+                  <div className="flex items-center justify-between mb-5 flex-wrap gap-2">
+                    <div className="flex gap-1.5 text-amber-400 drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
+                      {[...Array(testimonials[activeTestimonial].rating)].map((_, idx) => (
+                        <Star key={idx} className="h-4.5 w-4.5 fill-current" />
+                      ))}
+                    </div>
+
+                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full flex items-center gap-1.5">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> VERIFIED SUCCESS STORY
+                    </span>
                   </div>
 
+                  {/* Quote text */}
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeTestimonial}
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
+                      exit={{ opacity: 0, y: -8 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <p className="text-slate-100 text-sm sm:text-base md:text-lg leading-relaxed font-semibold italic mb-5 sm:mb-6">
+                      <p className="text-slate-100 text-base sm:text-lg md:text-xl leading-relaxed font-semibold italic mb-6">
                         "{testimonials[activeTestimonial].text}"
                       </p>
-                      
-                      <div className="flex items-center gap-2 sm:gap-3">
-                        <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-amber-400"></div>
-                        <p className="text-[10px] sm:text-xs text-amber-400/95 font-bold uppercase tracking-widest">
-                          Certified Achiever • Verified Success Story
-                        </p>
+
+                      <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                        <img 
+                          src={testimonials[activeTestimonial].image} 
+                          alt={testimonials[activeTestimonial].name}
+                          className="w-12 h-12 rounded-2xl object-cover border-2 border-amber-400/80 shadow-md"
+                        />
+                        <div>
+                          <h4 className="text-white font-extrabold text-base font-display">
+                            {testimonials[activeTestimonial].name}
+                          </h4>
+                          <p className="text-xs font-bold text-amber-400">
+                            {testimonials[activeTestimonial].exam} • <span className="text-slate-300">{testimonials[activeTestimonial].rank}</span>
+                          </p>
+                        </div>
                       </div>
                     </motion.div>
                   </AnimatePresence>
                 </div>
 
-                {/* Back/Next manual navigation triggers */}
-                <div className="flex gap-2 sm:gap-3 justify-end mt-6 sm:mt-8 relative z-10 border-t border-white/5 pt-4 sm:pt-6">
+                {/* Back / Next Navigation */}
+                <div className="flex gap-2 justify-end mt-6 relative z-10">
                   <button
                     onClick={() => {
                       setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
                     }}
-                    className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-slate-950 border border-white/10 hover:border-amber-500/50 hover:bg-slate-900 text-slate-400 hover:text-amber-400 transition-all duration-300"
+                    className="p-3 rounded-xl bg-slate-900 border border-white/10 hover:border-amber-500/50 hover:bg-slate-800 text-slate-300 hover:text-amber-400 transition-all duration-300 shadow-md"
                     aria-label="Previous Student"
                   >
-                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
+
                   <button
                     onClick={() => {
                       setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
                     }}
-                    className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-slate-950 border border-white/10 hover:border-amber-500/50 hover:bg-slate-900 text-slate-400 hover:text-amber-400 transition-all duration-300"
+                    className="p-3 rounded-xl bg-slate-900 border border-white/10 hover:border-amber-500/50 hover:bg-slate-800 text-slate-300 hover:text-amber-400 transition-all duration-300 shadow-md"
                     aria-label="Next Student"
                   >
-                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
               </div>
 
-              {/* Clickable Student Thumbnails Bar (Fast switcher) */}
-              <div className="space-y-4">
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                  Quick Switch Achiever List:
-                </p>
+              {/* Quick Switch Achiever Grid */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs font-black text-slate-300 uppercase tracking-widest flex items-center gap-2">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Select Achiever To View Story:</span>
+                  </p>
+                  <span className="text-[10px] text-slate-400 font-bold">
+                    {activeTestimonial + 1} of {testimonials.length}
+                  </span>
+                </div>
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {testimonials.map((testi, idx) => {
                     const isActive = activeTestimonial === idx;
                     return (
-                      <div
+                      <button
                         key={idx}
                         onClick={() => setActiveTestimonial(idx)}
-                        className={`p-3 rounded-2xl border transition-all duration-300 flex items-center gap-3 cursor-pointer select-none ${
+                        className={cn(
+                          "p-3 rounded-2xl border text-left transition-all duration-300 flex items-center gap-3 select-none relative overflow-hidden group",
                           isActive
-                            ? "bg-slate-900/90 border-amber-500/40 text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.15)]"
-                            : "bg-slate-900/30 border-white/5 hover:border-white/10 text-slate-400 hover:text-slate-200 hover:bg-slate-900/50"
-                        }`}
+                            ? "bg-gradient-to-r from-amber-500/20 via-slate-900 to-amber-950/30 border-amber-500/60 shadow-[0_0_20px_rgba(245,158,11,0.2)] text-amber-200"
+                            : "bg-slate-900/60 border-white/10 hover:border-amber-500/30 text-slate-400 hover:text-white hover:bg-slate-900/90"
+                        )}
                       >
+                        {isActive && (
+                          <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-amber-300 to-yellow-500"></div>
+                        )}
+
                         <img
                           src={testi.image}
                           alt={testi.name}
-                          className={`w-9 h-9 rounded-full object-cover border transition-all duration-300 ${
-                            isActive ? "border-amber-400 scale-105" : "border-white/10"
-                          }`}
+                          className={cn(
+                            "w-10 h-10 rounded-xl object-cover border transition-all duration-300 shrink-0",
+                            isActive ? "border-amber-400 ring-2 ring-amber-500/30 scale-105" : "border-white/10 group-hover:border-amber-400/50"
+                          )}
                         />
-                        <div className="truncate">
-                          <p className={`text-xs font-black truncate uppercase tracking-tight ${isActive ? "text-amber-300" : "text-slate-300"}`}>
+
+                        <div className="min-w-0 flex-1">
+                          <p className={cn(
+                            "text-xs font-extrabold truncate uppercase tracking-tight",
+                            isActive ? "text-amber-300" : "text-slate-200 group-hover:text-amber-200"
+                          )}>
                             {testi.name}
                           </p>
-                          <p className="text-[9px] text-slate-500 font-bold truncate tracking-tighter uppercase mt-0.5">
-                            {testi.exam.replace("TOPPER", "").replace("OUTSTANDING", "").trim()}
+                          <p className="text-[10px] text-slate-400 font-semibold truncate uppercase mt-0.5">
+                            {testi.exam.replace("OUTSTANDING", "").replace("MATHEMATICS", "").trim()}
                           </p>
                         </div>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
               </div>
 
             </div>
+
           </div>
         </div>
       </section>
