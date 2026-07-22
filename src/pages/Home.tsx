@@ -649,16 +649,16 @@ export default function Home() {
     <div className="w-full flex-1">
       {/* Banner Section */}
       <section className="pt-6 pb-2 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative w-full h-[520px] md:h-[620px] rounded-[32px] overflow-hidden border border-white/10 shadow-[0_20px_60px_rgba(245,158,11,0.2)] group flex">
+        <div className="relative w-full h-[540px] md:h-[620px] rounded-[32px] overflow-hidden border border-white/15 bg-slate-950/80 shadow-[0_25px_80px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] group flex">
           
           <div className="relative flex-1 h-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentBanner}
-                initial={{ opacity: 0, scale: 1.05 }}
+                initial={{ opacity: 0, scale: 1.04 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0"
               >
                 <img
@@ -668,46 +668,50 @@ export default function Home() {
                     e.currentTarget.src =
                       "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop";
                   }}
-                  className="w-full h-full object-cover mix-blend-luminosity opacity-40 transition-opacity duration-1000"
+                  className="w-full h-full object-cover mix-blend-luminosity opacity-35 transition-all duration-1000 scale-105 group-hover:scale-100"
                 />
                 
+                {/* Subtle Ambient Light Leak inside slide */}
+                <div className="absolute -top-32 -left-32 w-96 h-96 bg-pink-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+
                 {/* Math Pattern Overlay */}
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-15 mix-blend-overlay"></div>
                 
                 {/* Decorative Floating Math Symbols */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20 z-10">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25 z-10">
                   <motion.div
                     animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-12 left-[15%] text-2xl font-serif text-yellow-300/40"
+                    className="absolute top-12 left-[15%] text-2xl font-serif text-yellow-300/50 drop-shadow-[0_0_10px_rgba(250,204,21,0.3)]"
                   >
                     ∫ f(x) dx
                   </motion.div>
                   <motion.div
                     animate={{ y: [0, 20, 0], rotate: [0, -10, 0] }}
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute bottom-20 left-[25%] text-3xl font-serif text-pink-400/30"
+                    className="absolute bottom-20 left-[25%] text-3xl font-serif text-pink-400/40"
                   >
                     ∑ x_i
                   </motion.div>
                   <motion.div
                     animate={{ y: [0, -10, 0], rotate: [0, 15, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                    className="absolute top-24 right-[40%] text-4xl font-serif text-purple-400/30"
+                    className="absolute top-24 right-[40%] text-4xl font-serif text-purple-400/40"
                   >
                     π
                   </motion.div>
                   <motion.div
                     animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
                     transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-                    className="absolute top-1/3 left-[45%] text-2xl font-mono text-cyan-400/40"
+                    className="absolute top-1/3 left-[45%] text-2xl font-mono text-cyan-400/50"
                   >
                     dy/dx
                   </motion.div>
                   <motion.div
                     animate={{ y: [0, -12, 0], rotate: [0, 8, 0] }}
                     transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="absolute bottom-28 right-[35%] text-3xl font-serif text-amber-300/30"
+                    className="absolute bottom-28 right-[35%] text-3xl font-serif text-amber-300/40"
                   >
                     √x² + y²
                   </motion.div>
@@ -717,7 +721,7 @@ export default function Home() {
                 <div
                   className={`absolute inset-0 bg-gradient-to-r ${bannerData[currentBanner].gradient} opacity-95 transition-all duration-1000`}
                 ></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/60 to-transparent"></div>
                 
                 {/* Banner Content Overlay with Grid */}
                 <div className="absolute inset-0 p-6 sm:p-10 md:p-14 lg:p-16 w-full h-full flex items-center z-10">
@@ -725,33 +729,46 @@ export default function Home() {
                     
                     {/* Left Column: Title & Subtitle */}
                     <div className="lg:col-span-7 flex flex-col justify-center text-left">
-                      <span className="bg-yellow-400/10 text-yellow-400 border border-yellow-400/30 px-3.5 py-1.5 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 self-start inline-flex items-center gap-2 shadow-[0_0_15px_rgba(250,204,21,0.3)] backdrop-blur-md">
-                        <Star className="w-3.5 h-3.5 fill-yellow-400" />
-                        {bannerData[currentBanner].badge}
-                      </span>
+                      <div className="inline-flex items-center gap-2 bg-slate-900/80 backdrop-blur-md border border-white/15 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 self-start text-white shadow-[0_0_20px_rgba(255,255,255,0.08)]">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <span>{bannerData[currentBanner].badge}</span>
+                      </div>
                       <h2 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black text-slate-50 uppercase tracking-tight leading-[1.1] drop-shadow-2xl mb-4 sm:mb-6">
                         {bannerData[currentBanner].title}
                       </h2>
-                      <p className="text-slate-300 text-xs sm:text-sm md:text-base mb-6 sm:mb-8 font-medium leading-relaxed border-l-4 border-yellow-400 pl-4 max-w-2xl">
+                      <p className="text-slate-300 text-xs sm:text-sm md:text-base mb-6 sm:mb-8 font-medium leading-relaxed border-l-2 border-pink-500/80 pl-4 max-w-2xl bg-slate-950/30 py-2 rounded-r-xl backdrop-blur-sm border-y border-r border-white/5">
                         {bannerData[currentBanner].subtitle}
                       </p>
-                      <Link
-                        to={(bannerData[currentBanner] as any).link || "/courses"}
-                        className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-900 px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-black text-xs sm:text-sm md:text-base uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:shadow-[0_0_30px_rgba(250,204,21,0.6)] hover:-translate-y-1 self-start"
-                      >
-                        {bannerData[currentBanner].cta}{" "}
-                        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-                      </Link>
+                      
+                      <div className="flex flex-wrap items-center gap-3 self-start">
+                        <Link
+                          to={(bannerData[currentBanner] as any).link || "/courses"}
+                          className="inline-flex items-center gap-2.5 bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 hover:from-pink-400 hover:to-indigo-500 text-white px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl font-black text-xs sm:text-sm md:text-base uppercase tracking-widest transition-all shadow-[0_0_25px_rgba(219,39,119,0.5)] hover:shadow-[0_0_35px_rgba(219,39,119,0.7)] hover:-translate-y-1 active:translate-y-0 border border-white/20"
+                        >
+                          <span>{bannerData[currentBanner].cta}</span>
+                          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                        </Link>
+
+                        <a
+                          href="https://wa.me/918345819377"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="hidden sm:inline-flex items-center gap-2 bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white px-5 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm transition-all border border-white/10 backdrop-blur-md hover:border-emerald-500/40"
+                        >
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                          <span>Quick Enquiry</span>
+                        </a>
+                      </div>
                     </div>
 
                     {/* Right Column: Premium Visual Interactive Display */}
                     <div className="hidden lg:flex lg:col-span-5 justify-center items-center h-full">
-                      <div className="w-full max-w-[370px] p-1 rounded-3xl bg-gradient-to-tr from-yellow-400/20 via-pink-500/10 to-violet-500/20 backdrop-blur-xl border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.6)] overflow-hidden relative group/preview">
+                      <div className="w-full max-w-[380px] p-1 rounded-3xl bg-gradient-to-tr from-pink-500/30 via-purple-500/20 to-indigo-500/30 backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.2)] overflow-hidden relative group/preview">
                         {/* Glow effect */}
-                        <div className="absolute -inset-2 bg-gradient-to-r from-yellow-400/20 via-pink-500/20 to-violet-500/20 blur-2xl opacity-75 group-hover/preview:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                        <div className="absolute -inset-2 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 blur-2xl opacity-75 group-hover/preview:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                         
                         {/* Frame Wrapper */}
-                        <div className="bg-slate-950/90 rounded-[22px] p-6 relative z-10 border border-white/5 flex flex-col justify-between h-[340px]">
+                        <div className="bg-slate-950/90 rounded-[22px] p-6 relative z-10 border border-white/10 flex flex-col justify-between h-[350px]">
                           {renderBannerPreview(bannerData[currentBanner].id)}
                         </div>
                       </div>
@@ -766,29 +783,35 @@ export default function Home() {
           {/* Arrow Controls */}
           <button
             onClick={() => setCurrentBanner((prev) => (prev - 1 + bannerData.length) % bannerData.length)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/60 border border-white/10 text-white/70 hover:text-white hover:bg-slate-900 hover:border-yellow-400/50 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/80 border border-white/15 text-white/80 hover:text-white hover:bg-slate-900 hover:border-pink-500/50 backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl hover:scale-110 active:scale-95"
             aria-label="Previous Slide"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => setCurrentBanner((prev) => (prev + 1) % bannerData.length)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/60 border border-white/10 text-white/70 hover:text-white hover:bg-slate-900 hover:border-yellow-400/50 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 z-20"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/80 border border-white/15 text-white/80 hover:text-white hover:bg-slate-900 hover:border-pink-500/50 backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl hover:scale-110 active:scale-95"
             aria-label="Next Slide"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Banner Navigation Dots */}
-          <div className="absolute bottom-6 right-6 flex gap-2 z-20 bg-slate-950/40 px-3.5 py-1.5 rounded-full border border-white/5 backdrop-blur-md">
-            {bannerData.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentBanner(idx)}
-                className={`h-2 rounded-full transition-all duration-300 ${idx === currentBanner ? "w-6 bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)]" : "w-2 bg-white/30 hover:bg-white/60"}`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
+          {/* Banner Navigation Dots & Counter */}
+          <div className="absolute bottom-6 right-6 flex items-center gap-3 z-20 bg-slate-950/70 px-4 py-2 rounded-full border border-white/10 backdrop-blur-xl shadow-2xl">
+            <span className="text-[11px] font-mono font-bold text-slate-400">
+              0{currentBanner + 1} / 0{bannerData.length}
+            </span>
+            <div className="h-3 w-[1px] bg-white/10"></div>
+            <div className="flex gap-2 items-center">
+              {bannerData.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentBanner(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${idx === currentBanner ? "w-6 bg-gradient-to-r from-pink-500 to-purple-500 shadow-[0_0_10px_rgba(236,72,153,0.8)]" : "w-2 bg-white/30 hover:bg-white/60"}`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1437,16 +1460,16 @@ export default function Home() {
             <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-8">
               
               {/* Core Student Testimonial Text with Speech Bubble Quote Look */}
-              <div className="bg-gradient-to-br from-slate-900/60 to-slate-950/60 backdrop-blur-2xl border border-white/10 p-8 rounded-[32px] relative shadow-2xl overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[32px]"></div>
+              <div className="bg-gradient-to-br from-slate-900/60 to-slate-950/60 backdrop-blur-2xl border border-white/10 p-6 sm:p-8 rounded-2xl sm:rounded-[32px] relative shadow-2xl overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl sm:rounded-[32px]"></div>
                 
-                <Quote className="absolute top-8 right-8 h-12 w-12 text-amber-500/10 group-hover:text-amber-500/15 transition-all duration-500" />
+                <Quote className="absolute top-6 right-6 sm:top-8 sm:right-8 h-8 w-8 sm:h-10 sm:w-10 text-amber-500/10 group-hover:text-amber-500/15 transition-all duration-500" />
 
                 <div className="relative z-10">
                   {/* Rating Stars */}
-                  <div className="flex gap-1.5 mb-5 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.4)]">
+                  <div className="flex gap-1.5 mb-4 sm:mb-5 text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.4)]">
                     {[...Array(testimonials[activeTestimonial].rating)].map((_, idx) => (
-                      <Star key={idx} className="h-5 w-5 fill-current" />
+                      <Star key={idx} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />
                     ))}
                   </div>
 
@@ -1458,13 +1481,13 @@ export default function Home() {
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <p className="text-slate-100 text-base md:text-lg leading-relaxed font-semibold italic mb-6">
+                      <p className="text-slate-100 text-sm sm:text-base md:text-lg leading-relaxed font-semibold italic mb-5 sm:mb-6">
                         "{testimonials[activeTestimonial].text}"
                       </p>
                       
-                      <div className="flex items-center gap-3">
-                        <div className="h-2 w-2 rounded-full bg-amber-400"></div>
-                        <p className="text-xs text-amber-400/95 font-bold uppercase tracking-widest">
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-amber-400"></div>
+                        <p className="text-[10px] sm:text-xs text-amber-400/95 font-bold uppercase tracking-widest">
                           Certified Achiever • Verified Success Story
                         </p>
                       </div>
@@ -1473,24 +1496,24 @@ export default function Home() {
                 </div>
 
                 {/* Back/Next manual navigation triggers */}
-                <div className="flex gap-3 justify-end mt-8 relative z-10 border-t border-white/5 pt-6">
+                <div className="flex gap-2 sm:gap-3 justify-end mt-6 sm:mt-8 relative z-10 border-t border-white/5 pt-4 sm:pt-6">
                   <button
                     onClick={() => {
                       setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
                     }}
-                    className="p-3 rounded-xl bg-slate-950 border border-white/10 hover:border-amber-500/50 hover:bg-slate-900 text-slate-400 hover:text-amber-400 transition-all duration-300"
+                    className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-slate-950 border border-white/10 hover:border-amber-500/50 hover:bg-slate-900 text-slate-400 hover:text-amber-400 transition-all duration-300"
                     aria-label="Previous Student"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                   <button
                     onClick={() => {
                       setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
                     }}
-                    className="p-3 rounded-xl bg-slate-950 border border-white/10 hover:border-amber-500/50 hover:bg-slate-900 text-slate-400 hover:text-amber-400 transition-all duration-300"
+                    className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-slate-950 border border-white/10 hover:border-amber-500/50 hover:bg-slate-900 text-slate-400 hover:text-amber-400 transition-all duration-300"
                     aria-label="Next Student"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 </div>
               </div>

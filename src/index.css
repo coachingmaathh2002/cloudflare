@@ -8,6 +8,8 @@
   --animate-pulse-slow: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-float-1: float-1 10s ease-in-out infinite;
   --animate-float-2: float-2 12s ease-in-out infinite reverse;
+  --animate-light-leak-1: light-leak-1 18s ease-in-out infinite alternate;
+  --animate-light-leak-2: light-leak-2 22s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes pulse-slow {
@@ -23,6 +25,18 @@
 @keyframes float-2 {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(20px) rotate(-5deg); }
+}
+
+@keyframes light-leak-1 {
+  0% { transform: translate(0%, 0%) scale(1) rotate(0deg); opacity: 0.18; }
+  50% { transform: translate(15%, 10%) scale(1.2) rotate(45deg); opacity: 0.28; }
+  100% { transform: translate(-10%, 20%) scale(0.9) rotate(-30deg); opacity: 0.15; }
+}
+
+@keyframes light-leak-2 {
+  0% { transform: translate(0%, 0%) scale(1.1) rotate(0deg); opacity: 0.15; }
+  50% { transform: translate(-20%, -15%) scale(1.3) rotate(-60deg); opacity: 0.25; }
+  100% { transform: translate(10%, -25%) scale(1) rotate(30deg); opacity: 0.12; }
 }
 
 ::selection {
@@ -51,15 +65,40 @@ body {
   background: #db2777;
 }
 
-.text-glow text-pink-600 {
-  text-shadow: 0 0 20px rgba(219, 39, 119, 0.3);
+.text-glow {
+  text-shadow: 0 0 20px rgba(219, 39, 119, 0.35);
 }
 
 .bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.045;
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 1;
+}
+
+/* Glassmorphism Refinements */
+.glass-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.55) 0%, rgba(15, 23, 42, 0.75) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4), 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
+
+.glass-card-interactive {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.55) 0%, rgba(15, 23, 42, 0.75) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4), 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-interactive:hover {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.88) 100%);
+  border-color: rgba(236, 72, 153, 0.3);
+  box-shadow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.2), 0 25px 50px -12px rgba(219, 39, 119, 0.25);
+  transform: translateY(-2px);
 }
