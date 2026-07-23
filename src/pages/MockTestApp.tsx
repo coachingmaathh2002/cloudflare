@@ -217,62 +217,112 @@ export default function MockTestApp() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex flex-col min-h-[calc(100vh-100px)] relative z-10">
         
         {/* Header Banner */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 border border-pink-500/30 text-pink-300 text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-[0_0_20px_rgba(219,39,119,0.3)]"
-          >
-            <Sparkles className="w-4 h-4 text-pink-400 animate-pulse" />
-            <span>RAJ SIR MATH CLASSES • ONLINE CBT MOCK PORTAL</span>
-          </motion.div>
+        <div className="text-center max-w-5xl mx-auto mb-14 relative">
+          {/* Ambient Multi-Color Glow Orbs */}
+          <div className="absolute -top-16 left-1/4 -translate-x-1/2 w-96 h-96 bg-pink-600/20 rounded-full blur-[150px] pointer-events-none"></div>
+          <div className="absolute -top-16 right-1/4 translate-x-1/2 w-96 h-96 bg-indigo-600/20 rounded-full blur-[150px] pointer-events-none"></div>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-slate-50 uppercase tracking-tight leading-tight mb-4"
-          >
-            Master Exam Speed <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 drop-shadow-lg">
-              With CBT Mock Tests
-            </span>
-          </motion.h1>
+          <div className="rounded-[40px] p-8 sm:p-12 border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.8)] relative overflow-hidden bg-gradient-to-br from-slate-900/95 via-slate-950/98 to-indigo-950/60 backdrop-blur-3xl group">
+            
+            {/* Top Multi-Color Gradient Beam */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-pink-500 via-purple-500 via-cyan-400 to-amber-400"></div>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-slate-300 text-sm sm:text-base font-medium leading-relaxed mb-8"
-          >
-            নিয়মিত মক টেস্ট দিন এবং আপনার রেজাল্ট, স্পিড ও অল ইন্ডিয়া র্যাংক ট্র্যাক করুন। আসল পরীক্ষার হুবহু ইন্টারফেসে প্র্যাকটিস করুন।
-          </motion.p>
+            {/* Glowing Accent Corner Patterns */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
-          {/* Key Stats Pill Row */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto"
-          >
-            <div className="glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center border border-white/10">
-              <span className="text-2xl font-black text-pink-400">100+</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Mock Test Sets</span>
-            </div>
-            <div className="glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center border border-white/10">
-              <span className="text-2xl font-black text-emerald-400">CBT Format</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Real NTA Interface</span>
-            </div>
-            <div className="glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center border border-white/10">
-              <span className="text-2xl font-black text-amber-400">Detailed Solution</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">LaTeX Equations</span>
-            </div>
-            <div className="glass-card p-3.5 rounded-2xl flex flex-col items-center justify-center border border-white/10">
-              <span className="text-2xl font-black text-indigo-400">Rank List</span>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Instant Evaluation</span>
-            </div>
-          </motion.div>
+            {/* Badge Indicator */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-pink-500/40 text-pink-300 text-xs font-black uppercase tracking-widest mb-6 shadow-[0_0_25px_rgba(219,39,119,0.25)]"
+            >
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-500"></span>
+              </span>
+              <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+              <span>RAJ SIR MATH CLASSES • ONLINE CBT EXAMINATION PORTAL</span>
+            </motion.div>
+
+            {/* Main Headline */}
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tight leading-none mb-5"
+            >
+              ACCELERATE EXAM ACCURACY <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 via-cyan-300 to-amber-300 drop-shadow-md">
+                WITH CBT MOCK TESTS
+              </span>
+            </motion.h1>
+
+            {/* English Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="text-amber-300/90 text-xs sm:text-sm font-black uppercase tracking-widest mb-3"
+            >
+              WB SLST • WBJEE • CSIR NET • UG & PG MATHEMATICS
+            </motion.p>
+
+            {/* Bengali Guidance Text */}
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-slate-200 text-base sm:text-lg font-medium leading-relaxed mb-10 max-w-3xl mx-auto"
+            >
+              নিয়মিত সময়বদ্ধ মক টেস্ট দিন, ইনস্ট্যান্ট স্কোরকার্ড ও অল ইন্ডিয়া র‍্যাঙ্ক পান এবং বিস্তারিত সমাধান সহ নিজের প্রস্তুতিকে সেরা উচ্চতায় নিয়ে যান।
+            </motion.p>
+
+            {/* Key Stats Pill Grid */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto"
+            >
+              <div className="bg-slate-900/90 border border-pink-500/30 p-4 rounded-2xl flex flex-col items-center justify-center hover:border-pink-500/70 hover:scale-[1.03] transition-all duration-300 group shadow-xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="w-10 h-10 rounded-xl bg-pink-500/15 border border-pink-500/40 flex items-center justify-center text-pink-400 mb-2 group-hover:rotate-6 transition-transform shadow-md">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-200 to-pink-400">150+</span>
+                <span className="text-[10px] sm:text-xs font-black text-slate-300 uppercase tracking-wider mt-1">CBT MOCK TESTS</span>
+              </div>
+
+              <div className="bg-slate-900/90 border border-emerald-500/30 p-4 rounded-2xl flex flex-col items-center justify-center hover:border-emerald-500/70 hover:scale-[1.03] transition-all duration-300 group shadow-xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mb-2 group-hover:rotate-6 transition-transform shadow-md">
+                  <Zap className="w-5 h-5" />
+                </div>
+                <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-teal-400">REAL CBT</span>
+                <span className="text-[10px] sm:text-xs font-black text-slate-300 uppercase tracking-wider mt-1">NTA EXAM PATTERN</span>
+              </div>
+
+              <div className="bg-slate-900/90 border border-amber-500/30 p-4 rounded-2xl flex flex-col items-center justify-center hover:border-amber-500/70 hover:scale-[1.03] transition-all duration-300 group shadow-xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/40 flex items-center justify-center text-amber-400 mb-2 group-hover:rotate-6 transition-transform shadow-md">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-400">DETAILED</span>
+                <span className="text-[10px] sm:text-xs font-black text-slate-300 uppercase tracking-wider mt-1">LaTeX SOLUTIONS</span>
+              </div>
+
+              <div className="bg-slate-900/90 border border-cyan-500/30 p-4 rounded-2xl flex flex-col items-center justify-center hover:border-cyan-500/70 hover:scale-[1.03] transition-all duration-300 group shadow-xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/40 flex items-center justify-center text-cyan-400 mb-2 group-hover:rotate-6 transition-transform shadow-md">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-blue-400">RANK LIST</span>
+                <span className="text-[10px] sm:text-xs font-black text-slate-300 uppercase tracking-wider mt-1">SPEED ANALYTICS</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
         {/* Exam Categories Grid */}

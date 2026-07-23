@@ -36,9 +36,10 @@ export default function Latex({ children, displayMode = false, className }: Late
   );
 }
 
-export function MixedLatex({ content, className }: { content: string, className?: string }) {
+export function MixedLatex({ content, className }: { content?: string, className?: string }) {
+  if (!content) return null;
   return (
-    <div className={cn("text-inherit leading-relaxed font-medium whitespace-pre-wrap", className)}>
+    <div className={cn("text-inherit leading-relaxed font-medium whitespace-pre-wrap tex2jax_process", className)}>
       <MathJax dynamic>{content}</MathJax>
     </div>
   );

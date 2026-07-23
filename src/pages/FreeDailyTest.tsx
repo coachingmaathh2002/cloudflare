@@ -334,11 +334,16 @@ export default function FreeDailyTest() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto w-full">
+    <div className="w-full flex-1 flex flex-col py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#030712] text-slate-100">
+      {/* Deep ambient background glows */}
+      <div className="absolute top-10 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-900/15 rounded-full blur-[180px] pointer-events-none"></div>
+      <div className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-emerald-900/15 rounded-full blur-[160px] pointer-events-none"></div>
+      <div className="absolute bottom-10 left-1/3 w-[600px] h-[600px] bg-blue-950/20 rounded-full blur-[180px] pointer-events-none"></div>
+
+      <div className="max-w-4xl mx-auto w-full relative z-10">
         {viewState !== 'test' && (
-          <Link to="/" className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 font-bold uppercase text-xs tracking-widest mb-8 transition-colors bg-white/5 px-4 py-2 rounded-xl border border-white/10 shadow-inner hover:bg-white/10">
-            <ArrowLeft className="h-4 w-4" /> Back Home
+          <Link to="/" className="inline-flex items-center gap-2 text-slate-300 hover:text-emerald-400 font-bold uppercase text-xs tracking-widest mb-8 transition-all bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800 shadow-xl hover:border-emerald-500/40 hover:bg-slate-850">
+            <ArrowLeft className="h-4 w-4 text-emerald-400" /> Back to Portal
           </Link>
         )}
 
@@ -346,75 +351,96 @@ export default function FreeDailyTest() {
           {viewState === 'registration' && (
             <motion.div
               key="registration"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden"
+              transition={{ duration: 0.4 }}
+              className="bg-slate-900/90 backdrop-blur-2xl border border-slate-800/90 rounded-[32px] p-6 sm:p-10 shadow-[0_25px_80px_rgba(0,0,0,0.85)] relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] pointer-events-none"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-500/10 rounded-full blur-[80px] pointer-events-none"></div>
+              {/* Top Accent Gradient Bar */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-indigo-500 to-purple-500"></div>
               
               <div className="relative z-10 text-center mb-10">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(52,211,153,0.3)]">
-                  <Lock className="h-8 w-8 text-slate-900" />
+                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-800/60 text-emerald-300 text-xs font-black uppercase tracking-widest mb-6 shadow-sm">
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span>FREE DAILY PRACTICE • SLST & WBJEE MATHEMATICS</span>
                 </div>
-                <h1 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight uppercase">Unlock Daily Free Test</h1>
-                <p className="text-slate-300 max-w-lg mx-auto">Please enter your details and the secret code to access today's free SLST Math test.</p>
+
+                <div className="w-18 h-18 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/80 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl border border-slate-800/90">
+                  <Lock className="h-9 w-9 text-emerald-400 stroke-[2.25]" />
+                </div>
+                
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-3 tracking-tight uppercase font-display">
+                  Unlock Daily <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300">Free Mock Test</span>
+                </h1>
+                <p className="text-slate-300 font-medium max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
+                  Enter your candidate information and secret test passcode to unlock today's timed CBT examination.
+                </p>
               </div>
 
-              <form onSubmit={handleRegistrationSubmit} className="max-w-md mx-auto space-y-5 relative z-10">
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+              <form onSubmit={handleRegistrationSubmit} className="max-w-md mx-auto space-y-4 relative z-10">
+                <div className="relative group">
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
                   <input
                     type="text"
                     placeholder="Full Name"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full bg-slate-900/50 border border-white/10 focus:border-green-400/50 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-slate-500 outline-none transition-colors"
+                    className="w-full bg-slate-950/80 border border-slate-800/90 focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm sm:text-base"
                   />
                 </div>
-                <div className="relative">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+
+                <div className="relative group">
+                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
                   <input
                     type="tel"
                     placeholder="Mobile Number"
                     value={formData.mobile}
                     onChange={(e) => setFormData({...formData, mobile: e.target.value})}
-                    className="w-full bg-slate-900/50 border border-white/10 focus:border-green-400/50 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-slate-500 outline-none transition-colors"
+                    className="w-full bg-slate-950/80 border border-slate-800/90 focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm sm:text-base"
                   />
                 </div>
-                <div className="relative">
-                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+
+                <div className="relative group">
+                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
                   <input
                     type="text"
                     placeholder="District Name"
                     value={formData.district}
                     onChange={(e) => setFormData({...formData, district: e.target.value})}
-                    className="w-full bg-slate-900/50 border border-white/10 focus:border-green-400/50 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-slate-500 outline-none transition-colors"
+                    className="w-full bg-slate-950/80 border border-slate-800/90 focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm sm:text-base"
                   />
                 </div>
-                <div className="relative">
-                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-green-400" />
+
+                <div className="relative group">
+                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-amber-400/90 group-focus-within:text-amber-300 transition-colors" />
                   <input
                     type="text"
-                    placeholder="Test Code (e.g., test@547)"
+                    placeholder="Secret Test Code (e.g., test@547)"
                     value={formData.code}
                     onChange={(e) => setFormData({...formData, code: e.target.value})}
-                    className="w-full bg-slate-900/80 border border-green-500/30 focus:border-green-400 rounded-xl py-3.5 pl-12 pr-4 text-white placeholder-slate-500 outline-none transition-colors"
+                    className="w-full bg-slate-950/80 border border-amber-500/30 focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-bold tracking-wide text-sm sm:text-base"
                   />
                 </div>
 
                 {error && (
-                  <p className="text-red-400 text-sm text-center bg-red-400/10 py-2 rounded-lg border border-red-400/20 font-medium">
+                  <motion.p
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-rose-300 text-xs sm:text-sm text-center bg-rose-950/40 py-2.5 px-4 rounded-xl border border-rose-800/60 font-bold"
+                  >
                     {error}
-                  </p>
+                  </motion.p>
                 )}
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-400 hover:to-teal-400 text-slate-900 font-black py-4 rounded-xl uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(52,211,153,0.3)] hover:shadow-[0_0_30px_rgba(52,211,153,0.5)] hover:-translate-y-1 mt-6"
+                  className="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-slate-950 font-black py-4 rounded-xl uppercase tracking-widest text-sm sm:text-base transition-all shadow-lg shadow-emerald-950/50 hover:shadow-emerald-900/60 hover:-translate-y-0.5 mt-6 flex items-center justify-center gap-2"
                 >
-                  Verify & Continue
+                  Verify Credentials & Start <ChevronRight className="w-5 h-5 stroke-[2.5]" />
                 </button>
               </form>
             </motion.div>
@@ -423,62 +449,80 @@ export default function FreeDailyTest() {
           {viewState === 'details' && (
             <motion.div
               key="details"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl text-center relative overflow-hidden"
+              transition={{ duration: 0.4 }}
+              className="bg-slate-900/90 backdrop-blur-2xl border border-slate-800/90 rounded-[32px] p-6 sm:p-10 shadow-[0_25px_80px_rgba(0,0,0,0.85)] text-center relative overflow-hidden"
             >
-               <div className="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] pointer-events-none"></div>
-              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(52,211,153,0.3)]">
-                <Target className="h-10 w-10 text-slate-900" />
-              </div>
-              <h2 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase tracking-tight">{DAILY_TEST.title}</h2>
-              <p className="text-emerald-400 font-bold mb-8 uppercase tracking-widest text-sm">Welcome, {formData.name}</p>
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-indigo-500 to-purple-500"></div>
 
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-10">
-                <div className="bg-slate-900/80 px-6 py-4 rounded-2xl border border-white/5 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                    <Target className="h-5 w-5 text-blue-400" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-xs text-slate-400 uppercase font-bold tracking-wider">Questions</p>
-                    <p className="text-lg font-black text-white">{DAILY_TEST.totalQuestions}</p>
-                  </div>
-                </div>
-                <div className="bg-slate-900/80 px-6 py-4 rounded-2xl border border-white/5 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-purple-400" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-xs text-slate-400 uppercase font-bold tracking-wider">Duration</p>
-                    <p className="text-lg font-black text-white">{DAILY_TEST.duration / 60} mins</p>
-                  </div>
-                </div>
+              <div className="w-18 h-18 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/80 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl border border-slate-800/90">
+                <Target className="h-9 w-9 text-emerald-400 stroke-[2.25]" />
               </div>
 
-              <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-6 mb-10 text-left max-w-2xl mx-auto">
-                <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-sm border-b border-white/10 pb-2">Instructions</h3>
-                <ul className="space-y-3 text-sm text-slate-300">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
-                    <span>Each question carries 1 mark. There is no negative marking in this free test.</span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 uppercase tracking-tight font-display">
+                {DAILY_TEST.title}
+              </h2>
+              
+              <div className="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest text-emerald-300 bg-emerald-950/70 border border-emerald-800/60 mb-8 shadow-sm">
+                Candidate: {formData.name} ({formData.district})
+              </div>
+
+              {/* Stats Highlights */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8 max-w-3xl mx-auto">
+                <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+                  <Target className="h-5 w-5 text-cyan-400 mb-1" />
+                  <span className="text-2xl font-black text-cyan-300">{DAILY_TEST.totalQuestions}</span>
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-0.5">Questions</span>
+                </div>
+
+                <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+                  <Clock className="h-5 w-5 text-purple-400 mb-1" />
+                  <span className="text-2xl font-black text-purple-300">{DAILY_TEST.duration / 60}m</span>
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-0.5">Duration</span>
+                </div>
+
+                <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 mb-1" />
+                  <span className="text-2xl font-black text-emerald-300">+1 / 0</span>
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-0.5">Marking Scheme</span>
+                </div>
+
+                <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+                  <Lock className="h-5 w-5 text-amber-400 mb-1" />
+                  <span className="text-2xl font-black text-amber-300">CBT</span>
+                  <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mt-0.5">Format</span>
+                </div>
+              </div>
+
+              {/* Rules List */}
+              <div className="bg-slate-950/90 border border-slate-800/90 rounded-2xl p-6 mb-8 text-left max-w-2xl mx-auto">
+                <h3 className="text-white font-black mb-4 uppercase tracking-wider text-xs border-b border-slate-800 pb-2.5 flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  Exam Instructions & Guidelines
+                </h3>
+                <ul className="space-y-3 text-xs sm:text-sm text-slate-300 font-medium">
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0"></span>
+                    <span>Each question carries 1 mark. There is no negative marking for incorrect choices.</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
-                    <span>You cannot pause the test once started. Ensure you have stable internet.</span>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0"></span>
+                    <span>The timer starts automatically upon launch. Test auto-submits when time expires.</span>
                   </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
-                    <span>The test will auto-submit when the timer reaches zero.</span>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 shrink-0"></span>
+                    <span>You can navigate back and forth between questions using the Question Palette.</span>
                   </li>
                 </ul>
               </div>
 
               <button
                 onClick={handleStartTest}
-                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-slate-900 font-black py-4 px-12 rounded-xl text-lg uppercase tracking-widest transition-all shadow-[0_0_30px_rgba(52,211,153,0.4)] hover:shadow-[0_0_40px_rgba(52,211,153,0.6)] hover:-translate-y-1 inline-flex items-center gap-3"
+                className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-slate-950 font-black py-4 px-10 rounded-xl text-base sm:text-lg uppercase tracking-widest transition-all shadow-lg shadow-emerald-950/50 hover:shadow-emerald-900/60 hover:-translate-y-0.5 inline-flex items-center gap-3"
               >
-                <PlayCircle className="h-6 w-6" /> Start Test Now
+                <PlayCircle className="h-6 w-6 stroke-[2.25]" /> Launch Test Portal
               </button>
             </motion.div>
           )}
@@ -489,73 +533,127 @@ export default function FreeDailyTest() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="w-full"
+              className="w-full space-y-5"
             >
-              <div className="bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-4 z-20 shadow-xl">
-                <div>
-                  <h2 className="text-white font-black text-lg sm:text-xl uppercase tracking-tight">{DAILY_TEST.title}</h2>
-                  <p className="text-slate-400 text-sm font-medium">Question {currentQuestionIndex + 1} of {DAILY_TEST.totalQuestions}</p>
+              {/* Sticky Exam Top Bar */}
+              <div className="bg-slate-900/95 backdrop-blur-2xl border border-slate-800 rounded-2xl p-4 shadow-2xl flex flex-col sm:flex-row justify-between items-center gap-4 sticky top-4 z-30">
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start">
+                  <div>
+                    <span className="px-3 py-1 rounded-md bg-emerald-950 text-emerald-300 text-xs font-black uppercase tracking-wider border border-emerald-800/80 mr-2">
+                      Question {currentQuestionIndex + 1} / {DAILY_TEST.totalQuestions}
+                    </span>
+                    <span className="text-xs text-slate-400 font-bold hidden sm:inline">
+                      ({Object.keys(answers).length} Answered)
+                    </span>
+                  </div>
                 </div>
-                <div className={`flex items-center gap-3 px-5 py-2.5 rounded-xl border font-mono text-xl font-bold transition-all ${timeLeft < 60 ? 'bg-red-600 border-red-500 text-white animate-pulse shadow-[0_0_20px_rgba(220,38,38,0.8)] scale-105' : 'bg-slate-900 border-white/10 text-emerald-400'}`}>
+
+                {/* Progress Bar */}
+                <div className="w-full sm:w-48 bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800 hidden md:block">
+                  <div 
+                    className="bg-gradient-to-r from-emerald-500 to-cyan-500 h-full transition-all duration-300"
+                    style={{ width: `${((currentQuestionIndex + 1) / DAILY_TEST.totalQuestions) * 100}%` }}
+                  ></div>
+                </div>
+
+                <div className={`flex items-center gap-2.5 px-5 py-2 rounded-xl border font-mono text-lg font-black transition-all ${
+                  timeLeft < 300 
+                    ? 'bg-rose-950/90 border-rose-600 text-rose-200 animate-pulse shadow-md' 
+                    : timeLeft < 600
+                      ? 'bg-amber-950/80 border-amber-600/80 text-amber-300'
+                      : 'bg-slate-950 border-emerald-800/60 text-emerald-400'
+                }`}>
                   <Clock className="h-5 w-5" />
-                  {formatTime(timeLeft)}
+                  <span>{formatTime(timeLeft)}</span>
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 border border-white/5 rounded-3xl p-6 sm:p-10 shadow-2xl relative">
+              {/* Question Navigation Drawer Palette */}
+              <div className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-3 flex flex-wrap gap-1.5 justify-center max-h-28 overflow-y-auto custom-scrollbar">
+                {DAILY_TEST.questions.map((_, idx) => {
+                  const isCurrent = idx === currentQuestionIndex;
+                  const isAnswered = answers[idx] !== undefined;
+
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentQuestionIndex(idx)}
+                      className={`w-8 h-8 rounded-lg text-xs font-black transition-all border ${
+                        isCurrent
+                          ? 'bg-emerald-400 text-slate-950 border-emerald-300 ring-2 ring-emerald-400/40 shadow-md scale-110'
+                          : isAnswered
+                            ? 'bg-emerald-950 text-emerald-300 border-emerald-800'
+                            : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700'
+                      }`}
+                    >
+                      {idx + 1}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Main Question Card */}
+              <div className="bg-slate-900/95 border border-slate-800/90 rounded-[28px] p-6 sm:p-10 shadow-2xl relative">
+                
+                {/* Question Text */}
                 <div className="mb-8">
-                  <h3 className="text-xl sm:text-2xl text-white font-medium leading-relaxed">
+                  <div className="text-lg sm:text-2xl text-white font-medium leading-relaxed bg-slate-950/90 p-5 rounded-2xl border border-slate-800">
                     <span className="font-black text-emerald-400 mr-2">Q{currentQuestionIndex + 1}.</span>
                     <MixedLatex content={DAILY_TEST.questions[currentQuestionIndex].question} />
-                  </h3>
+                  </div>
                 </div>
 
-                <div className="space-y-4 mb-10">
+                {/* Option Cards */}
+                <div className="space-y-3.5 mb-10">
                   {DAILY_TEST.questions[currentQuestionIndex].options.map((option, idx) => {
                     const isSelected = answers[currentQuestionIndex] === idx;
+                    const optionLabels = ["A", "B", "C", "D"];
+
                     return (
                       <button
                         key={idx}
                         onClick={() => handleAnswer(idx)}
-                        className={`w-full text-left p-5 rounded-xl border transition-all flex items-start gap-4 ${
+                        className={`w-full text-left p-4 sm:p-5 rounded-2xl border transition-all flex items-start gap-4 ${
                           isSelected 
-                            ? 'bg-emerald-500/20 border-emerald-500 text-white shadow-[0_0_20px_rgba(52,211,153,0.15)]' 
-                            : 'bg-slate-900/50 border-white/10 text-slate-300 hover:bg-slate-800 hover:border-white/20'
+                            ? 'bg-emerald-950/70 border-emerald-500 text-emerald-100 ring-1 ring-emerald-500/30 shadow-md' 
+                            : 'bg-slate-950/70 border-slate-800/80 text-slate-200 hover:bg-slate-900 hover:border-slate-700'
                         }`}
                       >
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${
-                          isSelected ? 'border-emerald-400 bg-emerald-400 text-slate-900' : 'border-slate-500'
+                        <div className={`w-7 h-7 rounded-xl border flex items-center justify-center shrink-0 mt-0.5 text-xs font-black transition-colors ${
+                          isSelected ? 'border-emerald-400 bg-emerald-500 text-slate-950' : 'border-slate-700 bg-slate-900 text-slate-400'
                         }`}>
-                          {isSelected && <div className="w-2.5 h-2.5 bg-slate-900 rounded-full" />}
+                          {optionLabels[idx]}
                         </div>
-                        <div className="text-base sm:text-lg"><MixedLatex content={option} /></div>
+                        <div className="text-base sm:text-lg pt-0.5 font-medium"><MixedLatex content={option} /></div>
                       </button>
                     );
                   })}
                 </div>
 
-                <div className="flex justify-between items-center pt-6 border-t border-white/10">
+                {/* Question Footer Action Bar */}
+                <div className="flex justify-between items-center pt-6 border-t border-slate-800">
                   <button
                     onClick={handlePrev}
                     disabled={currentQuestionIndex === 0}
-                    className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-colors disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900 text-white hover:bg-slate-800"
+                    className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold uppercase tracking-wider text-xs sm:text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-slate-950 text-slate-300 hover:bg-slate-800 border border-slate-800"
                   >
-                    <ChevronLeft className="h-5 w-5" /> Prev
+                    <ChevronLeft className="h-4 w-4" /> Previous
                   </button>
                   
                   {currentQuestionIndex === DAILY_TEST.questions.length - 1 ? (
                     <button
                       onClick={handleFinishTest}
-                      className="flex items-center gap-2 px-8 py-3 rounded-xl font-black uppercase tracking-widest text-sm transition-all bg-emerald-500 hover:bg-emerald-400 text-slate-900 shadow-[0_0_20px_rgba(52,211,153,0.4)]"
+                      disabled={isSubmitting}
+                      className="flex items-center gap-2 px-8 py-3 rounded-xl font-black uppercase tracking-wider text-xs sm:text-sm transition-all bg-gradient-to-r from-amber-500 to-emerald-500 hover:from-amber-400 hover:to-emerald-400 text-slate-950 shadow-lg shadow-amber-950/40 hover:scale-105"
                     >
-                      Submit Test
+                      {isSubmitting ? 'Submitting...' : 'Submit Test Now'}
                     </button>
                   ) : (
                     <button
                       onClick={handleNext}
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-sm transition-colors bg-green-500/20 text-green-400 hover:bg-green-500/30 border border-green-500/30"
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl font-black uppercase tracking-wider text-xs sm:text-sm transition-all bg-emerald-950 text-emerald-300 hover:bg-emerald-900 border border-emerald-800/80"
                     >
-                      Next <ChevronRight className="h-5 w-5" />
+                      Next <ChevronRight className="h-4 w-4" />
                     </button>
                   )}
                 </div>
@@ -568,73 +666,115 @@ export default function FreeDailyTest() {
               key="results"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-slate-800/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-12 shadow-2xl max-w-3xl mx-auto w-full relative overflow-hidden text-center"
+              transition={{ duration: 0.4 }}
+              className="bg-slate-900/90 backdrop-blur-2xl border border-slate-800/90 rounded-[32px] p-6 sm:p-12 shadow-2xl max-w-4xl mx-auto w-full relative overflow-hidden text-center"
             >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-emerald-500/20 rounded-full blur-[100px] pointer-events-none"></div>
-              
-              <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(52,211,153,0.4)] relative z-10">
-                <Target className="h-12 w-12 text-slate-900" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-indigo-500 to-purple-500"></div>
+
+              <div className="w-20 h-20 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/80 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl border border-slate-800/90">
+                <Target className="h-10 w-10 text-emerald-400 stroke-[2.25]" />
               </div>
               
-              <h2 className="text-3xl sm:text-4xl font-black text-white mb-2 uppercase tracking-tight relative z-10">Test Completed!</h2>
-              <p className="text-slate-300 mb-10 relative z-10">Great effort, {formData.name}. Here is your performance summary.</p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-2 uppercase tracking-tight font-display">
+                Test Completed!
+              </h2>
+              <p className="text-slate-300 font-medium mb-8">
+                Great job, <span className="text-emerald-300 font-black">{formData.name}</span>! Here is your performance evaluation.
+              </p>
               
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10 relative z-10">
-                <div className="bg-slate-900/80 rounded-2xl p-6 border border-white/5">
-                  <p className="text-slate-400 font-bold uppercase tracking-widest text-xs mb-2">Total Score</p>
-                  <p className="text-4xl font-black text-emerald-400">{score}/{DAILY_TEST.totalQuestions}</p>
+              {/* Score Summary Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+                <div className="bg-slate-950/80 rounded-2xl p-6 border border-slate-800 flex flex-col items-center shadow-md">
+                  <p className="text-slate-400 font-extrabold uppercase tracking-widest text-[10px] mb-2">Total Score</p>
+                  <p className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+                    {score} <span className="text-xl text-slate-400 font-normal">/ {DAILY_TEST.totalQuestions}</span>
+                  </p>
                 </div>
-                <div className="bg-slate-900/80 rounded-2xl p-6 border border-white/5">
-                  <p className="text-slate-400 font-bold uppercase tracking-widest text-xs mb-2">Accuracy</p>
-                  <p className="text-4xl font-black text-blue-400">{Math.round((score/DAILY_TEST.totalQuestions)*100)}%</p>
+
+                <div className="bg-slate-950/80 rounded-2xl p-6 border border-slate-800 flex flex-col items-center shadow-md">
+                  <p className="text-slate-400 font-extrabold uppercase tracking-widest text-[10px] mb-2">Accuracy Rate</p>
+                  <p className="text-4xl sm:text-5xl font-black text-cyan-300">
+                    {Math.round((score / DAILY_TEST.totalQuestions) * 100)}%
+                  </p>
                 </div>
-                <div className="bg-slate-900/80 rounded-2xl p-6 border border-white/5">
-                  <p className="text-slate-400 font-bold uppercase tracking-widest text-xs mb-2">Time Taken</p>
-                  <p className="text-4xl font-black text-purple-400">{formatTime(DAILY_TEST.duration - timeLeft)}</p>
+
+                <div className="bg-slate-950/80 rounded-2xl p-6 border border-slate-800 flex flex-col items-center shadow-md">
+                  <p className="text-slate-400 font-extrabold uppercase tracking-widest text-[10px] mb-2">Time Consumed</p>
+                  <p className="text-4xl sm:text-5xl font-black text-purple-300">
+                    {formatTime(DAILY_TEST.duration - timeLeft)}
+                  </p>
                 </div>
               </div>
 
-              <div className="space-y-6 text-left relative z-10 mt-10 border-t border-white/10 pt-10">
-                <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-6">Detailed Solutions</h3>
+              {/* Detailed Solutions Section */}
+              <div className="space-y-6 text-left border-t border-slate-800 pt-10">
+                <h3 className="text-xl font-black text-white uppercase tracking-wider mb-6 flex items-center gap-2.5">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Detailed Question Solutions
+                </h3>
+
                 {DAILY_TEST.questions.map((q, idx) => {
                   const userAnswer = answers[idx];
                   const isCorrect = userAnswer === q.correctAnswer;
                   const isUnanswered = userAnswer === undefined;
                   
                   return (
-                    <div key={idx} className={`p-6 rounded-2xl border ${isCorrect ? 'bg-emerald-500/10 border-emerald-500/30' : isUnanswered ? 'bg-slate-900/50 border-white/10' : 'bg-red-500/10 border-red-500/30'}`}>
-                      <div className="flex gap-4 items-start mb-4">
+                    <div 
+                      key={idx} 
+                      className={`p-6 rounded-2xl border transition-all ${
+                        isCorrect 
+                          ? 'bg-emerald-950/20 border-emerald-800/60' 
+                          : isUnanswered 
+                            ? 'bg-slate-950/60 border-slate-800' 
+                            : 'bg-rose-950/20 border-rose-800/60'
+                      }`}
+                    >
+                      <div className="flex gap-4 items-start">
                         {isCorrect ? (
                           <CheckCircle2 className="h-6 w-6 text-emerald-400 shrink-0 mt-1" />
                         ) : isUnanswered ? (
-                          <div className="h-6 w-6 rounded-full border-2 border-slate-500 shrink-0 mt-1"></div>
+                          <div className="h-6 w-6 rounded-full border-2 border-amber-400/80 text-amber-400 flex items-center justify-center text-[10px] font-black shrink-0 mt-1">?</div>
                         ) : (
-                          <XCircle className="h-6 w-6 text-red-400 shrink-0 mt-1" />
+                          <XCircle className="h-6 w-6 text-rose-400 shrink-0 mt-1" />
                         )}
-                        <div>
-                          <div className="text-white font-medium mb-3"><MixedLatex content={`Q${idx+1}. ${q.question}`} /></div>
+
+                        <div className="w-full">
+                          <div className="text-white font-medium text-base sm:text-lg mb-4 bg-slate-950/90 p-4 rounded-xl border border-slate-800">
+                            <span className="font-bold text-emerald-400 mr-2">Q{idx + 1}.</span>
+                            <MixedLatex content={q.question} />
+                          </div>
+
                           <div className="space-y-2 mb-4">
                             {q.options.map((opt, optIdx) => (
-                              <div key={optIdx} className={`p-3 rounded-lg border ${
+                              <div key={optIdx} className={`p-3.5 rounded-xl border text-sm font-medium ${
                                 optIdx === q.correctAnswer 
-                                  ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                                  ? 'bg-emerald-950/80 border-emerald-500/80 text-emerald-200 font-bold'
                                   : optIdx === userAnswer
-                                    ? 'bg-red-500/20 border-red-500/50 text-red-300'
-                                    : 'bg-slate-800 border-white/5 text-slate-400'
+                                    ? 'bg-rose-950/80 border-rose-500/80 text-rose-200'
+                                    : 'bg-slate-950/60 border-slate-800/80 text-slate-400'
                               }`}>
                                 <MixedLatex content={opt} />
                               </div>
                             ))}
                           </div>
-                          <div className="bg-slate-900/80 p-4 rounded-xl border border-white/5">
-                            <p className="text-xs text-emerald-400 font-bold uppercase tracking-widest mb-2">Explanation</p>
-                            <div className="text-sm text-slate-300"><MixedLatex content={q.explanation} /></div>
+
+                          <div className="bg-slate-950/90 p-4 rounded-xl border border-slate-800">
+                            <p className="text-[11px] text-emerald-400 font-black uppercase tracking-widest mb-1.5">Explanation & Method</p>
+                            <div className="text-sm text-slate-300 leading-relaxed font-medium"><MixedLatex content={q.explanation} /></div>
                           </div>
                         </div>
                       </div>
                     </div>
                   );
                 })}
+              </div>
+
+              <div className="mt-10 pt-6 border-t border-slate-800 flex justify-center">
+                <Link
+                  to="/"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-4 px-10 rounded-xl text-sm uppercase tracking-widest transition-all shadow-lg hover:scale-105"
+                >
+                  Return to Portal Dashboard
+                </Link>
               </div>
             </motion.div>
           )}

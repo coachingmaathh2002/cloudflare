@@ -29,6 +29,31 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- MathJax 3 Configuration & Preload for Instant LaTeX Typesetting -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        },
+        options: {
+          enableMenu: false,
+          ignoreHtmlClass: 'tex2jax_ignore',
+          processHtmlClass: 'tex2jax_process'
+        },
+        chtml: {
+          scale: 1,
+          displayAlign: 'left'
+        },
+        startup: {
+          typeset: true
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
     <!-- Schema.org JSON-LD Structured Data for LocalBusiness & Education -->
     <script type="application/ld+json">
       {
