@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Link } from "react-router-dom";
 import { useSEO } from "../lib/useSEO";
 import { cn } from "../lib/utils";
+import Latex, { MixedLatex } from "../components/LatexRenderer";
 import {
   BookOpen,
   Award,
@@ -11,13 +12,13 @@ import {
   ChevronLeft,
   School,
   CheckCircle2,
+  XCircle,
   ShieldCheck,
   PlayCircle,
   FileText,
   Star,
   Quote,
   GraduationCap,
-  MapPin,
   Users,
   HelpCircle,
   Compass,
@@ -26,6 +27,13 @@ import {
   Plus,
   Minus,
   Clock,
+  Flame,
+  Zap,
+  BrainCircuit,
+  RefreshCw,
+  ArrowRight,
+  Check,
+  MessageCircle,
 } from "lucide-react";
 
 const bannerData = [
@@ -36,7 +44,7 @@ const bannerData = [
     title: (
       <>
         আপনার SLST Math প্রস্তুতি যাচাই করুন <br className="hidden md:block" />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-purple-400 drop-shadow-[0_0_20px_rgba(168,85,247,0.5)]">
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-pink-400 to-purple-300 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]">
           প্রতিদিন ফ্রি মক টেস্ট দিয়ে!
         </span>
       </>
@@ -44,56 +52,85 @@ const bannerData = [
     subtitle:
       "SLST Mathematics-এর সেরা প্রস্তুতির জন্য আজই আমাদের ফ্রি মক টেস্ট দিন। বিস্তারিত সমাধান ও স্কোর চেক করুন সম্পূর্ণ বিনামূল্যে।",
     cta: "এখনই মক টেস্ট দিন",
-    gradient: "from-[#1e1b4b] via-[#6d28d9] to-transparent",
+    gradient: "from-[#1a0c2e] via-[#581c87]/90 to-transparent",
     link: "/free-daily-test",
-    iconColor: "text-purple-400"
+    iconColor: "text-purple-400",
+    tag: "FREE PRACTICE",
+    status: "LIVE NOW",
+    highlights: [
+      "• 100% Free Daily Practice Mocks",
+      "• Instant Result & Rank Analysis",
+      "• Complete Step-by-Step Solutions"
+    ]
   },
   {
     id: 1,
-    image: "/carousel/slide1.webp",
+    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2000&auto=format&fit=crop",
     badge: "🚀 নতুন ব্যাচ শুরু হচ্ছে!",
     title: (
       <>
-        টার্গেট <span className="text-yellow-400 drop-shadow-lg">JEE 2027</span>{" "}
-        <br className="hidden md:block" /> ক্র্যাশ কোর্সে ভর্তি শুরু!
+        টার্গেট <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-300 to-yellow-400 drop-shadow-[0_0_25px_rgba(253,224,71,0.6)] font-black">JEE 2027</span>{" "}
+        <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-200 drop-shadow-sm">ক্র্যাশ কোর্সে ভর্তি শুরু!</span>
       </>
     ),
     subtitle:
       "৫০০+ ভিডিও লেকচার, মক টেস্ট এবং ডাউট ক্লিয়ারিং সেশন নিয়ে এখনই শুরু করো সম্পূর্ণ প্রস্তুতি।",
     cta: "আজই এনরোল করো",
-    gradient: "from-[#1e1b4b] via-[#4338ca] to-transparent",
+    gradient: "from-[#0c1938] via-[#1e40af]/90 to-transparent",
+    link: "/courses",
+    tag: "JEE CRASH COURSE",
+    status: "ADMISSIONS OPEN",
+    highlights: [
+      "• 500+ HD Chapter Video Lectures",
+      "• Speed Optimization & Short Tricks",
+      "• Dedicated Live Doubt Clearing"
+    ]
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2000&auto=format&fit=crop",
     badge: "🏆 SLST MATHEMATICS",
     title: (
       <>
-        <span className="text-emerald-400 drop-shadow-lg">SLST Mathematics</span>-এর{" "}
-        <br className="hidden md:block" /> নতুন লাইভ ব্যাচ
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 drop-shadow-[0_0_25px_rgba(52,211,153,0.6)]">SLST Mathematics</span>-এর{" "}
+        <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-emerald-200 drop-shadow-sm">নতুন লাইভ ব্যাচ</span>
       </>
     ),
     subtitle:
       "সম্পূর্ণ সিলেবাস কভারেজ, চ্যাপ্টার-ভিত্তিক নোটস, এবং ১০০% পরীক্ষার প্রস্তুতির জন্য মক টেস্ট সিরিজ।",
     cta: "জয়েন করো লাইভ কোর্স",
-    gradient: "from-[#064e3b] via-[#059669] to-transparent",
+    gradient: "from-[#042f2e] via-[#0d9488]/90 to-transparent",
+    link: "/courses",
+    tag: "SLST IX-X & XI-XII",
+    status: "NEW BATCH",
+    highlights: [
+      "• Complete Syllabus Coverage",
+      "• Raj Sir's Handwritten Note PDFs",
+      "• Exam-Oriented Mock Test Series"
+    ]
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2000&auto=format&fit=crop",
     badge: "📢 স্পেশাল অফার",
     title: (
       <>
-        <span className="text-fuchsia-400 drop-shadow-lg">CSIR NET ও GATE</span>:{" "}
-        <br className="hidden md:block" /> নিশ্চিত সাফল্যের লক্ষ্যে!
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-300 via-pink-300 to-purple-300 drop-shadow-[0_0_25px_rgba(232,121,249,0.6)]">CSIR NET ও GATE</span>:{" "}
+        <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-fuchsia-200 drop-shadow-sm">নিশ্চিত সাফল্যের লক্ষ্যে!</span>
       </>
     ),
     subtitle:
       "পিওর এবং অ্যাপ্লায়েড ম্যাথমেটিক্স এর স্পেশাল কোর্স। স্কলারশিপ টেস্টের মাধ্যমে ভর্তি হলে পাও ৫০% পর্যন্ত ছাড়!",
     cta: "টেস্টের জন্য রেজিস্টার করো",
-    gradient: "from-[#4c1d95] via-[#9333ea] to-transparent",
+    gradient: "from-[#2e1065] via-[#7e22ce]/90 to-transparent",
+    link: "/mock-test",
+    tag: "CSIR NET & GATE",
+    status: "SPECIAL OFFER",
+    highlights: [
+      "• Pure & Applied Maths Mastery",
+      "• Higher Level Theorem Proofs",
+      "• Up to 50% Scholarship Discount"
+    ]
   },
   {
     id: 4,
@@ -101,51 +138,101 @@ const bannerData = [
     badge: "🎓 বিএসসি ও এমএসসি (B.Sc & M.Sc)",
     title: (
       <>
-        অনার্স ও পাসের জন্য <br className="hidden md:block" /> <span className="text-rose-400 drop-shadow-lg">স্পেশাল গাইডিং ব্যাচ</span>
+        অনার্স ও পাসের জন্য <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-pink-400 to-red-300 drop-shadow-[0_0_25px_rgba(244,63,94,0.6)]">স্পেশাল গাইডিং ব্যাচ</span>
       </>
     ),
     subtitle: "WBSU, CU, BU সহ সকল ইউনিভার্সিটির সিলেবাস অনুযায়ী স্পেশাল অফলাইন ও অনলাইন ব্যাচ।",
     cta: "বিস্তারিত জানুন",
-    gradient: "from-[#7f1d1d] via-[#dc2626] to-transparent",
+    gradient: "from-[#450a0a] via-[#be123c]/90 to-transparent",
+    link: "/courses",
+    tag: "UNIVERSITY DEGREE",
+    status: "ENROLLING NOW",
+    highlights: [
+      "• CU, WBSU, BU Varsity Syllabus",
+      "• Honours & General Streams",
+      "• Interactive Online & Offline Classes"
+    ]
   },
   {
     id: 5,
-    image: "https://images.unsplash.com/photo-1427504494785-319ce83d506c?q=80&w=2000&auto=format&fit=crop",
-    badge: "📚 মাধ্যমিক প্রস্তুতি",
-    title: (
-      <>
-        নবম ও দশম শ্রেণীর <br className="hidden md:block" /> <span className="text-cyan-400 drop-shadow-lg">গণিতের ফাউন্ডেশন ব্যাচ</span>
-      </>
-    ),
-    subtitle: "WBBSE স্পেশাল: বেসিক থেকে অ্যাডভান্স কনসেপ্ট, শর্টকাট ট্রিক্স এবং পরীক্ষার সেরা প্রস্তুতি।",
-    cta: "অ্যাডমিশন শুরু হয়েছে",
-    gradient: "from-[#083344] via-[#0891b2] to-transparent",
-  },
-  {
-    id: 6,
     image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2000&auto=format&fit=crop",
     badge: "✨ নতুন সেমিস্টার সিস্টেম",
     title: (
       <>
-        একাদশ শ্রেণী (<span className="text-orange-400 drop-shadow-lg">1st & 2nd Sem</span>) <br className="hidden md:block" /> WBCHSE স্পেশাল গাইডেন্স
+        একাদশ শ্রেণী (<span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-300 drop-shadow-[0_0_20px_rgba(251,146,60,0.6)] font-black">1st & 2nd Sem</span>) <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-amber-200 drop-shadow-sm">WBCHSE স্পেশাল গাইডেন্স</span>
       </>
     ),
     subtitle: "নতুন প্যাটার্নের সাথে মিল রেখে সম্পূর্ণ স্টাডি মেটেরিয়াল এবং বিষয়ভিত্তিক মক টেস্ট।",
     cta: "সিলেবাস জানুন",
-    gradient: "from-[#7c2d12] via-[#ea580c] to-transparent",
+    gradient: "from-[#431407] via-[#c2410c]/90 to-transparent",
+    link: "/notes",
+    tag: "CLASS 11 (SEM 1 & 2)",
+    status: "NEW PATTERN",
+    highlights: [
+      "• Aligned with WBCHSE Sem Pattern",
+      "• Chapter MCQ Practice Sheets",
+      "• Strong Conceptual Foundation"
+    ]
   },
   {
-    id: 7,
+    id: 6,
     image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000&auto=format&fit=crop",
     badge: "🎯 উচ্চমাধ্যমিক স্পেশাল",
     title: (
       <>
-        দ্বাদশ শ্রেণী (<span className="text-pink-400 drop-shadow-lg">3rd & 4th Sem</span>) <br className="hidden md:block" /> মিশন বোর্ড এক্সাম
+        দ্বাদশ শ্রেণী (<span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-purple-300 drop-shadow-[0_0_20px_rgba(244,114,182,0.6)] font-black">3rd & 4th Sem</span>) <br className="hidden md:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-rose-100 to-pink-200 drop-shadow-sm">মিশন বোর্ড এক্সাম</span>
       </>
     ),
     subtitle: "বোর্ড এক্সাম এবং জয়েন্ট (WBJEE/JEE MAINS) এর জন্য একদম পারফেক্ট ম্যাথমেটিক্স স্ট্র্যাটেজি।",
     cta: "জয়েন করো আজই",
-    gradient: "from-[#831843] via-[#db2777] to-transparent",
+    gradient: "from-[#500724] via-[#be185d]/90 to-transparent",
+    link: "/courses",
+    tag: "CLASS 12 (SEM 3 & 4)",
+    status: "BOARD MISSION",
+    highlights: [
+      "• Board + Entrance Sync Prep",
+      "• Formula Cheat Sheets & Mocks",
+      "• High-scoring Exam Techniques"
+    ]
+  }
+];
+
+const dailyChallenges = [
+  {
+    id: 1,
+    subject: "SLST Math - Real Analysis",
+    questionLatex: "If \\, f(x) = \\int_{0}^{x} \\frac{\\sin t}{t} \\, dt, \\, x > 0, \\text{ find } f'(x) \\text{ at } x = \\pi/2.",
+    options: [
+      { id: "A", latex: "2 / \\pi", correct: true },
+      { id: "B", latex: "\\pi / 2", correct: false },
+      { id: "C", latex: "1", correct: false },
+      { id: "D", latex: "0", correct: false },
+    ],
+    explanationLatex: "By Leibnitz's Rule of Differentiation under integral sign, \\, f'(x) = \\frac{\\sin x}{x}. \\text{ Substituting } x = \\pi/2 \\Rightarrow f'(\\pi/2) = \\frac{\\sin(\\pi/2)}{\\pi/2} = \\frac{1}{\\pi/2} = \\frac{2}{\\pi}.",
+  },
+  {
+    id: 2,
+    subject: "JEE Mains - Calculus",
+    questionLatex: "\\text{Evaluate the limit: } \\lim_{x \\to 0} \\frac{e^{x^2} - \\cos x}{x^2}.",
+    options: [
+      { id: "A", latex: "1/2", correct: false },
+      { id: "B", latex: "3/2", correct: true },
+      { id: "C", latex: "1", correct: false },
+      { id: "D", latex: "2", correct: false },
+    ],
+    explanationLatex: "Using Taylor series expansion: \\, e^{x^2} = 1 + x^2 + O(x^4) \\text{ and } \\cos x = 1 - \\frac{x^2}{2} + O(x^4). \\text{ Thus, } e^{x^2} - \\cos x = x^2 + \\frac{x^2}{2} = \\frac{3}{2}x^2. \\text{ Hence limit = } \\frac{3}{2}.",
+  },
+  {
+    id: 3,
+    subject: "Abstract Algebra - Group Theory",
+    questionLatex: "\\text{What is the number of generators of a cyclic group } G \\text{ of order } 12?",
+    options: [
+      { id: "A", latex: "2", correct: false },
+      { id: "B", latex: "4", correct: true },
+      { id: "C", latex: "6", correct: false },
+      { id: "D", latex: "12", correct: false },
+    ],
+    explanationLatex: "\\text{The number of generators of a cyclic group of order } n \\text{ is given by Euler's totient function } \\phi(n). \\text{ Here } \\phi(12) = 12 \\left(1 - \\frac{1}{2}\\right)\\left(1 - \\frac{1}{3}\\right) = 12 \\times \\frac{1}{2} \\times \\frac{2}{3} = 4.",
   }
 ];
 
@@ -297,328 +384,10 @@ const faqData = [
     a: "রাজ স্যার অনলাইন ও অফলাইন দুটি মোডেই পড়িয়ে থাকেন। অনলাইন লাইভ ক্লাস আমাদের ডেডিকেটেড পোর্টালে হয়, এবং অফলাইন ক্লাস সংক্রান্ত লোকেশন, ব্যাচ টাইমিং বা স্পেশাল ডিসকাউন্ট সম্পর্কে বিস্তারিত জানার জন্য আমাদের সরাসরি ফোন বা WhatsApp করতে পারেন।"
   },
   {
-    q: "মক টেস্ট সিরিজে নেগেটিভ মার্কিং কি চালু থাকে?",
+    q: "মক টেস্ট সিরিজে নেগেティブ মার্কিং কি চালু থাকে?",
     a: "হ্যাঁ, SLST ও JEE মেইন মক টেস্ট সিরিজে আসল পরীক্ষার মতই প্রতি ভুল উত্তরের জন্য ২৫% (০.২৫) নেগেটিভ মার্কিং ব্যবস্থা চালু রাখা হয়েছে, যা আপনার টাইম ম্যানেজমেন্ট এবং সঠিকতা বৃদ্ধিতে ব্যাপক সাহায্য করে।"
   }
 ];
-
-const renderBannerPreview = (id: string | number) => {
-  switch (id) {
-    case 'free_test':
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-purple-400 bg-purple-400/10 px-2.5 py-1 rounded border border-purple-500/20">
-              Live Mock Test
-            </span>
-            <div className="flex items-center gap-1.5 text-[11px] font-bold text-red-400">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-              1.4K+ PARTICIPANTS
-            </div>
-          </div>
-          
-          <div className="my-4 bg-slate-900/60 p-4 rounded-xl border border-white/5 font-mono text-xs text-left">
-            <p className="text-slate-400 mb-1 text-[10px] uppercase tracking-wider">// Question of the Day</p>
-            <p className="text-slate-100 font-bold leading-relaxed mb-3">
-              If f(x) = sin²(x), find the value of the integral:
-            </p>
-            <div className="text-pink-300 font-black text-sm my-2 text-center p-2.5 bg-slate-950/60 rounded border border-pink-500/15">
-              ∫₀^(π/2) f(x) dx = ?
-            </div>
-            <div className="grid grid-cols-2 gap-2 mt-3 text-[10px]">
-              <div className="bg-slate-950/80 p-2 rounded border border-white/5 text-slate-300 text-center hover:border-pink-500/30 transition-all cursor-pointer">
-                (A) π / 2
-              </div>
-              <div className="bg-slate-950/80 p-2 rounded border border-emerald-500/30 text-emerald-400 text-center font-extrabold">
-                (B) π / 4 ✓
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between border-t border-white/10 pt-3">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-400 border border-pink-500/20">
-                <Clock className="w-3.5 h-3.5" />
-              </div>
-              <div>
-                <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Time Limit</p>
-                <p className="text-xs text-slate-200 font-black uppercase tracking-wider">30 Mins</p>
-              </div>
-            </div>
-            <div className="bg-yellow-400 text-slate-950 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-lg shadow-[0_0_10px_rgba(250,204,21,0.3)]">
-              FREE PASS
-            </div>
-          </div>
-        </div>
-      );
-
-    case 1: // JEE 2027 Crash Course
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-yellow-400 bg-yellow-400/10 px-2.5 py-1 rounded border border-yellow-500/20">
-              JEE Mains & WBJEE
-            </span>
-            <span className="text-[11px] font-bold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/10">
-              BATCH ACTIVE
-            </span>
-          </div>
-
-          <div className="my-3 space-y-2.5">
-            <div className="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-white/5 text-left">
-              <div className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center shrink-0">
-                <PlayCircle className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-100 font-extrabold uppercase">500+ Video Lectures</p>
-                <p className="text-[10px] text-slate-500 font-medium">Chapter-wise crystal clear explanations</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-white/5 text-left">
-              <div className="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 border border-pink-500/20 flex items-center justify-center shrink-0">
-                <Award className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-100 font-extrabold uppercase">Doubt Portal access</p>
-                <p className="text-[10px] text-slate-500 font-medium">Direct solutions from Raj Sir</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-indigo-950/40 p-3 rounded-xl border border-indigo-500/10 flex items-center justify-between text-left">
-            <div>
-              <p className="text-[9px] text-slate-400 font-black uppercase tracking-wider">Target Rank Goal</p>
-              <p className="text-sm font-black text-indigo-300">UNDER AIR 1000</p>
-            </div>
-            <div className="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></div>
-          </div>
-        </div>
-      );
-
-    case 2: // SLST Mathematics Live Batch
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded border border-emerald-500/20">
-              SLST IX-X / XI-XII
-            </span>
-            <span className="text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/10">
-              NEW BATCH
-            </span>
-          </div>
-
-          <div className="my-3 space-y-2.5">
-            <div className="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-white/5 text-left">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0">
-                <FileText className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-100 font-extrabold uppercase">Handwritten Notes</p>
-                <p className="text-[10px] text-slate-500 font-medium">Comprehensive theorem proof PDFs</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-xl border border-white/5 text-left">
-              <div className="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 border border-pink-500/20 flex items-center justify-center shrink-0">
-                <CheckCircle2 className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-100 font-extrabold uppercase">100% Syllabus Coverage</p>
-                <p className="text-[10px] text-slate-500 font-medium">Rigorous previous year analysis</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-emerald-950/40 p-3 rounded-xl border border-emerald-500/10 flex items-center justify-between text-left">
-            <div>
-              <p className="text-[9px] text-slate-400 font-black uppercase tracking-wider">Coaching History</p>
-              <p className="text-sm font-black text-emerald-300">92% SUCCESS RATE</p>
-            </div>
-            <Award className="w-5 h-5 text-emerald-400" />
-          </div>
-        </div>
-      );
-
-    case 3: // CSIR NET & GATE Math
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-fuchsia-400 bg-fuchsia-400/10 px-2.5 py-1 rounded border border-fuchsia-500/20">
-              CSIR NET / GATE
-            </span>
-            <span className="text-[11px] font-bold text-pink-400 bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/10">
-              HIGHER MATHS
-            </span>
-          </div>
-
-          <div className="my-3 space-y-2 text-left">
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Advanced Focus Areas:</p>
-            <div className="grid grid-cols-2 gap-2 text-[10px] font-semibold text-slate-200">
-              <div className="bg-slate-900/80 p-2 rounded border border-white/5">
-                ✦ Linear Algebra
-              </div>
-              <div className="bg-slate-900/80 p-2 rounded border border-white/5">
-                ✦ Real Analysis
-              </div>
-              <div className="bg-slate-900/80 p-2 rounded border border-white/5">
-                ✦ Abstract Algebra
-              </div>
-              <div className="bg-slate-900/80 p-2 rounded border border-white/5">
-                ✦ Complex Numbers
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-pink-950/40 p-3 rounded-xl border border-pink-500/10 flex items-center justify-between text-left">
-            <div>
-              <p className="text-[9px] text-slate-400 font-black uppercase tracking-wider">Limited Offer</p>
-              <p className="text-xs font-black text-pink-300">SCHOLARSHIP UP TO 50% OFF</p>
-            </div>
-            <Sparkles className="w-5 h-5 text-pink-400 animate-pulse" />
-          </div>
-        </div>
-      );
-
-    case 4: // B.Sc & M.Sc Honours
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-rose-400 bg-rose-400/10 px-2.5 py-1 rounded border border-rose-500/20">
-              B.Sc & M.Sc BATCH
-            </span>
-            <span className="text-[11px] font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/10">
-              UNIVERSITY PREP
-            </span>
-          </div>
-
-          <div className="my-3 space-y-2.5 text-left">
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Curriculum Mapped For:</p>
-            <div className="flex flex-wrap gap-1.5">
-              {['WBSU', 'CU', 'BU', 'Kalyani'].map((uni, idx) => (
-                <span key={idx} className="bg-slate-900 border border-white/5 text-[9px] font-extrabold text-slate-300 px-2 py-1 rounded">
-                  {uni}
-                </span>
-              ))}
-            </div>
-            <p className="text-[11px] text-slate-400 leading-relaxed italic">
-              Rigorous descriptive proof writing, step-by-step calculus, and previous year solutions.
-            </p>
-          </div>
-
-          <div className="bg-rose-950/40 p-2.5 rounded-xl border border-rose-500/10 flex items-center justify-between text-[10px] font-bold text-rose-300 uppercase text-left">
-            <span>Descriptive Guides active</span>
-            <School className="w-4 h-4 text-rose-400" />
-          </div>
-        </div>
-      );
-
-    case 5: // Class 9 & 10 Foundation
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-cyan-400 bg-cyan-400/10 px-2.5 py-1 rounded border border-cyan-500/20">
-              CLASS 9 & 10 CORES
-            </span>
-            <span className="text-[11px] font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/10">
-              WBBSE / CBSE
-            </span>
-          </div>
-
-          <div className="my-3 space-y-3 text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
-                <Target className="w-4 h-4" />
-              </div>
-              <p className="text-xs text-slate-200 font-extrabold">Concept-to-Shortcut Practice</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
-                <Users className="w-4 h-4" />
-              </div>
-              <p className="text-xs text-slate-200 font-extrabold">Regular Parent Updates</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
-                <CheckCircle2 className="w-4 h-4" />
-              </div>
-              <p className="text-xs text-slate-200 font-extrabold">Weekly feedback tests</p>
-            </div>
-          </div>
-
-          <div className="bg-cyan-950/40 p-2.5 rounded-xl border border-cyan-500/10 text-center text-[10px] font-black text-cyan-300 uppercase tracking-widest">
-            ADMISSION OPEN FOR 2026-27
-          </div>
-        </div>
-      );
-
-    case 6: // Class 11 Semester System
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-orange-400 bg-orange-400/10 px-2.5 py-1 rounded border border-orange-500/20">
-              WBCHSE CLASS 11
-            </span>
-            <span className="text-[11px] font-bold text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/10">
-              SEM 1 & 2 FOCUS
-            </span>
-          </div>
-
-          <div className="my-3 space-y-2.5 text-left">
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">New MCQ Guidelines Covered:</p>
-            <div className="bg-slate-900/80 p-3 rounded-xl border border-white/5 text-[11px] text-slate-200 font-medium leading-relaxed">
-              We provide chapter-wise MCQ sheets, short trick videos, and board mock environments.
-            </div>
-          </div>
-
-          <div className="bg-orange-950/40 p-2.5 rounded-xl border border-orange-500/10 flex items-center justify-between text-xs font-bold text-orange-300 text-left">
-            <span>Free PDF Syllabus Guide</span>
-            <BookOpen className="w-4 h-4 text-orange-400" />
-          </div>
-        </div>
-      );
-
-    case 7: // Class 12 Semester System
-      return (
-        <div className="flex flex-col h-full justify-between">
-          <div className="flex justify-between items-center border-b border-white/10 pb-3">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-pink-400 bg-pink-400/10 px-2.5 py-1 rounded border border-pink-500/20">
-              WBCHSE CLASS 12
-            </span>
-            <span className="text-[11px] font-bold text-pink-400 bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/10">
-              SEM 3 & 4 BOARD
-            </span>
-          </div>
-
-          <div className="my-3 space-y-2 text-left">
-            <div className="flex items-center justify-between text-[11px] font-extrabold text-slate-200">
-              <span>BOARD PATTERN REVISION</span>
-              <span className="text-pink-400">100%</span>
-            </div>
-            <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden border border-white/5">
-              <div className="h-full bg-pink-500" style={{ width: '100%' }}></div>
-            </div>
-            
-            <div className="flex items-center justify-between text-[11px] font-extrabold text-slate-200">
-              <span>JEE MAINS & WBJEE PREP</span>
-              <span className="text-pink-400">100%</span>
-            </div>
-            <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden border border-white/5">
-              <div className="h-full bg-pink-500" style={{ width: '100%' }}></div>
-            </div>
-          </div>
-
-          <div className="bg-pink-950/40 p-2.5 rounded-xl border border-pink-500/10 flex items-center justify-between text-xs font-black text-pink-300 uppercase tracking-widest text-left">
-            <span>MISSION BOARD ACTIVE</span>
-            <Target className="w-4 h-4 text-pink-400" />
-          </div>
-        </div>
-      );
-
-    default:
-      return null;
-  }
-};
 
 export default function Home() {
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -628,30 +397,94 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
+  // Daily Challenge State
+  const [challengeIdx, setChallengeIdx] = useState(0);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+
   useSEO(
-    "Best SLST Mathematics & JEE Mains Coaching",
-    "Master Mathematics for SLST, JEE Mains, WBJEE, GATE, and CSIR NET with Raj Sir. Access free daily mock tests, study materials, and premium video lectures."
+    "Best SLST Mathematics & JEE Mains Coaching | Raj Sir Math Classes",
+    "Master Mathematics for SLST, JEE Mains, WBJEE, GATE, and CSIR NET with Raj Sir. Access free daily mock tests, handwritten study materials, and premium video lectures."
   );
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentBanner((prev) => (prev + 1) % bannerData.length);
-    }, 5000);
+    }, 5500);
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
+    }, 6500);
     return () => clearInterval(timer);
   }, []);
 
+  const activeChallenge = dailyChallenges[challengeIdx];
+
+  const handleSelectOption = (optionId: string) => {
+    setSelectedOption(optionId);
+    setShowExplanation(true);
+  };
+
+  const handleNextChallenge = () => {
+    setSelectedOption(null);
+    setShowExplanation(false);
+    setChallengeIdx((prev) => (prev + 1) % dailyChallenges.length);
+  };
+
   return (
     <div className="w-full flex-1">
-      {/* Banner Section */}
-      <section className="pt-6 pb-2 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative w-full h-[540px] md:h-[620px] rounded-[32px] overflow-hidden border border-white/15 bg-slate-950/80 shadow-[0_25px_80px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] group flex">
+      {/* Top Exam Navigation Filter Strip */}
+      <section className="bg-slate-950 border-b border-slate-800 py-2.5 px-4 w-full overflow-x-auto no-scrollbar sticky top-[64px] z-40 shadow-md">
+        <div className="max-w-7xl mx-auto flex items-center justify-start sm:justify-center gap-2 min-w-max text-xs">
+          <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] mr-2 flex items-center gap-1 shrink-0">
+            <Flame className="w-3.5 h-3.5 text-amber-400" /> Target Exams:
+          </span>
+          <Link
+            to="/free-daily-test"
+            className="px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-300 font-extrabold hover:bg-emerald-500/30 transition-all shrink-0 flex items-center gap-1.5"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+            Free SLST Mock
+          </Link>
+          <Link
+            to="/courses"
+            className="px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-slate-300 font-bold hover:text-white hover:border-pink-500/30 transition-all shrink-0"
+          >
+            SLST IX-X & XI-XII
+          </Link>
+          <Link
+            to="/courses"
+            className="px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-slate-300 font-bold hover:text-white hover:border-indigo-500/30 transition-all shrink-0"
+          >
+            JEE Mains & WBJEE
+          </Link>
+          <Link
+            to="/courses"
+            className="px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-slate-300 font-bold hover:text-white hover:border-purple-500/30 transition-all shrink-0"
+          >
+            CSIR NET & GATE
+          </Link>
+          <Link
+            to="/upper-primary"
+            className="px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-slate-300 font-bold hover:text-white hover:border-amber-500/30 transition-all shrink-0"
+          >
+            Upper Primary TET
+          </Link>
+          <Link
+            to="/notes"
+            className="px-3 py-1 rounded-full bg-slate-900 border border-white/10 text-slate-300 font-bold hover:text-white hover:border-rose-500/30 transition-all shrink-0"
+          >
+            Handwritten Notes
+          </Link>
+        </div>
+      </section>
+
+      {/* Banner Hero Carousel Section */}
+      <section className="pt-6 pb-4 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative w-full h-[540px] md:h-[620px] rounded-[32px] overflow-hidden border border-white/15 bg-slate-950/90 shadow-[0_25px_80px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] group flex">
           
           <div className="relative flex-1 h-full overflow-hidden">
             <AnimatePresence mode="wait">
@@ -680,7 +513,7 @@ export default function Home() {
                 {/* Math Pattern Overlay */}
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-15 mix-blend-overlay"></div>
                 
-                {/* Decorative Floating Math Symbols */}
+                {/* Floating Math Symbols */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-25 z-10">
                   <motion.div
                     animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
@@ -725,27 +558,27 @@ export default function Home() {
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/60 to-transparent"></div>
                 
-                {/* Banner Content Overlay with Grid */}
+                {/* Banner Content Overlay Grid */}
                 <div className="absolute inset-0 p-6 sm:p-10 md:p-14 lg:p-16 w-full h-full flex items-center z-10">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center w-full">
                     
                     {/* Left Column: Title & Subtitle */}
                     <div className="lg:col-span-7 flex flex-col justify-center text-left">
-                      <div className="inline-flex items-center gap-2 bg-slate-900/80 backdrop-blur-md border border-white/15 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 self-start text-white shadow-[0_0_20px_rgba(255,255,255,0.08)]">
+                      <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-700 px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 self-start text-white shadow-md">
                         <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                         <span>{bannerData[currentBanner].badge}</span>
                       </div>
                       <h2 className="font-display text-2xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-black text-slate-50 uppercase tracking-tight leading-[1.1] drop-shadow-2xl mb-4 sm:mb-6">
                         {bannerData[currentBanner].title}
                       </h2>
-                      <p className="text-slate-300 text-xs sm:text-sm md:text-base mb-6 sm:mb-8 font-medium leading-relaxed border-l-2 border-pink-500/80 pl-4 max-w-2xl bg-slate-950/30 py-2 rounded-r-xl backdrop-blur-sm border-y border-r border-white/5">
+                      <p className="text-slate-300 text-xs sm:text-sm md:text-base mb-6 sm:mb-8 font-medium leading-relaxed border-l-2 border-pink-500/80 pl-4 max-w-2xl bg-slate-900/90 py-2 rounded-r-xl border-y border-r border-slate-800">
                         {bannerData[currentBanner].subtitle}
                       </p>
                       
                       <div className="flex flex-wrap items-center gap-3 self-start">
                         <Link
-                          to={(bannerData[currentBanner] as any).link || "/courses"}
-                          className="inline-flex items-center gap-2.5 bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 hover:from-pink-400 hover:to-indigo-500 text-white px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl font-black text-xs sm:text-sm md:text-base uppercase tracking-widest transition-all shadow-[0_0_25px_rgba(219,39,119,0.5)] hover:shadow-[0_0_35px_rgba(219,39,119,0.7)] hover:-translate-y-1 active:translate-y-0 border border-white/20"
+                          to={bannerData[currentBanner].link || "/courses"}
+                          className="inline-flex items-center gap-2.5 bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 hover:from-pink-400 hover:to-indigo-500 text-white px-6 py-3 sm:px-8 sm:py-3.5 rounded-xl font-black text-xs sm:text-sm md:text-base uppercase tracking-widest transition-all shadow-xl hover:-translate-y-1 active:translate-y-0 border border-white/20"
                         >
                           <span>{bannerData[currentBanner].cta}</span>
                           <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -755,23 +588,53 @@ export default function Home() {
                           href="https://wa.me/918345819377"
                           target="_blank"
                           rel="noreferrer"
-                          className="hidden sm:inline-flex items-center gap-2 bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white px-5 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm transition-all border border-white/10 backdrop-blur-md hover:border-emerald-500/40"
+                          className="hidden sm:inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white px-5 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm transition-all border border-slate-700 hover:border-emerald-500/40"
                         >
                           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                          <span>Quick Enquiry</span>
+                          <span>WhatsApp Enquiry</span>
                         </a>
                       </div>
                     </div>
 
-                    {/* Right Column: Premium Visual Interactive Display */}
+                    {/* Right Column: Premium Interactive Slide Preview Frame */}
                     <div className="hidden lg:flex lg:col-span-5 justify-center items-center h-full">
-                      <div className="w-full max-w-[380px] p-1 rounded-3xl bg-gradient-to-tr from-pink-500/30 via-purple-500/20 to-indigo-500/30 backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.2)] overflow-hidden relative group/preview">
-                        {/* Glow effect */}
-                        <div className="absolute -inset-2 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 blur-2xl opacity-75 group-hover/preview:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                      <div className="w-full max-w-[380px] p-1 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden relative group/preview">
                         
-                        {/* Frame Wrapper */}
-                        <div className="bg-slate-950/90 rounded-[22px] p-6 relative z-10 border border-white/10 flex flex-col justify-between h-[350px]">
-                          {renderBannerPreview(bannerData[currentBanner].id)}
+                        <div className="bg-slate-950 rounded-[22px] p-6 relative z-10 border border-slate-800 flex flex-col justify-between h-[350px]">
+                          <div className="flex justify-between items-center border-b border-white/10 pb-3">
+                            <span className="text-[10px] uppercase font-bold tracking-widest text-purple-400 bg-purple-400/10 px-2.5 py-1 rounded border border-purple-500/20">
+                              {bannerData[currentBanner].tag || "Active Highlight"}
+                            </span>
+                            <div className="flex items-center gap-1.5 text-[11px] font-bold text-emerald-400">
+                              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                              <span>{bannerData[currentBanner].status || "10K+ ASPIRANTS"}</span>
+                            </div>
+                          </div>
+
+                          <div className="my-3 space-y-2 text-left">
+                            <div className="bg-slate-900/80 p-3.5 rounded-xl border border-white/5 space-y-2">
+                              <p className="text-[10px] text-pink-400 uppercase font-black tracking-wider mb-1 flex items-center gap-1">
+                                <Sparkles className="w-3 h-3" /> Key Course Features
+                              </p>
+                              {(bannerData[currentBanner].highlights || [
+                                "• Conceptual Theory + Fast MCQ Shortcuts",
+                                "• Chapter-wise Handwritten Notes PDFs",
+                                "• Live Doubts Portal by Raj Sir"
+                              ]).map((item, hIdx) => (
+                                <p key={hIdx} className="text-xs text-slate-200 font-bold leading-relaxed">
+                                  {item}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="bg-gradient-to-r from-purple-950/40 to-indigo-950/40 p-3 rounded-xl border border-purple-500/20 flex items-center justify-between text-left">
+                            <div>
+                              <p className="text-[9px] text-slate-400 font-black uppercase tracking-wider">Preparation Standard</p>
+                              <p className="text-xs font-black text-purple-300">100% EXAM ORIENTED</p>
+                            </div>
+                            <Award className="w-5 h-5 text-purple-400" />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -785,42 +648,65 @@ export default function Home() {
           {/* Arrow Controls */}
           <button
             onClick={() => setCurrentBanner((prev) => (prev - 1 + bannerData.length) % bannerData.length)}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/80 border border-white/15 text-white/80 hover:text-white hover:bg-slate-900 hover:border-pink-500/50 backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl hover:scale-110 active:scale-95"
+            className="absolute left-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-900 border border-slate-700 text-white hover:bg-slate-800 hover:border-pink-500/60 opacity-80 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 z-20 shadow-2xl hover:scale-110 active:scale-95"
             aria-label="Previous Slide"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => setCurrentBanner((prev) => (prev + 1) % bannerData.length)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-950/80 border border-white/15 text-white/80 hover:text-white hover:bg-slate-900 hover:border-pink-500/50 backdrop-blur-xl opacity-0 group-hover:opacity-100 transition-all duration-300 z-20 shadow-xl hover:scale-110 active:scale-95"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-900 border border-slate-700 text-white hover:bg-slate-800 hover:border-pink-500/60 opacity-80 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 z-20 shadow-2xl hover:scale-110 active:scale-95"
             aria-label="Next Slide"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Banner Navigation Dots & Counter */}
-          <div className="absolute bottom-6 right-6 flex items-center gap-3 z-20 bg-slate-950/70 px-4 py-2 rounded-full border border-white/10 backdrop-blur-xl shadow-2xl">
-            <span className="text-[11px] font-mono font-bold text-slate-400">
+          <div className="absolute bottom-6 right-6 flex items-center gap-3 z-20 bg-slate-950 px-4 py-2 rounded-full border border-slate-700 shadow-xl">
+            <span className="text-[11px] font-mono font-bold text-slate-300">
               0{currentBanner + 1} / 0{bannerData.length}
             </span>
-            <div className="h-3 w-[1px] bg-white/10"></div>
+            <div className="h-3 w-[1px] bg-white/20"></div>
             <div className="flex gap-2 items-center">
               {bannerData.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentBanner(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 ${idx === currentBanner ? "w-6 bg-gradient-to-r from-pink-500 to-purple-500 shadow-[0_0_10px_rgba(236,72,153,0.8)]" : "w-2 bg-white/30 hover:bg-white/60"}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${idx === currentBanner ? "w-6 bg-gradient-to-r from-pink-500 to-purple-500 shadow-[0_0_10px_rgba(236,72,153,0.8)]" : "w-2 bg-white/40 hover:bg-white/80"}`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}
             </div>
           </div>
         </div>
+
+        {/* Interactive Quick Banner Category Selector Bar */}
+        <div className="mt-4 flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          {bannerData.map((b, idx) => {
+            const isActive = idx === currentBanner;
+            return (
+              <button
+                key={b.id}
+                onClick={() => setCurrentBanner(idx)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 flex items-center gap-1.5 border ${
+                  isActive
+                    ? "bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 border-pink-500/50 text-white shadow-[0_0_15px_rgba(236,72,153,0.25)]"
+                    : "bg-slate-950/80 border-white/10 text-slate-400 hover:text-slate-200 hover:border-white/20"
+                }`}
+              >
+                <span className={`w-1.5 h-1.5 rounded-full ${isActive ? "bg-pink-400 animate-ping" : "bg-slate-600"}`}></span>
+                <span>{b.tag || `Banner ${idx + 1}`}</span>
+              </button>
+            );
+          })}
+        </div>
       </section>
 
-      {/* Premium Bento Grid Hero */}
-      <section className="relative overflow-hidden py-16 lg:py-24 bg-[#020617]">
-        {/* Glowing Accents */}
+
+
+
+      {/* Premium Bento Grid Hero Feature Overview */}
+      <section className="relative overflow-hidden py-12 lg:py-20 bg-[#020617]">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-pink-600/10 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -833,26 +719,26 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="md:col-span-8 row-span-2 relative bg-gradient-to-br from-slate-900/80 to-slate-950/80 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 lg:p-12 overflow-hidden group shadow-2xl flex flex-col justify-between"
+              className="md:col-span-8 row-span-2 relative bg-gradient-to-br from-[#0c0a21] via-[#0f172a] to-[#1e1035] border border-slate-800 rounded-[32px] p-8 lg:p-12 overflow-hidden group shadow-2xl flex flex-col justify-between"
             >
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
-              <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 blur-[80px] group-hover:bg-pink-500/20 transition-colors duration-700"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 blur-[80px] group-hover:bg-pink-500/20 transition-colors duration-700 pointer-events-none"></div>
               
               <div className="relative z-10 mb-8">
                 <div className="inline-flex gap-2 mb-6">
-                  <span className="bg-pink-500/10 text-pink-400 px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold border border-pink-500/20 uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(236,72,153,0.15)] flex items-center">
+                  <span className="bg-pink-500/10 text-pink-400 px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold border border-pink-500/20 uppercase tracking-[0.2em] shadow-md flex items-center">
                     <Star className="w-3.5 h-3.5 mr-2 fill-pink-400" /> Premium Coaching
                   </span>
                 </div>
-                <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl tracking-tighter mb-6 leading-[1.05] text-white font-black drop-shadow-lg">
+                <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl tracking-tighter mb-6 leading-[1.08] text-white font-black drop-shadow-lg">
                   Master{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-violet-400 drop-shadow-[0_0_20px_rgba(236,72,153,0.3)]">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 drop-shadow-[0_0_20px_rgba(236,72,153,0.3)]">
                     Mathematics
                   </span>{" "}
                   <br />
                   with Confidence
                 </h1>
-                <p className="text-slate-300 text-base sm:text-xl max-w-xl leading-relaxed font-medium">
+                <p className="text-slate-300 text-sm sm:text-lg max-w-xl leading-relaxed font-medium">
                   Join the elite circle of toppers. Expert coaching for JEE Mains, SLST Mathematics, and Advanced Competitive Exams.
                 </p>
               </div>
@@ -860,13 +746,13 @@ export default function Home() {
               <div className="flex flex-wrap gap-4 relative z-10">
                 <Link
                   to="/courses"
-                  className="bg-white hover:bg-slate-100 text-slate-900 font-black py-4 px-8 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.2)] flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest"
+                  className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-black py-3.5 px-7 rounded-2xl transition-all hover:scale-105 shadow-[0_0_25px_rgba(236,72,153,0.4)] flex items-center gap-3 text-xs sm:text-sm uppercase tracking-widest border border-pink-400/30"
                 >
                   <PlayCircle className="h-5 w-5" /> Start Learning
                 </Link>
                 <Link
                   to="/mock-test"
-                  className="bg-slate-800/50 border border-white/10 hover:border-pink-500/30 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-2xl transition-all hover:-translate-y-1 flex items-center gap-3 text-sm sm:text-base uppercase tracking-widest backdrop-blur-md shadow-lg"
+                  className="bg-slate-900 border border-slate-700 hover:border-pink-500/50 hover:bg-slate-800 text-white font-bold py-3.5 px-7 rounded-2xl transition-all hover:-translate-y-1 flex items-center gap-3 text-xs sm:text-sm uppercase tracking-widest shadow-lg"
                 >
                   <Target className="h-5 w-5 text-pink-400" /> Mock Tests
                 </Link>
@@ -879,10 +765,10 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
-              className="md:col-span-4 bg-gradient-to-b from-slate-800/40 to-slate-900/40 backdrop-blur-xl border border-white/10 p-8 rounded-[32px] flex flex-col justify-center items-center text-center shadow-xl group hover:border-white/20 transition-colors relative overflow-hidden"
+              className="md:col-span-4 bg-slate-900 border border-slate-800 p-8 rounded-[32px] flex flex-col justify-center items-center text-center shadow-xl group hover:border-slate-700 transition-colors relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-b from-emerald-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <p className="text-6xl sm:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 tracking-tighter leading-none mb-3 drop-shadow-md">
+              <div className="absolute inset-0 bg-gradient-to-b from-emerald-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <p className="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 tracking-tighter leading-none mb-3 drop-shadow-md">
                 500+
               </p>
               <p className="text-xs text-slate-400 uppercase tracking-[0.2em] font-bold">
@@ -898,14 +784,15 @@ export default function Home() {
               viewport={{ once: true }}
               className="md:col-span-4 relative group rounded-[32px] p-[1px] overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 via-teal-500 to-emerald-600 opacity-50 group-hover:opacity-100 transition-opacity"></div>
-              <Link to="/free-daily-test" className="relative h-full bg-[#020617] backdrop-blur-xl rounded-[31px] p-8 flex flex-col justify-between overflow-hidden shadow-2xl block">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 blur-[40px] group-hover:bg-emerald-500/30 transition-colors"></div>
-                <div className="absolute -top-3 -right-3 bg-red-500 text-white text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-[0_0_20px_rgba(239,68,68,0.6)] z-20 animate-pulse rotate-12">
-                  Live Free
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 via-teal-500 to-emerald-600 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+              <Link to="/free-daily-test" className="relative h-full bg-[#020617] rounded-[31px] p-8 flex flex-col justify-between overflow-hidden shadow-2xl block">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 blur-[40px] group-hover:bg-emerald-500/30 transition-colors pointer-events-none"></div>
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-red-600 to-rose-600 border border-red-400/50 text-white text-[10px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-widest shadow-[0_0_18px_rgba(239,68,68,0.8)] z-20 flex items-center gap-1.5 animate-pulse">
+                  <span className="w-2 h-2 rounded-full bg-white"></span>
+                  <span>Live Free</span>
                 </div>
-                <div className="bg-gradient-to-br from-emerald-400 to-teal-400 w-16 h-16 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(52,211,153,0.4)] mb-6 z-10 group-hover:scale-110 transition-transform">
-                  <Target className="h-8 w-8 text-slate-900" />
+                <div className="bg-gradient-to-br from-emerald-400 to-teal-400 w-14 h-14 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(52,211,153,0.4)] mb-6 z-10 group-hover:scale-110 transition-transform">
+                  <Target className="h-7 w-7 text-slate-900" />
                 </div>
                 <div className="z-10">
                   <h3 className="font-display font-black text-2xl text-white tracking-tight mb-2">
@@ -923,10 +810,10 @@ export default function Home() {
       </section>
 
       {/* Infinite Marquee Section */}
-      <section className="py-10 border-y border-white/5 bg-[#020617] overflow-hidden flex items-center">
+      <section className="py-8 border-y border-white/5 bg-[#020617] overflow-hidden flex items-center">
         <motion.div 
           animate={{ x: [0, -1000] }}
-          transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+          transition={{ ease: "linear", duration: 18, repeat: Infinity }}
           className="flex whitespace-nowrap"
         >
           {[...Array(4)].map((_, i) => (
@@ -943,7 +830,6 @@ export default function Home() {
 
       {/* About Raj Sir Section */}
       <section className="py-20 lg:py-28 relative overflow-hidden bg-[#020617] border-t border-white/10">
-        {/* Multi-color ambient background glows */}
         <div className="absolute top-1/2 left-10 -translate-y-1/2 w-96 h-96 bg-pink-600/15 rounded-full blur-[140px] pointer-events-none"></div>
         <div className="absolute top-1/3 right-10 w-96 h-96 bg-indigo-600/15 rounded-full blur-[140px] pointer-events-none"></div>
         <div className="absolute bottom-10 left-1/3 w-80 h-80 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -965,11 +851,11 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="glass-card rounded-[36px] p-2 sm:p-3 border border-white/15 shadow-[0_0_80px_rgba(0,0,0,0.8)] relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-950/95 to-indigo-950/40">
+          <div className="solid-card rounded-[36px] p-2 sm:p-3 border border-slate-800 shadow-2xl relative overflow-hidden bg-gradient-to-br from-[#0b0f19] via-[#0f172a] to-[#120a2a]">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 p-6 sm:p-10 items-center">
               
               {/* Left Column: Portrait & Badge */}
-              <div className="lg:col-span-5 flex flex-col items-center justify-center text-center p-6 rounded-3xl bg-slate-900/80 border border-white/10 relative overflow-hidden group">
+              <div className="lg:col-span-5 flex flex-col items-center justify-center text-center p-6 rounded-3xl bg-slate-900 border border-slate-800 relative overflow-hidden group shadow-lg">
                 <div className="absolute inset-0 bg-gradient-to-b from-pink-500/10 via-purple-500/5 to-transparent opacity-50 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
                 {/* Portrait with Glowing Gradient Rings */}
@@ -996,11 +882,11 @@ export default function Home() {
 
                 {/* Experience Pills */}
                 <div className="grid grid-cols-2 gap-3 w-full z-10">
-                  <div className="bg-slate-950/80 border border-white/10 p-3 rounded-2xl flex flex-col items-center">
+                  <div className="bg-slate-950 border border-slate-800 p-3 rounded-2xl flex flex-col items-center">
                     <span className="text-xl font-black text-amber-400">9+ Years</span>
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Experience</span>
                   </div>
-                  <div className="bg-slate-950/80 border border-white/10 p-3 rounded-2xl flex flex-col items-center">
+                  <div className="bg-slate-950 border border-slate-800 p-3 rounded-2xl flex flex-col items-center">
                     <span className="text-xl font-black text-emerald-400">10,000+</span>
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-0.5">Students Mentored</span>
                   </div>
@@ -1023,8 +909,8 @@ export default function Home() {
 
                 {/* Qualification Cards Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-cyan-500/30 hover:border-cyan-500/60 transition-colors shadow-md relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-cyan-500/10 rounded-full blur-xl"></div>
+                  <div className="p-4 rounded-2xl bg-slate-900 border border-cyan-500/40 hover:border-cyan-400 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-cyan-500/10 rounded-full blur-xl pointer-events-none"></div>
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shrink-0">
                         <BookOpen className="h-4 w-4" />
@@ -1036,8 +922,8 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-purple-500/30 hover:border-purple-500/60 transition-colors shadow-md relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-xl"></div>
+                  <div className="p-4 rounded-2xl bg-slate-900 border border-purple-500/40 hover:border-purple-400 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/10 rounded-full blur-xl pointer-events-none"></div>
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 shrink-0">
                         <BookOpen className="h-4 w-4" />
@@ -1049,8 +935,8 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-emerald-500/30 hover:border-emerald-500/60 transition-colors shadow-md relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl"></div>
+                  <div className="p-4 rounded-2xl bg-slate-900 border border-emerald-500/40 hover:border-emerald-400 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
                         <CheckCircle2 className="h-4 w-4" />
@@ -1062,8 +948,8 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-slate-900/80 border border-amber-500/30 hover:border-amber-500/60 transition-colors shadow-md relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full blur-xl"></div>
+                  <div className="p-4 rounded-2xl bg-slate-900 border border-amber-500/40 hover:border-amber-400 transition-colors shadow-md relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full blur-xl pointer-events-none"></div>
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
                         <Award className="h-4 w-4" />
@@ -1107,194 +993,346 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Popular Categories */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xs font-bold text-pink-200/60 uppercase tracking-widest">
-              Premium Curriculum
-            </h3>
-            <Link
-              to="/courses"
-              className="text-pink-400 text-xs font-bold hover:text-pink-300"
-            >
-              View All Courses →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-50">
-            <CourseCard
-              title="JEE Mains Mathematics"
-              subtitle="Limit, Continuity, Differentiability, Algebra & Coordinate Geometry modules."
-              icon="∫"
-              stats="12/20 Lessons"
-              progress={60}
-              active
-            />
-            <CourseCard
-              title="SLST Mathematics"
-              subtitle="Real Analysis, Abstract Algebra, Mechanics and Previous Year Questions."
-              icon="Σ"
-              stats="15/15 Lessons"
-              progress={100}
-              completed
-            />
-            <CourseCard
-              title="Advanced Mathematics"
-              subtitle="Higher Math Foundations, Application based problems for GATE/NET."
-              icon="⌬"
-              stats="0/15 Lessons"
-              progress={0}
-              enrolling
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Concept Syllabus Roadmap Tracker */}
-      <section className="py-16 bg-[#020617] relative overflow-hidden border-t border-white/5">
-        {/* Glow Effects */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/5 rounded-full blur-[150px] pointer-events-none"></div>
+      {/* Premium Colour Grid Curriculum Section */}
+      <section className="py-16 lg:py-24 bg-[#020617] relative border-t border-white/10 overflow-hidden">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-pink-600/10 via-purple-600/10 to-indigo-600/10 rounded-full blur-[180px] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="text-center mb-12">
-            <span className="bg-pink-500/10 text-pink-400 border border-pink-500/20 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4 inline-flex items-center gap-2">
-              <Compass className="w-4 h-4 text-pink-400" /> Interactive Syllabus Explorer
+          {/* Section Header */}
+          <div className="text-center mb-14">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/15 via-purple-500/15 to-indigo-500/15 border border-pink-500/30 text-pink-300 text-xs font-black uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(236,72,153,0.25)]">
+              <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+              <span>EXCELLENCE IN MATHEMATICS EDUCATION</span>
             </span>
-            <h2 className="font-display text-3xl md:text-5xl text-slate-50 font-black uppercase tracking-tight">
-              Syllabus Roadmap & Weightage
+
+            <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl text-white font-black uppercase tracking-tight">
+              Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 to-indigo-300 drop-shadow-md">Curriculum Grid</span>
             </h2>
-            <p className="text-slate-400 text-sm md:text-base mt-4 max-w-2xl mx-auto leading-relaxed">
-              Select your target exam, see the chapter-wise weightage and difficulty levels. Interactive checkmarks help you track your preparation progress on the fly!
+            <p className="text-slate-300 text-sm sm:text-base mt-3 max-w-2xl mx-auto font-medium leading-relaxed">
+              Explore our structured course modules engineered with chapterwise theory, shortcut tricks, handwritten notes & live test series.
             </p>
           </div>
 
-          {/* Exam Toggles */}
-          <div className="flex flex-wrap justify-center gap-3 mb-10">
-            {Object.entries(roadmapData).map(([key, exam]) => (
-              <button
-                key={key}
-                onClick={() => {
-                  setActiveRoadmap(key);
-                }}
-                className={`px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider transition-all duration-300 border ${
-                  activeRoadmap === key
-                    ? "bg-gradient-to-r from-pink-600 to-violet-600 text-white border-pink-500 shadow-[0_0_20px_rgba(219,39,119,0.3)]"
-                    : "bg-slate-900/60 text-slate-400 border-white/10 hover:border-slate-700 hover:text-white"
-                }`}
-              >
-                {exam.title}
-              </button>
-            ))}
-          </div>
+          {/* 6-Card Colour Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            
+            {/* Grid Card 1: SLST Mathematics (Emerald Theme) */}
+            <div className="group relative rounded-[28px] border border-emerald-500/30 hover:border-emerald-400 transition-all duration-500 bg-slate-900/90 p-7 flex flex-col justify-between shadow-2xl hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/15 rounded-full blur-2xl group-hover:bg-emerald-500/25 transition-colors pointer-events-none"></div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left Side: Exam Meta & Live Interactive Progress */}
-            <div className="lg:col-span-4 bg-gradient-to-b from-slate-900/80 to-slate-950/80 backdrop-blur-xl border border-white/10 p-8 rounded-[32px] shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 blur-[50px] pointer-events-none"></div>
-              
-              <span className="text-[10px] font-bold text-pink-400 uppercase tracking-widest bg-pink-500/10 border border-pink-500/20 px-3 py-1 rounded-full inline-block mb-4">
-                Active Category
-              </span>
-              <h3 className="font-display font-black text-2xl text-white mb-2 uppercase leading-tight">
-                {roadmapData[activeRoadmap].title}
-              </h3>
-              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-4">
-                {roadmapData[activeRoadmap].badge}
-              </p>
-              <p className="text-slate-300 text-sm leading-relaxed mb-8">
-                {roadmapData[activeRoadmap].description}
-              </p>
+              <div>
+                <div className="flex items-center justify-between mb-5 relative z-10">
+                  <span className="bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>MOST POPULAR • IX-XII</span>
+                  </span>
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center text-xl font-serif font-black shadow-[0_0_15px_rgba(52,211,153,0.3)] group-hover:scale-110 transition-transform">
+                    Σ
+                  </div>
+                </div>
 
-              {/* Progress Tracker Card */}
-              <div className="bg-slate-950/80 border border-white/5 rounded-2xl p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                    Your Tracked Progress
-                  </span>
-                  <span className="text-sm font-black text-emerald-400">
-                    {Math.round(
-                      (roadmapData[activeRoadmap].chapters.filter(ch => checkedChapters.includes(ch.name)).length /
-                        roadmapData[activeRoadmap].chapters.length) *
-                        100
-                    )}%
-                  </span>
-                </div>
-                {/* Progress bar */}
-                <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-white/5 mb-4">
-                  <div
-                    className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 transition-all duration-500"
-                    style={{
-                      width: `${
-                        (roadmapData[activeRoadmap].chapters.filter(ch => checkedChapters.includes(ch.name)).length /
-                          roadmapData[activeRoadmap].chapters.length) *
-                        100
-                      }%`
-                    }}
-                  ></div>
-                </div>
-                <p className="text-[11px] text-slate-500 leading-relaxed">
-                  Toggle the checkmarks of the chapters on the right that you have studied to track your syllabus completion rate!
+                <h3 className="text-2xl font-black text-white group-hover:text-emerald-300 transition-colors mb-2 font-display">
+                  SLST IX-X & XI-XII Math
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium mb-5">
+                  Complete syllabus covering Real Analysis, Modern Algebra, Calculus, Mechanics, and Previous Year SLST Papers.
                 </p>
+
+                {/* Topics Tag Pills */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {["Real Analysis", "Abstract Algebra", "Mechanics", "Analytic Geometry", "LPP"].map((tag, idx) => (
+                    <span key={idx} className="bg-emerald-950/80 border border-emerald-500/30 text-emerald-200 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Footer / Progress & Action */}
+              <div className="pt-5 border-t border-emerald-500/20 relative z-10 mt-auto">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-3">
+                  <span>35 / 35 Lessons</span>
+                  <span className="text-emerald-400 font-black">100% Complete</span>
+                </div>
+                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden mb-5 border border-emerald-500/20">
+                  <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full w-full shadow-[0_0_10px_rgba(52,211,153,0.8)]"></div>
+                </div>
+                <Link
+                  to="/courses"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all"
+                >
+                  <span>Explore SLST Modules</span>
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </Link>
               </div>
             </div>
 
-            {/* Right Side: Chapter Roadmap list */}
-            <div className="lg:col-span-8 space-y-4">
-              {roadmapData[activeRoadmap].chapters.map((chapter, idx) => {
-                const isChecked = checkedChapters.includes(chapter.name);
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      if (isChecked) {
-                        setCheckedChapters(checkedChapters.filter(c => c !== chapter.name));
-                      } else {
-                        setCheckedChapters([...checkedChapters, chapter.name]);
-                      }
-                    }}
-                    className={`p-5 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-4 cursor-pointer select-none ${
-                      isChecked
-                        ? "bg-slate-900/80 border-emerald-500/30 hover:border-emerald-500/50"
-                        : "bg-slate-900/40 border-white/5 hover:border-white/10 hover:bg-slate-900/60"
-                    }`}
-                  >
-                    <div className="flex items-center gap-4">
-                      {/* Interactive check button */}
-                      <div
-                        className={`w-6 h-6 rounded-lg border flex items-center justify-center transition-all duration-300 ${
-                          isChecked
-                            ? "bg-emerald-500/20 border-emerald-400 text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.3)]"
-                            : "bg-slate-950/50 border-white/10 text-transparent"
-                        }`}
-                      >
-                        <CheckCircle2 className="w-4 h-4 fill-current" />
-                      </div>
-                      <div>
-                        <p className={`text-sm sm:text-base font-bold transition-colors duration-300 ${isChecked ? "text-emerald-300 line-through opacity-85" : "text-slate-100"}`}>
-                          {chapter.name}
-                        </p>
-                        <div className="flex flex-wrap items-center gap-2 mt-2">
-                          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-950/60 border border-white/5 text-pink-400">
-                            {chapter.weightage}
-                          </span>
-                          <span className={`text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded ${
-                            chapter.difficulty === 'Very High' || chapter.difficulty === 'High'
-                              ? "bg-red-500/10 text-red-400 border border-red-500/20"
-                              : "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"
-                          }`}>
-                            Difficulty: {chapter.difficulty}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+            {/* Grid Card 2: JEE Mains & WBJEE (Rose / Violet Theme) */}
+            <div className="group relative rounded-[28px] border border-pink-500/30 hover:border-pink-400 transition-all duration-500 bg-slate-900/90 p-7 flex flex-col justify-between shadow-2xl hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-purple-500/5 to-transparent opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/15 rounded-full blur-2xl group-hover:bg-pink-500/25 transition-colors pointer-events-none"></div>
+
+              <div>
+                <div className="flex items-center justify-between mb-5 relative z-10">
+                  <span className="bg-pink-500/15 border border-pink-500/40 text-pink-300 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                    <Star className="w-3 h-3 text-pink-400 fill-pink-400" />
+                    <span>HIGH SCORE SHORTCUTS</span>
+                  </span>
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-pink-500/20 to-purple-500/20 text-pink-400 border border-pink-500/30 flex items-center justify-center text-xl font-serif font-black shadow-[0_0_15px_rgba(236,72,153,0.3)] group-hover:scale-110 transition-transform">
+                    ∫
                   </div>
-                );
-              })}
+                </div>
+
+                <h3 className="text-2xl font-black text-white group-hover:text-pink-300 transition-colors mb-2 font-display">
+                  JEE Mains & WBJEE Math
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium mb-5">
+                  Master Calculus, Vectors, 3D Geometry, and Algebra with Raj Sir's speed-solving techniques and topicwise PYQs.
+                </p>
+
+                {/* Topics Tag Pills */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {["Calculus", "Coordinate Geometry", "Matrices", "Vectors & 3D", "Probability"].map((tag, idx) => (
+                    <span key={idx} className="bg-pink-950/80 border border-pink-500/30 text-pink-200 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Footer / Progress & Action */}
+              <div className="pt-5 border-t border-pink-500/20 relative z-10 mt-auto">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-3">
+                  <span>28 / 30 Lessons</span>
+                  <span className="text-pink-400 font-black">90% Complete</span>
+                </div>
+                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden mb-5 border border-pink-500/20">
+                  <div className="h-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full w-[90%] shadow-[0_0_10px_rgba(236,72,153,0.8)]"></div>
+                </div>
+                <Link
+                  to="/courses"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all"
+                >
+                  <span>Start JEE Prep</span>
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </Link>
+              </div>
             </div>
+
+            {/* Grid Card 3: CSIR NET & GATE (Indigo / Cyan Theme) */}
+            <div className="group relative rounded-[28px] border border-indigo-500/30 hover:border-indigo-400 transition-all duration-500 bg-slate-900/90 p-7 flex flex-col justify-between shadow-2xl hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-cyan-500/5 to-transparent opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/15 rounded-full blur-2xl group-hover:bg-indigo-500/25 transition-colors pointer-events-none"></div>
+
+              <div>
+                <div className="flex items-center justify-between mb-5 relative z-10">
+                  <span className="bg-indigo-500/15 border border-indigo-500/40 text-indigo-300 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                    <Target className="w-3 h-3 text-indigo-400" />
+                    <span>ADVANCED HIGHER MATH</span>
+                  </span>
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-cyan-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center text-xl font-serif font-black shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:scale-110 transition-transform">
+                    ⌬
+                  </div>
+                </div>
+
+                <h3 className="text-2xl font-black text-white group-hover:text-indigo-300 transition-colors mb-2 font-display">
+                  CSIR NET & GATE Math
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium mb-5">
+                  Rigorous proof-based problem solving for NET JRF and GATE. Deep dives into Linear Algebra, Complex Analysis, and Topology.
+                </p>
+
+                {/* Topics Tag Pills */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {["Linear Algebra", "Complex Analysis", "Topology", "Metric Spaces", "ODEs & PDEs"].map((tag, idx) => (
+                    <span key={idx} className="bg-indigo-950/80 border border-indigo-500/30 text-indigo-200 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Footer / Progress & Action */}
+              <div className="pt-5 border-t border-indigo-500/20 relative z-10 mt-auto">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-3">
+                  <span>22 / 25 Lessons</span>
+                  <span className="text-indigo-400 font-black">85% Complete</span>
+                </div>
+                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden mb-5 border border-indigo-500/20">
+                  <div className="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full w-[85%] shadow-[0_0_10px_rgba(99,102,241,0.8)]"></div>
+                </div>
+                <Link
+                  to="/courses"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-600 hover:from-indigo-400 hover:to-cyan-500 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all"
+                >
+                  <span>Enroll Advanced</span>
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Grid Card 4: Upper Primary TET (Amber / Gold Theme) */}
+            <div className="group relative rounded-[28px] border border-amber-500/30 hover:border-amber-400 transition-all duration-500 bg-slate-900/90 p-7 flex flex-col justify-between shadow-2xl hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-yellow-500/5 to-transparent opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/15 rounded-full blur-2xl group-hover:bg-amber-500/25 transition-colors pointer-events-none"></div>
+
+              <div>
+                <div className="flex items-center justify-between mb-5 relative z-10">
+                  <span className="bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                    <Award className="w-3 h-3 text-amber-400" />
+                    <span>TET SPECIAL BATCH</span>
+                  </span>
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500/20 to-yellow-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xl font-serif font-black shadow-[0_0_15px_rgba(245,158,11,0.3)] group-hover:scale-110 transition-transform">
+                    π
+                  </div>
+                </div>
+
+                <h3 className="text-2xl font-black text-white group-hover:text-amber-300 transition-colors mb-2 font-display">
+                  Upper Primary TET Math
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium mb-5">
+                  Target Upper Primary TET with structured Arithmetic, Geometry, Pedagogy modules, and previous exam practice sets.
+                </p>
+
+                {/* Topics Tag Pills */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {["Number System", "Arithmetic", "Pedagogy", "Geometry", "Practice Sets"].map((tag, idx) => (
+                    <span key={idx} className="bg-amber-950/80 border border-amber-500/30 text-amber-200 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Footer / Progress & Action */}
+              <div className="pt-5 border-t border-amber-500/20 relative z-10 mt-auto">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-3">
+                  <span>18 / 20 Lessons</span>
+                  <span className="text-amber-400 font-black">90% Complete</span>
+                </div>
+                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden mb-5 border border-amber-500/20">
+                  <div className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full w-[90%] shadow-[0_0_10px_rgba(245,158,11,0.8)]"></div>
+                </div>
+                <Link
+                  to="/upper-primary"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all"
+                >
+                  <span>Open TET Portal</span>
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Grid Card 5: UG Math Honours (Sky / Blue Theme) */}
+            <div className="group relative rounded-[28px] border border-sky-500/30 hover:border-sky-400 transition-all duration-500 bg-slate-900/90 p-7 flex flex-col justify-between shadow-2xl hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 via-blue-500/5 to-transparent opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-sky-500/15 rounded-full blur-2xl group-hover:bg-sky-500/25 transition-colors pointer-events-none"></div>
+
+              <div>
+                <div className="flex items-center justify-between mb-5 relative z-10">
+                  <span className="bg-sky-500/15 border border-sky-500/40 text-sky-300 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                    <BookOpen className="w-3 h-3 text-sky-400" />
+                    <span>BSc HONOURS ALL SEMESTERS</span>
+                  </span>
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-sky-500/20 to-blue-500/20 text-sky-400 border border-sky-500/30 flex items-center justify-center text-sm font-mono font-black shadow-[0_0_15px_rgba(56,189,248,0.3)] group-hover:scale-110 transition-transform">
+                    lim
+                  </div>
+                </div>
+
+                <h3 className="text-2xl font-black text-white group-hover:text-sky-300 transition-colors mb-2 font-display">
+                  BSc UG Math Honours
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium mb-5">
+                  University semester coaching for Bankura, Burdwan, CU, Vidyasagar, and NSOU students with handwritten PDF notes.
+                </p>
+
+                {/* Topics Tag Pills */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {["Group Theory", "Ring Theory", "Multivariate Calculus", "ODEs & PDEs"].map((tag, idx) => (
+                    <span key={idx} className="bg-sky-950/80 border border-sky-500/30 text-sky-200 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Footer / Progress & Action */}
+              <div className="pt-5 border-t border-sky-500/20 relative z-10 mt-auto">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-3">
+                  <span>40 / 40 Lessons</span>
+                  <span className="text-sky-400 font-black">100% Complete</span>
+                </div>
+                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden mb-5 border border-sky-500/20">
+                  <div className="h-full bg-gradient-to-r from-sky-400 to-blue-500 rounded-full w-full shadow-[0_0_10px_rgba(56,189,248,0.8)]"></div>
+                </div>
+                <Link
+                  to="/notes"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all"
+                >
+                  <span>View BSc Notes</span>
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Grid Card 6: Free Daily Test Series (Red / Crimson Theme) */}
+            <div className="group relative rounded-[28px] border border-red-500/40 hover:border-red-400 transition-all duration-500 bg-slate-900/90 p-7 flex flex-col justify-between shadow-2xl hover:-translate-y-2 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/15 via-rose-500/5 to-transparent opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/20 rounded-full blur-2xl group-hover:bg-red-500/30 transition-colors pointer-events-none"></div>
+
+              <div>
+                <div className="flex items-center justify-between mb-5 relative z-10">
+                  <span className="bg-red-600/20 border border-red-500/50 text-red-300 text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider flex items-center gap-1.5 shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
+                    <span className="w-2 h-2 rounded-full bg-red-400"></span>
+                    <span>FREE DAILY LIVE MOCK</span>
+                  </span>
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-red-500/20 to-rose-500/20 text-red-400 border border-red-500/40 flex items-center justify-center text-xl font-serif font-black shadow-[0_0_20px_rgba(239,68,68,0.4)] group-hover:scale-110 transition-transform">
+                    √
+                  </div>
+                </div>
+
+                <h3 className="text-2xl font-black text-white group-hover:text-red-300 transition-colors mb-2 font-display">
+                  SLST Real Analysis Mock
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed font-medium mb-5">
+                  11 specialized Real Analysis test pools with negative marking, time tracking, instant results & solution breakdown.
+                </p>
+
+                {/* Topics Tag Pills */}
+                <div className="flex flex-wrap gap-1.5 mb-6">
+                  {["Topology", "Sequence & Series", "Riemann Integrals", "Bounded Variation"].map((tag, idx) => (
+                    <span key={idx} className="bg-red-950/80 border border-red-500/40 text-red-200 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card Footer / Progress & Action */}
+              <div className="pt-5 border-t border-red-500/30 relative z-10 mt-auto">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-3">
+                  <span>11 Test Pools Available</span>
+                  <span className="text-red-400 font-black">100% Free</span>
+                </div>
+                <div className="w-full bg-slate-950 h-2 rounded-full overflow-hidden mb-5 border border-red-500/30">
+                  <div className="h-full bg-gradient-to-r from-red-500 to-rose-500 rounded-full w-full shadow-[0_0_12px_rgba(239,68,68,0.9)]"></div>
+                </div>
+                <Link
+                  to="/free-daily-test"
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all"
+                >
+                  <span>Attempt Free Mock</span>
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </Link>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
+
+
 
       {/* FAQ Section */}
       <section className="py-16 bg-[#0B1120] relative border-t border-white/5 overflow-hidden">
@@ -1324,7 +1362,7 @@ export default function Home() {
               value={faqSearch}
               onChange={(e) => {
                 setFaqSearch(e.target.value);
-                setOpenFaq(null); // Close active ones on search changes
+                setOpenFaq(null);
               }}
               placeholder="প্রশ্ন খুঁজুন (যেমন: মক টেস্ট, ভিডিও...)"
               className="w-full bg-slate-900/80 border border-white/10 hover:border-white/20 focus:border-pink-500 focus:ring-1 focus:ring-pink-500 transition-all rounded-2xl py-4 pl-12 pr-6 text-slate-200 text-sm sm:text-base font-medium placeholder-slate-500 shadow-inner outline-none"
@@ -1343,7 +1381,7 @@ export default function Home() {
                 return (
                   <div
                     key={idx}
-                    className="bg-slate-900/40 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden transition-all duration-300"
+                    className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-all duration-300 hover:border-slate-700 shadow-md"
                   >
                     <button
                       onClick={() => setOpenFaq(isOpen ? null : idx)}
@@ -1352,7 +1390,7 @@ export default function Home() {
                       <span className="text-base sm:text-lg font-bold text-slate-100 uppercase tracking-tight hover:text-pink-300 transition-colors">
                         {item.q}
                       </span>
-                      <div className={`p-1.5 rounded-lg border bg-slate-950/60 transition-colors duration-300 shrink-0 ${isOpen ? "border-pink-500/30 text-pink-400" : "border-white/10 text-slate-400"}`}>
+                      <div className={`p-1.5 rounded-lg border bg-slate-950 transition-colors duration-300 shrink-0 ${isOpen ? "border-pink-500/50 text-pink-400" : "border-slate-800 text-slate-400"}`}>
                         {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                       </div>
                     </button>
@@ -1364,7 +1402,7 @@ export default function Home() {
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="border-t border-white/5 bg-slate-950/20"
+                          className="border-t border-slate-800 bg-slate-950"
                         >
                           <div className="p-6 text-sm sm:text-base text-slate-300 leading-relaxed font-medium">
                             {item.a}
@@ -1392,7 +1430,6 @@ export default function Home() {
 
       {/* Testimonials & Proud Achievers Hall of Fame */}
       <section className="py-20 lg:py-28 bg-[#020617] w-full border-y border-white/10 relative overflow-hidden">
-        {/* Multi-layered Ambient Luxury Lighting */}
         <div className="absolute top-1/4 right-1/4 w-[650px] h-[650px] bg-gradient-to-br from-amber-500/10 via-pink-500/5 to-transparent rounded-full blur-[180px] pointer-events-none"></div>
         <div className="absolute bottom-1/4 left-1/4 w-[550px] h-[550px] bg-gradient-to-tr from-violet-600/10 via-indigo-500/5 to-transparent rounded-full blur-[160px] pointer-events-none"></div>
 
@@ -1401,7 +1438,7 @@ export default function Home() {
           {/* Header */}
           <div className="text-center mb-16 sm:mb-20">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/15 via-yellow-500/10 to-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-black uppercase tracking-widest mb-4 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 animate-spin-slow" />
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
               <span>HALL OF ACADEMIC EXCELLENCE</span>
             </span>
 
@@ -1427,9 +1464,8 @@ export default function Home() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.94, y: -10 }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="w-full max-w-[380px] sm:max-w-[410px] aspect-[3/4.2] rounded-[36px] border-2 border-amber-500/50 bg-gradient-to-b from-slate-900/95 via-slate-950/98 to-amber-950/40 text-center shadow-[0_0_60px_rgba(245,158,11,0.25)] relative overflow-hidden flex flex-col items-center justify-between p-7 select-none backdrop-blur-2xl"
+                  className="w-full max-w-[380px] sm:max-w-[410px] aspect-[3/4.2] rounded-[36px] border-2 border-amber-500/50 bg-gradient-to-b from-slate-900 via-slate-950 to-amber-950/80 text-center shadow-[0_0_60px_rgba(245,158,11,0.25)] relative overflow-hidden flex flex-col items-center justify-between p-7 select-none"
                 >
-                  {/* Metallic Shimmer Overlay */}
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-400/10 via-transparent to-transparent pointer-events-none"></div>
                   
                   {/* Top Certificate Header Badge */}
@@ -1513,7 +1549,7 @@ export default function Home() {
             <div className="lg:col-span-7 flex flex-col justify-between space-y-8">
               
               {/* Premium Quote Card */}
-              <div className="glass-card rounded-3xl p-6 sm:p-8 border border-white/15 relative shadow-2xl overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-950/95 to-indigo-950/40 backdrop-blur-2xl">
+              <div className="solid-card rounded-3xl p-6 sm:p-8 border border-slate-800 relative shadow-2xl overflow-hidden bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950/80">
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
 
                 <Quote className="absolute top-6 right-6 sm:top-8 sm:right-8 h-10 w-10 sm:h-12 sm:w-12 text-amber-500/15" />
@@ -1650,16 +1686,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Bottom Banner */}
-      <section className="py-12 my-8 border-t border-white/10 bg-[#0B1120] w-full backdrop-blur-sm relative overflow-hidden">
+      {/* Featured Bottom Banner & Quick Access Cards */}
+      <section className="py-12 my-8 border-t border-slate-800 bg-[#0B1120] w-full relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/5 to-amber-500/5"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-slate-800/80 backdrop-blur-xl border border-white/10 hover:border-yellow-400/30 p-8 rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl relative overflow-hidden group transition-all">
+            <div className="bg-slate-900 border border-slate-800 hover:border-yellow-400/50 p-8 rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl relative overflow-hidden group transition-all">
               <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
               
-              {/* Background Accent */}
-              <div className="absolute -right-8 -top-8 w-32 h-32 bg-yellow-400/20 rounded-full blur-2xl group-hover:bg-yellow-400/30 transition-colors"></div>
+              <div className="absolute -right-8 -top-8 w-32 h-32 bg-yellow-400/20 rounded-full blur-2xl group-hover:bg-yellow-400/30 transition-colors pointer-events-none"></div>
 
               <div className="relative z-10">
                 <p className="text-yellow-400 font-bold text-[10px] uppercase tracking-widest mb-2 flex items-center gap-1.5">
@@ -1681,17 +1716,17 @@ export default function Home() {
             </div>
 
             <div className="flex gap-4">
-              <Link to="/notes" className="flex-1 bg-slate-800/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:border-sky-400/30 hover:bg-slate-800 transition-all group shadow-xl hover:-translate-y-1 relative overflow-hidden">
+              <Link to="/notes" className="flex-1 bg-slate-900 border border-slate-800 p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:border-sky-400/40 hover:bg-slate-850 transition-all group shadow-xl hover:-translate-y-1 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-sky-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="w-14 h-14 rounded-2xl bg-sky-400/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <FileText className="text-sky-400 h-7 w-7" />
                 </div>
                 <p className="text-base font-black text-slate-50">PDF Notes</p>
                 <p className="text-[10px] text-slate-400 mt-2 uppercase tracking-widest font-bold group-hover:text-sky-400 transition-colors">
-                  Premium Library
+                  Free Library
                 </p>
               </Link>
-              <Link to="/courses" className="flex-1 bg-slate-800/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:border-pink-400/30 hover:bg-slate-800 transition-all group shadow-xl hover:-translate-y-1 relative overflow-hidden">
+              <Link to="/courses" className="flex-1 bg-slate-900 border border-slate-800 p-6 rounded-3xl flex flex-col items-center justify-center text-center hover:border-pink-400/40 hover:bg-slate-850 transition-all group shadow-xl hover:-translate-y-1 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-pink-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div className="w-14 h-14 rounded-2xl bg-pink-400/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <PlayCircle className="text-pink-400 h-7 w-7" />
@@ -1720,7 +1755,7 @@ function CourseCard({
   enrolling,
 }: any) {
   return (
-    <div className="bg-gradient-to-b from-slate-800/40 to-slate-900/60 backdrop-blur-xl border border-white/10 p-8 rounded-[32px] relative overflow-hidden group hover:border-pink-500/30 transition-all duration-500 flex flex-col h-full shadow-2xl hover:-translate-y-2">
+    <div className="bg-slate-900 border border-slate-800 p-8 rounded-[32px] relative overflow-hidden group hover:border-pink-500/50 transition-all duration-500 flex flex-col h-full shadow-2xl hover:-translate-y-2">
       <div className="absolute inset-0 bg-gradient-to-b from-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       <div className="flex justify-between items-start mb-6 relative z-10">
         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-serif italic border shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-transform duration-500 group-hover:scale-110 ${active ? "bg-gradient-to-br from-pink-600/20 to-violet-600/20 text-pink-400 border-pink-500/20" : completed ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-slate-800/60 text-slate-300 border-white/10"}`}>

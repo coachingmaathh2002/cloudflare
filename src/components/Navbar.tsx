@@ -17,7 +17,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-slate-950/80 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50 shrink-0 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+    <nav className="bg-slate-950 border-b border-slate-800 sticky top-0 z-50 shrink-0 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between items-center h-16 w-full">
           {/* Logo */}
@@ -63,11 +63,12 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center gap-2.5">
             <Link
               to="/free-daily-test"
-              className="relative group overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs px-3.5 py-1.5 rounded-lg transition-all shadow-[0_0_15px_rgba(16,185,129,0.4)] hover:shadow-[0_0_25px_rgba(16,185,129,0.7)] hover:-translate-y-0.5 flex items-center gap-1.5 border border-emerald-300/40"
+              style={{ backgroundColor: '#f00b0b' }}
+              className="relative group overflow-hidden hover:brightness-110 text-white font-black text-xs px-3.5 py-1.5 rounded-lg transition-all shadow-[0_0_15px_rgba(240,11,11,0.4)] hover:shadow-[0_0_25px_rgba(240,11,11,0.7)] hover:-translate-y-0.5 flex items-center gap-1.5 border border-red-400/40"
             >
-              <Flame className="h-3.5 w-3.5 text-slate-950 animate-bounce" />
+              <Flame className="h-3.5 w-3.5 text-white animate-bounce" />
               <span>FREE DAILY TEST</span>
-              <span className="bg-slate-950/20 text-slate-950 text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ml-1">LIVE</span>
+              <span className="bg-white/20 text-white text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ml-1">LIVE</span>
             </Link>
 
             <Link
@@ -102,7 +103,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       {isOpen && (
-        <div className="lg:hidden bg-slate-950/95 backdrop-blur-2xl border-b border-white/10 shadow-2xl animate-in slide-in-from-top duration-200">
+        <div className="lg:hidden bg-slate-950 border-b border-slate-800 shadow-2xl animate-in slide-in-from-top duration-200">
           <div className="px-4 pt-3 pb-6 space-y-1.5">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;

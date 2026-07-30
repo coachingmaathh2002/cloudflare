@@ -204,7 +204,7 @@ export default function Notes() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-pink-500/20 to-purple-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/20 via-pink-500/20 to-purple-500/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-widest mb-6 shadow-md"
         >
           <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
           <span>RAJ SIR MATH CLASSES • FREE DIGITAL VAULT</span>
@@ -238,19 +238,19 @@ export default function Notes() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mb-10"
         >
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-amber-400">100% Free</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Open Access</span>
           </div>
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-pink-400">HD Quality</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Handwritten PDFs</span>
           </div>
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-emerald-400">Class 9 to MSc</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">All Levels</span>
           </div>
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-indigo-400">Secured Reader</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Instant View</span>
           </div>
@@ -265,11 +265,11 @@ export default function Notes() {
               placeholder="Search notes by subject, chapter, or exam (e.g., SLST, Real Analysis, Class 12 Calculus)..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-900/90 border border-white/15 text-slate-100 placeholder-slate-400 rounded-2xl pl-12 pr-4 py-4 focus:outline-none focus:border-pink-500/60 focus:ring-1 focus:ring-pink-500/50 shadow-2xl backdrop-blur-xl transition-all text-sm font-medium"
+              className="w-full bg-slate-900 border border-slate-800 text-slate-100 placeholder-slate-400 rounded-2xl pl-12 pr-4 py-4 focus:outline-none focus:border-pink-500/60 focus:ring-1 focus:ring-pink-500/50 shadow-2xl transition-all text-sm font-medium"
             />
           </div>
 
-          <div className="flex bg-slate-900/80 border border-white/10 rounded-2xl p-2 overflow-x-auto scrollbar-none shadow-xl backdrop-blur-xl gap-1.5">
+          <div className="flex bg-slate-900 border border-slate-800 rounded-2xl p-2 overflow-x-auto scrollbar-none shadow-xl gap-1.5">
             {noteCategories.map(cat => (
               <button
                 key={cat}
@@ -277,7 +277,7 @@ export default function Notes() {
                 className={cn(
                   "whitespace-nowrap px-4 py-2 rounded-xl text-xs font-bold transition-all uppercase tracking-wider shrink-0",
                   selectedCategory === cat 
-                    ? "bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(219,39,119,0.4)] border border-white/20"
+                    ? "bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(219,39,119,0.4)] border border-pink-400/40"
                     : "text-slate-400 hover:text-white hover:bg-slate-800/60 border border-transparent"
                 )}
               >
@@ -312,7 +312,7 @@ export default function Notes() {
                   visible: { opacity: 1, y: 0 }
                 }}
                 key={note.id} 
-                className="glass-card-interactive rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border border-white/10 hover:border-pink-500/50 transition-all duration-300"
+                className="solid-card-interactive rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border border-slate-800 hover:border-pink-500/50 bg-slate-900 transition-all duration-300"
               >
                 {/* Background glow */}
                 <div className={cn("absolute -top-20 -right-20 w-44 h-44 rounded-full blur-3xl opacity-20 transition-opacity group-hover:opacity-40 bg-gradient-to-br", note.gradient)}></div>
@@ -399,7 +399,7 @@ export default function Notes() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl" 
+              className="absolute inset-0 bg-slate-950/95" 
               onClick={() => setSelectedPdf(null)}
             ></motion.div>
             
@@ -408,10 +408,10 @@ export default function Notes() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ duration: 0.2 }}
-              className="relative w-full max-w-6xl h-[92vh] bg-slate-950 rounded-3xl shadow-2xl border border-white/15 flex flex-col overflow-hidden z-10"
+              className="relative w-full max-w-6xl h-[92vh] bg-slate-950 rounded-3xl shadow-2xl border border-slate-800 flex flex-col overflow-hidden z-10"
             >
               {/* Modal Topbar */}
-              <div className="flex items-center justify-between p-4 bg-slate-900/90 border-b border-white/10 backdrop-blur-md">
+              <div className="flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800">
                 <div className="flex items-center gap-3 min-w-0 pr-4">
                   <div className="bg-pink-500/20 p-2 rounded-xl border border-pink-500/30 text-pink-400 shrink-0">
                     <FileText className="h-5 w-5" />
@@ -428,7 +428,7 @@ export default function Notes() {
                 <div className="flex items-center gap-2 shrink-0">
                   <button 
                     onClick={() => setSelectedPdf(null)}
-                    className="bg-slate-800 hover:bg-rose-600/30 text-slate-300 hover:text-rose-400 p-2.5 rounded-xl transition-all border border-white/10 hover:border-rose-500/40"
+                    className="bg-slate-800 hover:bg-rose-600/30 text-slate-300 hover:text-rose-400 p-2.5 rounded-xl transition-all border border-slate-700 hover:border-rose-500/40"
                     aria-label="Close modal"
                   >
                     <X className="h-5 w-5" />
@@ -447,7 +447,7 @@ export default function Notes() {
                 
                 {/* Security Overlay to mask Google Drive pop-out icon */}
                 <div 
-                  className="absolute top-0 right-0 w-28 sm:w-36 h-14 bg-slate-950/80 backdrop-blur-md z-10 cursor-not-allowed flex items-center justify-center border-l border-b border-white/10 rounded-bl-2xl" 
+                  className="absolute top-0 right-0 w-28 sm:w-36 h-14 bg-slate-950 border-l border-b border-slate-800 z-10 cursor-not-allowed flex items-center justify-center rounded-bl-2xl" 
                   title="PDF Downloads are protected"
                   onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
                 >
@@ -458,7 +458,7 @@ export default function Notes() {
               </div>
               
               {/* Modal Footer */}
-              <div className="bg-slate-900/90 p-3.5 text-center border-t border-white/10 flex flex-col sm:flex-row justify-between items-center px-6 gap-2 backdrop-blur-md">
+              <div className="bg-slate-900 p-3.5 text-center border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center px-6 gap-2">
                 <span className="text-xs text-slate-400 font-medium flex items-center gap-2">
                   <Target className="w-4 h-4 text-pink-400 shrink-0" /> Note: Downloads are disabled to safeguard proprietary teaching material.
                 </span>
@@ -478,7 +478,7 @@ export default function Notes() {
 
       {/* Community Request Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        <div className="glass-card rounded-3xl p-8 sm:p-10 border border-white/15 relative overflow-hidden bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/40 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="solid-card rounded-3xl p-8 sm:p-10 border border-slate-800 relative overflow-hidden bg-gradient-to-r from-purple-950/80 via-slate-900 to-indigo-950/80 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-left max-w-xl">
             <span className="text-xs font-bold text-pink-400 uppercase tracking-widest bg-pink-500/10 border border-pink-500/30 px-3 py-1 rounded-full inline-block mb-3">
               STUDENT COMMUNITY

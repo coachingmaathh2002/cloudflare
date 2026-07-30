@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Target, CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, ArrowLeft, PlayCircle, Lock, User, Phone, MapPin, Key } from 'lucide-react';
+import { Target, CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, ArrowLeft, PlayCircle, Lock, User, Phone, MapPin, Key, Sparkles, Star, BookOpen, Award, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MixedLatex } from '../components/LatexRenderer';
 import { useSEO } from '../lib/useSEO';
@@ -11,186 +11,37 @@ const DAILY_TEST = {
   duration: 2700, // 45 minutes
   totalQuestions: 30,
   questions: [
-    {
-      "question": "If the differential equation $(2x + 3y)dx + (3x + 4y)dy = 0$ is exact, what is its general solution?",
-      "options": ["$x^2 + 3xy + 2y^2 = C$", "$x^2 + 2xy + 3y^2 = C$", "$2x^2 + 3xy + y^2 = C$", "$x^2 + 3xy + y^2 = C$"],
-      "correctAnswer": 0,
-      "explanation": "Check exactness: $M = 2x+3y$, $N = 3x+4y$. $\\frac{\\partial M}{\\partial y} = 3 = \\frac{\\partial N}{\\partial x}$, so exact. Integrate $M$ w.r.t. $x$: $\\int (2x+3y)dx = x^2 + 3xy + g(y)$. Differentiate w.r.t. $y$: $3x + g'(y) = N = 3x+4y$, so $g'(y) = 4y$ and $g(y) = 2y^2$. General solution: $x^2 + 3xy + 2y^2 = C$."
-    },
-    {
-      "question": "The integrating factor for the first-order linear differential equation $\\frac{dy}{dx} - \\frac{2}{x}y = x^2 \\sin x$ is:",
-      "options": ["$x^{-2}$", "$x^2$", "$e^{-2/x}$", "$e^{2/x}$"],
-      "correctAnswer": 0,
-      "explanation": "The standard form is $y' + P(x)y = Q(x)$ with $P(x) = -\\frac{2}{x}$. The integrating factor is $\\mu(x) = e^{\\int P(x)dx} = e^{\\int -\\frac{2}{x}dx} = e^{-2\\ln|x|} = x^{-2}$."
-    },
-    {
-      "question": "The equation $\\frac{dy}{dx} + y = xy^3$ is a Bernoulli equation. Which substitution linearizes it?",
-      "options": ["$v = y^{-2}$", "$v = y^2$", "$v = y^{-1}$", "$v = y^3$"],
-      "correctAnswer": 0,
-      "explanation": "For Bernoulli equation $y' + P(x)y = Q(x)y^n$ with $n=3$, the linearizing substitution is $v = y^{1-n} = y^{-2}$."
-    },
-    {
-      "question": "The general solution of Clairaut's equation $y = xy' + (y')^2$ is:",
-      "options": ["$y = Cx + C^2$", "$y = Cx - C^2$", "$y = Cx^2 + C$", "$y = Cx + 1/C$"],
-      "correctAnswer": 0,
-      "explanation": "Clairaut's equation has the form $y = xp + f(p)$ with $p = y'$. Its general solution is obtained by replacing $p$ with an arbitrary constant $C$: $y = Cx + f(C)$. Here $f(p) = p^2$, so $y = Cx + C^2$."
-    },
-    {
-      "question": "Which of the following is Lagrange's equation?",
-      "options": ["$y = x(y')^2 + (y')^3$", "$y = (y')x + \\sin x$", "$y = x^2 y' + (y')^2$", "$y = x y' + \\ln(y')$"],
-      "correctAnswer": 0,
-      "explanation": "Lagrange's equation is of the form $y = x\\phi(p) + \\psi(p)$ where $p = y'$, with $\\phi(p) \\neq p$. Option (A) has $\\phi(p)=p^2$, $\\psi(p)=p^3$, so it is Lagrange. Option (B) contains $\\sin x$, not solely a function of $p$. Option (C) has $x^2$ instead of $x$. Option (D) is Clairaut's equation ($\\phi(p)=p$)."
-    },
-    {
-      "question": "Solve the first-order linear IVP: $\\frac{dy}{dx} + y \\tan x = \\sec x$, $y(0) = 0$.",
-      "options": ["$y = \\sin x$", "$y = \\cos x$", "$y = \\tan x$", "$y = \\sec x$"],
-      "correctAnswer": 0,
-      "explanation": "Integrating factor: $\\mu(x) = e^{\\int \\tan x\\,dx} = \\sec x$. Multiply: $\\frac{d}{dx}(y\\sec x) = \\sec^2 x$. Integrate: $y\\sec x = \\tan x + C$. Using $y(0)=0$ gives $0 = 0 + C$, so $C=0$. Thus $y = \\sin x$."
-    },
-    {
-      "question": "Which of the following differential equations is homogeneous (of degree 0)?",
-      "options": ["$\\frac{dy}{dx} = \\frac{x+y}{x-y}$", "$\\frac{dy}{dx} = \\frac{x^2+y}{x}$", "$\\frac{dy}{dx} = \\frac{x+y^2}{xy}$", "$\\frac{dy}{dx} = \\frac{\\sin x + y}{x}$"],
-      "correctAnswer": 0,
-      "explanation": "A first-order ODE $\\frac{dy}{dx} = f(x,y)$ is homogeneous if $f(tx,ty) = f(x,y)$ for all $t$. For (A), $\\frac{tx+ty}{tx-ty} = \\frac{x+y}{x-y}$, so homogeneous. The others do not satisfy this property."
-    },
-    {
-      "question": "The complementary function (CF) of the higher-order linear ODE $y''' - 3y'' + 3y' - y = 0$ is:",
-      "options": ["$(C_1 + C_2 x + C_3 x^2)e^x$", "$C_1 e^x + C_2 e^{-x} + C_3$", "$(C_1 + C_2 x)e^x + C_3 e^{-x}$", "$C_1 e^x + C_2 \\cos x + C_3 \\sin x$"],
-      "correctAnswer": 0,
-      "explanation": "The auxiliary equation is $r^3 - 3r^2 + 3r - 1 = (r-1)^3 = 0$, giving a triple root $r=1$. The CF is therefore $(C_1 + C_2 x + C_3 x^2)e^x$."
-    },
-    {
-      "question": "The appropriate form of the particular integral (PI) for $y'' + y = \\sin x$ using undetermined coefficients is:",
-      "options": ["$x(A\\sin x + B\\cos x)$", "$A\\sin x + B\\cos x$", "$Ax\\sin x$", "$Ax\\cos x$"],
-      "correctAnswer": 0,
-      "explanation": "The CF is $y_c = C_1 \\cos x + C_2 \\sin x$. Since $\\sin x$ is part of the CF, the PI must be multiplied by $x$: $y_p = x(A\\sin x + B\\cos x)$."
-    },
-    {
-      "question": "The general solution of the Cauchy–Euler equation $x^2 y'' - xy' + y = 0$ for $x > 0$ is:",
-      "options": ["$y = (C_1 + C_2 \\ln x)x$", "$y = C_1 x + C_2 x^{-1}$", "$y = C_1 x^2 + C_2 x^{-1}$", "$y = C_1 \\cos(\\ln x) + C_2 \\sin(\\ln x)$"],
-      "correctAnswer": 0,
-      "explanation": "Assume $y = x^m$. Substituting gives $m(m-1) - m + 1 = m^2 - 2m + 1 = (m-1)^2 = 0$, so $m=1$ is a double root. The general solution is $y = (C_1 + C_2 \\ln x)x$."
-    },
-    {
-      "question": "The Wronskian of $f(x) = e^x \\cos x$ and $g(x) = e^x \\sin x$ is:",
-      "options": ["$e^{2x}$", "$e^x$", "$2e^{2x}$", "$0$"],
-      "correctAnswer": 0,
-      "explanation": "$W(f,g) = \\begin{vmatrix} e^x\\cos x & e^x\\sin x \\\\ e^x\\cos x - e^x\\sin x & e^x\\sin x + e^x\\cos x \\end{vmatrix} = e^{2x}(\\cos x\\sin x + \\cos^2 x - \\sin x\\cos x + \\sin^2 x) = e^{2x}$."
-    },
-    {
-      "question": "Consider the IVP $\\frac{dy}{dx} = \\sqrt{y}$, $y(0) = 0$. Which statement is true?",
-      "options": ["A solution exists but is not unique", "No solution exists", "A unique solution exists", "Infinite solutions exist only for $x > 0$"],
-      "correctAnswer": 0,
-      "explanation": "$f(x,y)=\\sqrt{y}$ is continuous at $(0,0)$, so a solution exists. However, $\\frac{\\partial f}{\\partial y} = \\frac{1}{2\\sqrt{y}}$ is not continuous at $y=0$, so uniqueness is not guaranteed. Indeed, $y=0$ and $y=(x/2)^2$ (for $x \\ge 0$) both satisfy the IVP."
-    },
-    {
-      "question": "An integrating factor of the form $\\mu(x)$ for the differential equation $(x^2 + y^2)dx - 2xy\\,dy = 0$ is:",
-      "options": ["$1/x^2$", "$1/x$", "$1/y^2$", "$x$"],
-      "correctAnswer": 0,
-      "explanation": "$M = x^2+y^2$, $N = -2xy$. $\\frac{\\partial M}{\\partial y} - \\frac{\\partial N}{\\partial x} = 2y - (-2y) = 4y$. Then $\\frac{M_y - N_x}{N} = \\frac{4y}{-2xy} = -\\frac{2}{x}$. Integrating factor: $\\mu(x) = e^{\\int -\\frac{2}{x}dx} = x^{-2} = 1/x^2$."
-    },
-    {
-      "question": "The general solution of the Bernoulli equation $\\frac{dy}{dx} + y = y^2$ is:",
-      "options": ["$y = \\frac{1}{1+Ce^x}$", "$y = \\frac{Ce^x}{1+Ce^x}$", "$y = \\frac{1}{Ce^{-x}-1}$", "$y = \\frac{1}{1-Ce^x}$"],
-      "correctAnswer": 0,
-      "explanation": "Rewrite as $y^{-2}y' + y^{-1} = 1$. Let $v = y^{-1}$, then $v' = -y^{-2}y'$, giving $-v' + v = 1$ or $v' - v = -1$. Integrating factor $e^{-x}$: $\\frac{d}{dx}(ve^{-x}) = -e^{-x} \\Rightarrow ve^{-x} = e^{-x} + C \\Rightarrow v = 1 + Ce^x$. Thus $y = \\frac{1}{1+Ce^x}$."
-    },
-    {
-      "question": "The singular solution of Clairaut's equation $y = xy' - (y')^2$ is:",
-      "options": ["$y = x^2/4$", "$y = -x^2/4$", "$y = x^2/2$", "$y = -x^2/2$"],
-      "correctAnswer": 0,
-      "explanation": "Let $p = y'$. Differentiate $y = xp - p^2$ w.r.t. $x$: $p = p + x\\frac{dp}{dx} - 2p\\frac{dp}{dx} \\Rightarrow (x-2p)\\frac{dp}{dx}=0$. Setting $\\frac{dp}{dx}=0$ gives general solution $y = Cx - C^2$. Setting $x = 2p$ gives $p = x/2$, and singular solution $y = x(x/2) - (x/2)^2 = x^2/4$."
-    },
-    {
-      "question": "In solving Lagrange's equation $y = x(1+y') + (y')^2$, differentiating and treating $p = y'$ as independent variable yields a linear differential equation in:",
-      "options": ["$dp/dx$ as a function of $p$", "$dx/dp$ as a function of $p$", "$dy/dp$ as a function of $p$", "$dp/dy$ as a function of $y$"],
-      "correctAnswer": 1,
-      "explanation": "For Lagrange's equation $y = x\\phi(p) + \\psi(p)$, differentiating gives a first-order ODE that, after inverting $dp/dx$, becomes linear in $x$ as a function of $p$: $\\frac{dx}{dp} + \\left(\\frac{\\phi'(p)}{\\phi(p)-p}\\right)x = \\frac{\\psi'(p)}{p-\\phi(p)}$."
-    },
-    {
-      "question": "For $y'' - 4y' + 4y = e^{2x}\\ln x$, the Wronskian of the fundamental set of solutions of the homogeneous equation is:",
-      "options": ["$e^{4x}$", "$e^{2x}$", "$2e^{4x}$", "$e^{-2x}$"],
-      "correctAnswer": 0,
-      "explanation": "The homogeneous equation has characteristic equation $r^2-4r+4=0$, so $r=2,2$. Fundamental solutions: $y_1 = e^{2x}$, $y_2 = xe^{2x}$. $W = \\begin{vmatrix} e^{2x} & xe^{2x} \\\\ 2e^{2x} & e^{2x}+2xe^{2x} \\end{vmatrix} = e^{4x}$."
-    },
-    {
-      "question": "For which initial condition does the IVP $y' = y^{2/5}$ guarantee a unique solution?",
-      "options": ["$y_0 \\neq 0$", "$y_0 = 0$ only", "Any $y_0$", "$y_0 > 0$ only"],
-      "correctAnswer": 0,
-      "explanation": "$f(y)=y^{2/5}$ is continuous everywhere, so existence is guaranteed. $f'(y)=\\frac{2}{5}y^{-3/5}$ is discontinuous at $y=0$, so the Lipschitz condition fails there. Uniqueness is guaranteed when $y_0 \\neq 0$."
-    },
-    {
-      "question": "The complementary function of the Cauchy–Euler equation $x^2 y'' - 2xy' + 2y = 0$ is:",
-      "options": ["$C_1 x + C_2 x^2$", "$C_1 x^2 + C_2 x^{-1}$", "$C_1 \\cos(\\ln x) + C_2 \\sin(\\ln x)$", "$C_1 e^x + C_2 e^{2x}$"],
-      "correctAnswer": 0,
-      "explanation": "Substitute $y = x^m$: $m(m-1) - 2m + 2 = m^2 - 3m + 2 = (m-1)(m-2) = 0$. Roots $m=1,2$. CF: $y = C_1 x + C_2 x^2$."
-    },
-    {
-      "question": "If $y_1 = \\sin x$ and $y_2 = \\cos x$ are solutions of $y''+y=0$, their Wronskian is:",
-      "options": ["$-1$", "$1$", "$\\sin 2x$", "$0$"],
-      "correctAnswer": 0,
-      "explanation": "$W(\\sin x, \\cos x) = \\begin{vmatrix} \\sin x & \\cos x \\\\ \\cos x & -\\sin x \\end{vmatrix} = -\\sin^2 x - \\cos^2 x = -1$."
-    },
-    {
-      "question": "An integrating factor for the differential equation $(x^2+y^2+x)dx + xy\\,dy = 0$ is:",
-      "options": ["$x$", "$y$", "$1/x$", "$1/y$"],
-      "correctAnswer": 0,
-      "explanation": "$M=x^2+y^2+x$, $N=xy$. $\\frac{M_y - N_x}{N} = \\frac{2y - y}{xy} = \\frac{1}{x}$. Integrating factor $\\mu(x) = e^{\\int \\frac{1}{x}dx} = x$. Multiplying by $x$ makes the equation exact."
-    },
-    {
-      "question": "Using variation of parameters, a particular integral of $y'' + y = \\sec x$ is:",
-      "options": ["$x\\sin x + \\cos x \\ln|\\cos x|$", "$\\sin x \\ln|\\cos x| + x\\cos x$", "$x\\sin x - \\cos x \\ln|\\sin x|$", "$\\cos x \\ln|\\sec x| - \\sin x$"],
-      "correctAnswer": 0,
-      "explanation": "CF: $y_1=\\cos x$, $y_2=\\sin x$, $W=1$. $u_1 = -\\int y_2 \\sec x\\,dx = -\\int \\tan x\\,dx = \\ln|\\cos x|$. $u_2 = \\int y_1 \\sec x\\,dx = \\int 1\\,dx = x$. PI: $y_p = u_1 y_1 + u_2 y_2 = \\cos x \\ln|\\cos x| + x\\sin x$."
-    },
-    {
-      "question": "The substitution $y = vx$ reduces the homogeneous equation $x^2 dy = (x^2 + y^2)dx$ to:",
-      "options": ["$v' = 1/x$", "$x v' = 1 + v^2 - v$", "$x v' = 1 - v$", "$v' = v^2/x$"],
-      "correctAnswer": 1,
-      "explanation": "$\\frac{dy}{dx} = 1 + \\frac{y^2}{x^2} = 1 + v^2$. With $y = vx$, $y' = v + xv'$, so $v + xv' = 1 + v^2 \\Rightarrow xv' = 1 + v^2 - v$."
-    },
-    {
-      "question": "The complementary function of $y'' + 2y' + 5y = 0$ is:",
-      "options": ["$e^{-x}(C_1 \\cos 2x + C_2 \\sin 2x)$", "$e^{x}(C_1 \\cos 2x + C_2 \\sin 2x)$", "$C_1 e^{-x} + C_2 e^{-5x}$", "$e^{-2x}(C_1 \\cos x + C_2 \\sin x)$"],
-      "correctAnswer": 0,
-      "explanation": "Auxiliary equation: $r^2+2r+5=0$ gives $r = -1 \\pm 2i$. The CF is $e^{-x}(C_1 \\cos 2x + C_2 \\sin 2x)$."
-    },
-    {
-      "question": "The IVP $x y' + 2y = 4x^2$, $y(1)=2$ has a unique solution on the interval:",
-      "options": ["$(0, \\infty)$", "$(-\\infty, \\infty)$", "$(-\\infty, 0)$", "$(1, \\infty)$"],
-      "correctAnswer": 0,
-      "explanation": "Rewrite as $y' + \\frac{2}{x}y = 4x$. $P(x)=2/x$ is continuous on $(-\\infty,0)$ and $(0,\\infty)$. The initial point $x_0=1$ lies in $(0,\\infty)$, so the unique solution exists on $(0,\\infty)$."
-    },
-    {
-      "question": "The general solution of the Cauchy–Euler equation $x^2 y'' + 3xy' + y = 0$, $x>0$, is:",
-      "options": ["$y = C_1 x^{-1} + C_2 x^{-1} \\ln x$", "$y = C_1 x + C_2 x^{-1}$", "$y = C_1 \\cos(\\ln x) + C_2 \\sin(\\ln x)$", "$y = C_1 x^{-2} + C_2 x^{-1}$"],
-      "correctAnswer": 0,
-      "explanation": "Substituting $y = x^m$: $m(m-1)+3m+1 = m^2+2m+1 = (m+1)^2=0$. Double root $m=-1$. General solution: $y = (C_1 + C_2 \\ln x)x^{-1}$."
-    },
-    {
-      "question": "To solve $2xy\\frac{dy}{dx} + y^2 = x$, the substitution $v = y^2$ transforms it into:",
-      "options": ["$x \\frac{dv}{dx} + v = x$", "$x \\frac{dv}{dx} - v = x$", "$2x \\frac{dv}{dx} + v = x$", "$x \\frac{dv}{dx} + 2v = x$"],
-      "correctAnswer": 0,
-      "explanation": "Let $v = y^2$, so $\\frac{dv}{dx} = 2y\\frac{dy}{dx}$. The equation $2xyy' + y^2 = x$ becomes $x v' + v = x$."
-    },
-    {
-      "question": "The differential equation $y = 2xy' - \\ln y'$ is classified as:",
-      "options": ["Clairaut's equation", "Lagrange's equation", "Bernoulli's equation", "Cauchy–Euler equation"],
-      "correctAnswer": 1,
-      "explanation": "The equation is of the form $y = x\\phi(p) + \\psi(p)$ with $\\phi(p)=2p$, $\\psi(p)=-\\ln p$, and $\\phi(p)\\neq p$. This is Lagrange's equation. Clairaut's equation is the special case $\\phi(p)=p$."
-    },
-    {
-      "question": "By Abel's formula, the Wronskian $W$ of two solutions of $y'' + p(x)y' + q(x)y = 0$ satisfies $W' + p(x)W = 0$. If $p(x) = 2/x$, then $W(x)$ is proportional to:",
-      "options": ["$x^{-2}$", "$x^2$", "$e^{-2/x}$", "$e^{2/x}$"],
-      "correctAnswer": 0,
-      "explanation": "$W = C \\exp\\left(-\\int p(x)dx\\right) = C \\exp\\left(-\\int \\frac{2}{x}dx\\right) = C x^{-2}$. So $W \\propto x^{-2}$."
-    },
-    {
-      "question": "The appropriate form of the particular integral for $y'' - 3y' + 2y = e^x \\sin x$ using undetermined coefficients is:",
-      "options": ["$e^x (A \\sin x + B \\cos x)$", "$x e^x (A \\sin x + B \\cos x)$", "$e^{2x} (A \\sin x + B \\cos x)$", "$A e^x \\sin x$"],
-      "correctAnswer": 0,
-      "explanation": "The characteristic equation $r^2-3r+2=0$ has roots $r=1,2$. The right-hand side is $e^{x}\\sin x$ ($\\alpha=1$, $\\beta=1$). Since $\\alpha + i\\beta = 1+i$ is not a root, there is no resonance. The PI form is $e^x(A\\sin x + B\\cos x)$."
-    }
+{ question: "The series $\\sum \\frac{n^2}{2^n}$ converges by the Ratio Test since the limit of $\\frac{a_{n+1}}{a_n}$ equals:", options: ["$1$", "$\\frac{1}{2}$", "$2$", "$0$"], correctAnswer: 1, explanation: "Computing the ratio: $\\frac{(n+1)^2}{2^{n+1}} \\cdot \\frac{2^n}{n^2} = \\frac{1}{2}\\left(\\frac{n+1}{n}\\right)^2 \\to \\frac{1}{2} < 1$, confirming convergence." },
+{ question: "The series $\\sum \\frac{3^n}{n^3}$ diverges because the Ratio Test gives a limit of:", options: ["$0$", "$1$", "$3$", "$\\frac{1}{3}$"], correctAnswer: 2, explanation: "The ratio $\\frac{a_{n+1}}{a_n} = 3\\left(\\frac{n}{n+1}\\right)^3 \\to 3 > 1$, confirming divergence." },
+{ question: "When the Ratio Test gives limit $L=1$, the test is:", options: ["Conclusive: series converges", "Conclusive: series diverges", "Inconclusive; another test is needed", "Only valid for alternating series"], correctAnswer: 2, explanation: "The Ratio Test fails to give information when $L=1$; other tests like comparison or Raabe's test must be used." },
+{ question: "The series $\\sum \\frac{1}{n^2+1}$ converges by comparison with:", options: ["$\\sum \\frac{1}{n}$", "$\\sum \\frac{1}{n^2}$", "$\\sum n$", "$\\sum \\frac{1}{\\sqrt{n}}$"], correctAnswer: 1, explanation: "Since $\\frac{1}{n^2+1} < \\frac{1}{n^2}$ and $\\sum 1/n^2$ converges (p-series, $p=2$), by comparison the given series converges." },
+{ question: "The series $\\sum \\frac{1}{\\sqrt{n}}$ diverges by comparison since it behaves like the p-series with:", options: ["$p = 1/2 < 1$", "$p = 2 > 1$", "$p = 1$", "$p = 0$"], correctAnswer: 0, explanation: "Here $p=1/2 < 1$, so by the p-series test the series diverges." },
+{ question: "The Limit Comparison Test states that if $a_n, b_n > 0$ and $\\lim \\frac{a_n}{b_n} = L$ where $0 < L < \\infty$, then:", options: ["$\\sum a_n$ and $\\sum b_n$ both converge or both diverge", "$\\sum a_n$ always converges", "No relation can be established", "$\\sum b_n$ diverges always"], correctAnswer: 0, explanation: "This is the precise statement of the Limit Comparison Test: both series share the same convergence behavior when $L$ is finite and positive." },
+{ question: "Using Limit Comparison, the series $\\sum \\frac{2n+1}{n^3+3}$ behaves like:", options: ["$\\sum \\frac{1}{n^2}$ (convergent)", "$\\sum \\frac{1}{n}$ (divergent)", "$\\sum n$ (divergent)", "$\\sum \\frac{1}{n^3}$"], correctAnswer: 0, explanation: "For large $n$, $\\frac{2n+1}{n^3+3} \\sim \\frac{2n}{n^3} = \\frac{2}{n^2}$, comparable to convergent p-series with $p=2$." },
+{ question: "The series $\\sum \\frac{(-1)^n}{\\sqrt{n}}$ is:", options: ["Absolutely convergent", "Conditionally convergent", "Divergent", "Not a valid alternating series"], correctAnswer: 1, explanation: "By Leibnitz test it converges (terms decrease to $0$), but $\\sum 1/\\sqrt{n}$ diverges, so it is conditionally convergent." },
+{ question: "The series $\\sum \\frac{(-1)^n}{n^2}$ is:", options: ["Absolutely convergent", "Conditionally convergent", "Divergent", "Oscillating without convergence"], correctAnswer: 0, explanation: "Since $\\sum 1/n^2$ converges (p-series, $p=2>1$), the original series converges absolutely." },
+{ question: "For the series $\\sum \\frac{(-1)^n n}{n+1}$, we can conclude:", options: ["Converges absolutely", "Converges conditionally", "Diverges since terms don't tend to $0$", "Converges by root test"], correctAnswer: 2, explanation: "Since $\\frac{n}{n+1} \\to 1 \\neq 0$, the necessary condition for convergence fails; the series diverges." },
+{ question: "The Root Test applied to $\\sum \\left(\\frac{1}{\\ln n}\\right)^n$ (for $n \\geq 2$) gives:", options: ["Convergent since limit is $0$", "Divergent since limit is $\\infty$", "Inconclusive", "Convergent since limit is $1$"], correctAnswer: 0, explanation: "$(a_n)^{1/n} = \\frac{1}{\\ln n} \\to 0$ as $n \\to \\infty$, confirming convergence by the Root Test." },
+{ question: "Raabe's Test is typically used when:", options: ["The Ratio Test gives $L=1$ (inconclusive)", "The series has negative terms only", "The Comparison Test fails", "The series is alternating"], correctAnswer: 0, explanation: "Raabe's Test serves as a refinement when the basic Ratio Test is inconclusive due to limit equal to $1$." },
+{ question: "Raabe's Test states that for $a_n>0$, if $\\lim n\\left(\\frac{a_n}{a_{n+1}}-1\\right) = L$, the series converges if:", options: ["$L>1$", "$L<1$", "$L=1$", "$L=0$"], correctAnswer: 0, explanation: "Raabe's test confirms convergence when $L>1$ and divergence when $L<1$; inconclusive at $L=1$." },
+{ question: "The series $\\sum \\frac{1}{n!}$ converges by the Ratio Test with limit:", options: ["$0$", "$1$", "$e$", "$\\infty$"], correctAnswer: 0, explanation: "$\\frac{a_{n+1}}{a_n} = \\frac{1}{n+1} \\to 0 < 1$, confirming rapid convergence (this series sums to $e-1$ from $n=1$)." },
+{ question: "If $\\sum a_n$ converges and $c$ is a nonzero constant, then $\\sum c \\cdot a_n$:", options: ["Diverges", "Converges to $c$ times the original sum", "Converges to $0$", "May diverge depending on $c$"], correctAnswer: 1, explanation: "Scalar multiplication of a convergent series preserves convergence, scaling the sum by the constant." },
+{ question: "If $\\sum a_n$ diverges and $\\sum b_n$ converges, then $\\sum(a_n+b_n)$:", options: ["Converges", "Diverges", "May converge or diverge", "Always equals $0$"], correctAnswer: 1, explanation: "If the sum converged, then $\\sum a_n = \\sum(a_n+b_n) - \\sum b_n$ would converge (contradiction), so it must diverge." },
+{ question: "If both $\\sum a_n$ and $\\sum b_n$ diverge, then $\\sum(a_n+b_n)$:", options: ["Always converges", "Always diverges", "May converge or diverge", "Equals $\\sum a_n \\cdot \\sum b_n$"], correctAnswer: 2, explanation: "Counter-examples exist both ways: e.g., $a_n=1, b_n=-1$ gives convergent sum $0$, but $a_n=b_n=1/n$ gives divergent sum." },
+{ question: "The geometric series $\\sum_{n=0}^{\\infty} r^n$ converges if and only if:", options: ["$|r|<1$", "$|r|>1$", "$r=1$", "$r$ is any real number"], correctAnswer: 0, explanation: "The classical geometric series test: convergence occurs precisely when $|r|<1$, summing to $\\frac{1}{1-r}$." },
+{ question: "For $\\sum \\frac{n^n}{(n!)^2}$, applying the Ratio Test yields convergence because the limit equals:", options: ["$0$", "$1$", "$e$", "$\\infty$"], correctAnswer: 0, explanation: "Using Stirling-type analysis or direct ratio computation, this ratio tends to $0$, confirming convergence." },
+{ question: "The series $\\sum \\left(1 - \\cos\\frac{1}{n}\\right)$ converges by comparison with:", options: ["$\\sum \\frac{1}{n}$", "$\\sum \\frac{1}{n^2}$", "$\\sum \\frac{1}{n^3}$", "$\\sum n$"], correctAnswer: 1, explanation: "Since $1-\\cos x \\approx x^2/2$ for small $x$, the terms behave like $\\frac{1}{2n^2}$, comparable to convergent p-series." },
+{ question: "The series $\\sum \\ln\\left(1+\\frac{1}{n}\\right)$ diverges because it behaves like:", options: ["$\\sum \\frac{1}{n}$ (divergent, by comparison since $\\ln(1+x)\\sim x$)", "$\\sum \\frac{1}{n^2}$", "A convergent telescoping series", "It actually converges"], correctAnswer: 0, explanation: "Since $\\ln(1+1/n) \\sim 1/n$ for large $n$, and $\\sum 1/n$ diverges, this series also diverges by limit comparison." },
+{ question: "For the alternating series $\\sum (-1)^n \\left(\\sqrt{n+1}-\\sqrt{n}\\right)$, Leibnitz's test confirms convergence since:", options: ["The terms $\\sqrt{n+1}-\\sqrt{n}$ decrease monotonically to $0$", "The terms increase to infinity", "The series is a p-series", "It fails the necessary condition"], correctAnswer: 0, explanation: "Since $\\sqrt{n+1}-\\sqrt{n} = \\frac{1}{\\sqrt{n+1}+\\sqrt{n}} \\to 0$ and is decreasing, Leibnitz's test applies." },
+{ question: "If a series $\\sum a_n$ has all positive terms and converges, then it must converge:", options: ["Conditionally", "Absolutely", "Neither, since positive-term series can't converge", "Only if it's a p-series"], correctAnswer: 1, explanation: "For series with all nonnegative (or all positive) terms, convergence is automatically absolute convergence since $|a_n|=a_n$." },
+{ question: "The series $\\sum \\frac{\\cos(n\\pi)}{n^2}$ is:", options: ["Divergent", "Absolutely convergent", "Conditionally convergent only", "Not well-defined"], correctAnswer: 1, explanation: "Since $|\\cos(n\\pi)|=1$, this reduces to $\\sum \\frac{(-1)^n}{n^2}$ in absolute value comparison to $\\sum 1/n^2$, which converges, so absolute convergence holds." },
+{ question: "The p-series test is essentially a special case derived from which more general test?", options: ["The Integral Test", "The Ratio Test", "Abel's Test", "Dirichlet's Test"], correctAnswer: 0, explanation: "The p-series convergence criterion follows directly by applying the Integral Test to $f(x)=1/x^p$." },
+{ question: "The Integral Test states that for a positive, decreasing, continuous function $f$ with $f(n)=a_n$, $\\sum a_n$ converges if and only if:", options: ["$\\int_1^{\\infty} f(x)\\,dx$ converges", "$f(x) \\to \\infty$", "$f$ is bounded", "$f$ is increasing"], correctAnswer: 0, explanation: "This is the precise statement of the Integral Test, connecting series convergence to improper integral convergence." },
+{ question: "Using the Integral Test on $\\sum \\frac{1}{n \\ln n}$ (for $n\\geq 2$), we find the series:", options: ["Converges since the integral converges", "Diverges since $\\int_2^\\infty \\frac{dx}{x\\ln x} = \\infty$", "Cannot be tested this way", "Converges absolutely"], correctAnswer: 1, explanation: "The substitution $u=\\ln x$ gives $\\int \\frac{du}{u} = \\ln(\\ln x)$, which diverges as $x\\to\\infty$, so the series diverges." },
+{ question: "If $\\sum a_n^2$ and $\\sum b_n^2$ both converge, then by Cauchy-Schwarz, $\\sum a_n b_n$:", options: ["Diverges", "Converges absolutely", "Converges conditionally only", "Cannot be determined"], correctAnswer: 1, explanation: "By the Cauchy-Schwarz inequality, $\\sum |a_n b_n| \\leq \\sqrt{\\sum a_n^2}\\sqrt{\\sum b_n^2} < \\infty$, so the series converges absolutely." },
+{ question: "The series $\\sum \\frac{(-1)^n}{n \\ln n}$ (for $n \\geq 2$) is:", options: ["Absolutely convergent", "Conditionally convergent", "Divergent", "Not defined"], correctAnswer: 1, explanation: "By Leibnitz test it converges since $1/(n\\ln n)$ decreases to $0$, but $\\sum 1/(n\\ln n)$ diverges (shown via integral test), giving conditional convergence." },
+{ question: "For $\\sum a_n$ with $a_n = \\frac{(-1)^n}{n^p}$, the series converges absolutely when:", options: ["$p>1$", "$0<p\\leq 1$", "$p\\leq 0$", "Never absolutely convergent"], correctAnswer: 0, explanation: "Absolute convergence requires $\\sum 1/n^p$ to converge, which happens precisely when $p>1$." },
+
   ]
 };
 
@@ -198,6 +49,121 @@ type ViewState = 'registration' | 'details' | 'test' | 'results';
 
 export default function FreeDailyTest() {
   const [viewState, setViewState] = useState<ViewState>('registration');
+  const [selectedPool, setSelectedPool] = useState<string>('slst_mock');
+  const loginFormRef = useRef<HTMLDivElement>(null);
+
+  const testPools = [
+    {
+      id: 'slst_mock',
+      title: 'SLST Real Analysis Mock',
+      subtitle: 'Topology, Sequences, Series, Riemann Integral & SLST PYQs.',
+      theme: 'emerald',
+      badge: 'SLST IX-XII • 30 MCQs',
+      icon: 'Σ',
+      duration: '45 Mins',
+      tag: '100% Free',
+      borderColor: 'border-emerald-500/40 hover:border-emerald-400',
+      activeBorder: 'ring-2 ring-emerald-400 border-emerald-400 shadow-[0_0_25px_rgba(52,211,153,0.35)]',
+      bgGradient: 'from-emerald-500/15 via-teal-500/5 to-transparent',
+      badgeColor: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40',
+      iconColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+      textColor: 'text-emerald-400',
+      btnGradient: 'from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950'
+    },
+    {
+      id: 'jee_mock',
+      title: 'JEE Mains & WBJEE Calculus',
+      subtitle: 'Limits, Continuity, Differentiation, Vectors & 3D Geometry speed tests.',
+      theme: 'pink',
+      badge: 'JEE & WBJEE • CALCULUS',
+      icon: '∫',
+      duration: '45 Mins',
+      tag: 'Percentile Rank',
+      borderColor: 'border-pink-500/40 hover:border-pink-400',
+      activeBorder: 'ring-2 ring-pink-400 border-pink-400 shadow-[0_0_25px_rgba(236,72,153,0.35)]',
+      bgGradient: 'from-pink-500/15 via-purple-500/5 to-transparent',
+      badgeColor: 'bg-pink-500/15 text-pink-300 border-pink-500/40',
+      iconColor: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+      textColor: 'text-pink-400',
+      btnGradient: 'from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white'
+    },
+    {
+      id: 'net_mock',
+      title: 'CSIR NET JRF Advanced',
+      subtitle: 'Linear Algebra, Complex Variables, Metric Spaces & PDEs for NET.',
+      theme: 'indigo',
+      badge: 'NET JRF & GATE • ADVANCED',
+      icon: '⌬',
+      duration: '60 Mins',
+      tag: 'Standard CBT',
+      borderColor: 'border-indigo-500/40 hover:border-indigo-400',
+      activeBorder: 'ring-2 ring-indigo-400 border-indigo-400 shadow-[0_0_25px_rgba(99,102,241,0.35)]',
+      bgGradient: 'from-indigo-500/15 via-cyan-500/5 to-transparent',
+      badgeColor: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/40',
+      iconColor: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
+      textColor: 'text-indigo-400',
+      btnGradient: 'from-indigo-500 to-cyan-600 hover:from-indigo-400 hover:to-cyan-500 text-white'
+    },
+    {
+      id: 'tet_mock',
+      title: 'Upper Primary TET Math',
+      subtitle: 'Number System, Arithmetic, Pedagogy & Geometry targeted sets.',
+      theme: 'amber',
+      badge: 'TET SPECIAL BATCH',
+      icon: 'π',
+      duration: '30 Mins',
+      tag: 'Instant Keys',
+      borderColor: 'border-amber-500/40 hover:border-amber-400',
+      activeBorder: 'ring-2 ring-amber-400 border-amber-400 shadow-[0_0_25px_rgba(245,158,11,0.35)]',
+      bgGradient: 'from-amber-500/15 via-yellow-500/5 to-transparent',
+      badgeColor: 'bg-amber-500/15 text-amber-300 border-amber-500/40',
+      iconColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+      textColor: 'text-amber-400',
+      btnGradient: 'from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950'
+    },
+    {
+      id: 'bsc_mock',
+      title: 'BSc Math Honours Drill',
+      subtitle: 'Group Theory, Ring Theory, Multivariate Calculus & ODE modules.',
+      theme: 'sky',
+      badge: 'BSc HONOURS SEMESTER',
+      icon: 'lim',
+      duration: '60 Mins',
+      tag: 'PDF Solutions',
+      borderColor: 'border-sky-500/40 hover:border-sky-400',
+      activeBorder: 'ring-2 ring-sky-400 border-sky-400 shadow-[0_0_25px_rgba(56,189,248,0.35)]',
+      bgGradient: 'from-sky-500/15 via-blue-500/5 to-transparent',
+      badgeColor: 'bg-sky-500/15 text-sky-300 border-sky-500/40',
+      iconColor: 'bg-sky-500/20 text-sky-400 border-sky-500/30',
+      textColor: 'text-sky-400',
+      btnGradient: 'from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white'
+    },
+    {
+      id: 'live_mock',
+      title: "Today's Live Featured Mock",
+      subtitle: '30 Mixed Real Analysis equations with timed NTA CBT interface.',
+      theme: 'red',
+      badge: 'LIVE NOW • CODE test@547',
+      icon: '√',
+      duration: '45 Mins',
+      tag: 'Featured',
+      borderColor: 'border-red-500/50 hover:border-red-400',
+      activeBorder: 'ring-2 ring-red-400 border-red-400 shadow-[0_0_25px_rgba(239,68,68,0.4)]',
+      bgGradient: 'from-red-500/20 via-rose-500/5 to-transparent',
+      badgeColor: 'bg-red-600/20 text-red-300 border-red-500/50 animate-pulse',
+      iconColor: 'bg-red-500/20 text-red-400 border-red-500/40',
+      textColor: 'text-red-400',
+      btnGradient: 'from-red-600 via-rose-600 to-pink-600 hover:from-red-500 hover:to-pink-500 text-white'
+    }
+  ];
+
+  const handleSelectPoolCard = (poolId: string) => {
+    setSelectedPool(poolId);
+    setFormData(prev => ({ ...prev, code: 'test@547' }));
+    if (loginFormRef.current) {
+      loginFormRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   useSEO(
     "Free Daily Math Mock Test | SLST, JEE & WBJEE",
@@ -334,16 +300,31 @@ export default function FreeDailyTest() {
   };
 
   return (
-    <div className="w-full flex-1 flex flex-col py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#030712] text-slate-100">
-      {/* Deep ambient background glows */}
-      <div className="absolute top-10 left-1/4 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-900/15 rounded-full blur-[180px] pointer-events-none"></div>
-      <div className="absolute top-1/3 right-10 w-[500px] h-[500px] bg-emerald-900/15 rounded-full blur-[160px] pointer-events-none"></div>
-      <div className="absolute bottom-10 left-1/3 w-[600px] h-[600px] bg-blue-950/20 rounded-full blur-[180px] pointer-events-none"></div>
+    <div className="w-full flex-1 flex flex-col py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#090706] text-slate-100 min-h-screen">
+      {/* Warm Ambient Background Glows & Abstract Waves like in the design */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-b from-amber-600/20 via-orange-600/10 to-transparent rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute top-1/3 left-10 w-[450px] h-[450px] bg-orange-700/15 rounded-full blur-[160px] pointer-events-none"></div>
+      <div className="absolute bottom-10 right-10 w-[550px] h-[550px] bg-red-950/20 rounded-full blur-[180px] pointer-events-none"></div>
 
-      <div className="max-w-4xl mx-auto w-full relative z-10">
+      {/* Decorative Wavy Lines SVG Background Overlay */}
+      <svg className="absolute inset-0 w-full h-full stroke-amber-500/10 fill-none pointer-events-none stroke-[1.2]" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-100,200 C300,50 800,400 1400,100 C1800,-100 2200,300 2600,200" />
+        <path d="M-200,500 C400,300 900,600 1500,400 C1900,250 2300,550 2700,450" />
+        <path d="M-100,800 C500,650 1000,900 1600,700 C2000,550 2400,800 2800,750" />
+      </svg>
+
+      {/* Floating Starburst Accent Elements */}
+      <div className="absolute top-1/4 left-10 hidden lg:flex text-amber-400/30 animate-pulse pointer-events-none">
+        <Sparkles className="w-10 h-10" />
+      </div>
+      <div className="absolute bottom-1/3 right-12 hidden lg:flex text-orange-400/30 animate-pulse pointer-events-none">
+        <Sparkles className="w-12 h-12" />
+      </div>
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         {viewState !== 'test' && (
-          <Link to="/" className="inline-flex items-center gap-2 text-slate-300 hover:text-emerald-400 font-bold uppercase text-xs tracking-widest mb-8 transition-all bg-slate-900/90 px-4 py-2.5 rounded-xl border border-slate-800 shadow-xl hover:border-emerald-500/40 hover:bg-slate-850">
-            <ArrowLeft className="h-4 w-4 text-emerald-400" /> Back to Portal
+          <Link to="/" className="inline-flex items-center gap-2 text-slate-300 hover:text-amber-400 font-bold uppercase text-xs tracking-widest mb-6 transition-all bg-amber-950/40 px-4 py-2.5 rounded-full border border-amber-500/20 shadow-xl hover:border-amber-500/50 hover:bg-amber-900/40 backdrop-blur-md">
+            <ArrowLeft className="h-4 w-4 text-amber-400" /> Back to Portal
           </Link>
         )}
 
@@ -351,98 +332,157 @@ export default function FreeDailyTest() {
           {viewState === 'registration' && (
             <motion.div
               key="registration"
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, y: 30, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.98 }}
               transition={{ duration: 0.4 }}
-              className="bg-slate-900/90 backdrop-blur-2xl border border-slate-800/90 rounded-[32px] p-6 sm:p-10 shadow-[0_25px_80px_rgba(0,0,0,0.85)] relative overflow-hidden"
+              className="max-w-md mx-auto w-full py-4 sm:py-6"
             >
-              {/* Top Accent Gradient Bar */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-indigo-500 to-purple-500"></div>
-              
-              <div className="relative z-10 text-center mb-10">
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-emerald-950/70 border border-emerald-800/60 text-emerald-300 text-xs font-black uppercase tracking-widest mb-6 shadow-sm">
-                  <span className="flex h-2 w-2 relative">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </span>
-                  <span>FREE DAILY PRACTICE • SLST & WBJEE MATHEMATICS</span>
-                </div>
-
-                <div className="w-18 h-18 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950/80 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-2xl border border-slate-800/90">
-                  <Lock className="h-9 w-9 text-emerald-400 stroke-[2.25]" />
-                </div>
+              {/* Glassmorphic Card Container matching the user UI image */}
+              <div className="bg-[#1c1412]/80 border border-amber-500/20 rounded-[40px] p-6 sm:p-9 shadow-[0_30px_90px_rgba(0,0,0,0.85)] relative overflow-hidden backdrop-blur-2xl">
                 
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-3 tracking-tight uppercase font-display">
-                  Unlock Daily <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300">Free Mock Test</span>
-                </h1>
-                <p className="text-slate-300 font-medium max-w-lg mx-auto text-sm sm:text-base leading-relaxed">
-                  Enter your candidate information and secret test passcode to unlock today's timed CBT examination.
-                </p>
-              </div>
+                {/* Top Glowing Ambient Highlight */}
+                <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-gradient-to-b from-amber-500/30 via-orange-500/20 to-transparent rounded-full blur-2xl pointer-events-none"></div>
 
-              <form onSubmit={handleRegistrationSubmit} className="max-w-md mx-auto space-y-4 relative z-10">
-                <div className="relative group">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full bg-slate-950/80 border border-slate-800/90 focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm sm:text-base"
-                  />
+                {/* Top Decorative Artwork Badge (Organic Shape Illustration Container) */}
+                <div className="relative mb-6">
+                  <div className="w-full h-44 sm:h-48 rounded-[30px] bg-gradient-to-br from-amber-950/60 via-orange-950/40 to-stone-900/90 border border-amber-500/30 flex items-center justify-center relative overflow-hidden shadow-inner group">
+                    {/* Background Graphic Lines inside badge */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.15)_0,transparent_70%)] pointer-events-none"></div>
+                    
+                    {/* Floating Math & Exam Illustration Elements */}
+                    <div className="relative z-10 flex flex-col items-center text-center p-4">
+                      <div className="relative mb-2">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-slate-950 font-black text-2xl shadow-xl shadow-amber-950/60 transform rotate-3 group-hover:rotate-0 transition-transform duration-300">
+                          Σ
+                        </div>
+                        <div className="absolute -top-2 -right-3 w-8 h-8 rounded-xl bg-gradient-to-tr from-red-500 to-pink-500 flex items-center justify-center text-white font-bold text-xs shadow-lg transform -rotate-6">
+                          ∫
+                        </div>
+                        <div className="absolute -bottom-1 -left-3 w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-black text-xs shadow-md">
+                          ✓
+                        </div>
+                      </div>
+
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-black uppercase tracking-widest mt-1">
+                        <Sparkles className="w-3 h-3 text-amber-400" /> SLST & WBJEE CBT MOCK
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="relative group">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
-                  <input
-                    type="tel"
-                    placeholder="Mobile Number"
-                    value={formData.mobile}
-                    onChange={(e) => setFormData({...formData, mobile: e.target.value})}
-                    className="w-full bg-slate-950/80 border border-slate-800/90 focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm sm:text-base"
-                  />
+                {/* Main Card Title */}
+                <div className="text-center mb-6">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-display mb-1">
+                    Candidate Login
+                  </h1>
+                  <p className="text-slate-400 text-xs font-medium">
+                    Enter details & passcode <span className="text-amber-400 font-mono font-bold">test@547</span> to launch
+                  </p>
                 </div>
 
-                <div className="relative group">
-                  <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-emerald-400 transition-colors" />
-                  <input
-                    type="text"
-                    placeholder="District Name"
-                    value={formData.district}
-                    onChange={(e) => setFormData({...formData, district: e.target.value})}
-                    className="w-full bg-slate-950/80 border border-slate-800/90 focus:border-emerald-500/80 focus:ring-1 focus:ring-emerald-500/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm sm:text-base"
-                  />
-                </div>
+                {/* Registration Form with Top Labels and Capsule Inputs */}
+                <form onSubmit={handleRegistrationSubmit} className="space-y-4 relative z-10">
+                  
+                  {/* Field 1: Full Name */}
+                  <div>
+                    <label className="text-slate-300 text-xs font-medium ml-2 mb-1.5 block">
+                      Full Name
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="Your full name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full bg-white/5 border border-white/15 focus:border-amber-400 focus:bg-white/10 rounded-full py-3.5 px-5 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm shadow-inner"
+                      />
+                    </div>
+                  </div>
 
-                <div className="relative group">
-                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-amber-400/90 group-focus-within:text-amber-300 transition-colors" />
-                  <input
-                    type="text"
-                    placeholder="Secret Test Code (e.g., test@547)"
-                    value={formData.code}
-                    onChange={(e) => setFormData({...formData, code: e.target.value})}
-                    className="w-full bg-slate-950/80 border border-amber-500/30 focus:border-amber-400 focus:ring-1 focus:ring-amber-400/30 rounded-xl py-3.5 pl-12 pr-4 text-slate-100 placeholder-slate-500 outline-none transition-all font-bold tracking-wide text-sm sm:text-base"
-                  />
-                </div>
+                  {/* Field 2: Mobile Number */}
+                  <div>
+                    <label className="text-slate-300 text-xs font-medium ml-2 mb-1.5 block">
+                      Mobile Number
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="tel"
+                        placeholder="Your 10-digit mobile"
+                        value={formData.mobile}
+                        onChange={(e) => setFormData({...formData, mobile: e.target.value})}
+                        className="w-full bg-white/5 border border-white/15 focus:border-amber-400 focus:bg-white/10 rounded-full py-3.5 px-5 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm shadow-inner"
+                      />
+                    </div>
+                  </div>
 
-                {error && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-rose-300 text-xs sm:text-sm text-center bg-rose-950/40 py-2.5 px-4 rounded-xl border border-rose-800/60 font-bold"
+                  {/* Field 3: District Name */}
+                  <div>
+                    <label className="text-slate-300 text-xs font-medium ml-2 mb-1.5 block">
+                      District Name
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="Your district name"
+                        value={formData.district}
+                        onChange={(e) => setFormData({...formData, district: e.target.value})}
+                        className="w-full bg-white/5 border border-white/15 focus:border-amber-400 focus:bg-white/10 rounded-full py-3.5 px-5 text-slate-100 placeholder-slate-500 outline-none transition-all font-medium text-sm shadow-inner"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Field 4: Test Passcode */}
+                  <div>
+                    <div className="flex items-center justify-between ml-2 mb-1.5">
+                      <label className="text-slate-300 text-xs font-medium">
+                        Secret Test Code
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({...formData, code: 'test@547'})}
+                        className="text-amber-400 hover:text-amber-300 text-[11px] font-bold underline transition-colors"
+                      >
+                        Auto-fill test@547
+                      </button>
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="e.g. test@547"
+                        value={formData.code}
+                        onChange={(e) => setFormData({...formData, code: e.target.value})}
+                        className="w-full bg-white/5 border border-amber-500/40 focus:border-amber-400 focus:bg-white/10 rounded-full py-3.5 px-5 text-slate-100 placeholder-slate-500 outline-none transition-all font-mono font-bold tracking-wide text-sm shadow-inner"
+                      />
+                    </div>
+                  </div>
+
+                  {error && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-rose-300 text-xs text-center bg-rose-950/70 py-2.5 px-4 rounded-full border border-rose-800/60 font-bold"
+                    >
+                      {error}
+                    </motion.p>
+                  )}
+
+                  {/* Start Button matching the fiery glowing pill style in screenshot */}
+                  <button
+                    type="submit"
+                    className="w-full mt-6 py-4 px-6 rounded-full font-bold text-base uppercase tracking-wider text-white bg-gradient-to-r from-amber-500 via-orange-500 to-red-600 hover:from-amber-400 hover:to-red-500 shadow-[0_10px_35px_rgba(245,158,11,0.45)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    {error}
-                  </motion.p>
-                )}
+                    Start <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+                  </button>
+                </form>
 
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-slate-950 font-black py-4 rounded-xl uppercase tracking-widest text-sm sm:text-base transition-all shadow-lg shadow-emerald-950/50 hover:shadow-emerald-900/60 hover:-translate-y-0.5 mt-6 flex items-center justify-center gap-2"
-                >
-                  Verify Credentials & Start <ChevronRight className="w-5 h-5 stroke-[2.5]" />
-                </button>
-              </form>
+                <div className="mt-6 pt-4 border-t border-white/10 text-center">
+                  <p className="text-[11px] text-slate-400 font-medium flex items-center justify-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span>Live standard CBT examination portal</span>
+                  </p>
+                </div>
+              </div>
             </motion.div>
           )}
 

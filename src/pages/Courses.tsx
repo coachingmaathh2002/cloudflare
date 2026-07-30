@@ -275,7 +275,7 @@ export default function Courses() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 border border-pink-500/30 text-pink-300 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(219,39,119,0.3)]"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 border border-pink-500/40 text-pink-300 text-xs font-bold uppercase tracking-widest mb-6 shadow-md"
         >
           <Sparkles className="w-4 h-4 text-pink-400 animate-pulse" />
           <span>RAJ SIR MATH CLASSES • MASTERCLASS BATCHES</span>
@@ -309,26 +309,26 @@ export default function Courses() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto mb-10"
         >
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-pink-400">5,000+</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Enrolled Students</span>
           </div>
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-emerald-400">98%</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Success Rate</span>
           </div>
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-amber-400">100+</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Top SLST Ranks</span>
           </div>
-          <div className="glass-card p-4 rounded-2xl flex flex-col items-center justify-center border border-white/10">
+          <div className="solid-card p-4 rounded-2xl flex flex-col items-center justify-center border border-slate-800 bg-slate-900">
             <span className="text-2xl sm:text-3xl font-black text-indigo-400">4.9/5</span>
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mt-1">Average Rating</span>
           </div>
         </motion.div>
 
         {/* Search & Category Filter Bar */}
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-3 bg-slate-900/80 p-2.5 rounded-2xl border border-white/15 backdrop-blur-xl shadow-2xl">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-3 bg-slate-900 p-3 rounded-2xl border border-slate-800 shadow-2xl">
           {/* Search Input */}
           <div className="relative w-full md:w-72 flex items-center">
             <Search className="absolute left-3.5 h-4 w-4 text-slate-400" />
@@ -387,10 +387,10 @@ export default function Courses() {
                   animate={{ opacity: 1, y: 0 }}
                   key={course.id}
                   className={cn(
-                    "glass-card-interactive rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border",
+                    "solid-card-interactive rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border bg-slate-900",
                     isSelected 
-                      ? "border-pink-500/80 shadow-[0_0_30px_rgba(219,39,119,0.3)] ring-1 ring-pink-500/50" 
-                      : "border-white/10 hover:border-pink-500/40"
+                      ? "border-pink-500 shadow-[0_0_30px_rgba(219,39,119,0.3)] ring-1 ring-pink-500/50" 
+                      : "border-slate-800 hover:border-pink-500/50"
                   )}
                 >
                   {/* Subtle Background Glow */}
@@ -491,10 +491,10 @@ export default function Courses() {
 
       {/* Syllabus & Chapter Breakdown Drawer / Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 scroll-mt-24" id="syllabus-section">
-        <div className="glass-card rounded-3xl border border-white/15 overflow-hidden shadow-2xl">
+        <div className="solid-card rounded-3xl border border-slate-800 overflow-hidden shadow-2xl bg-slate-900">
           
           {/* Header of Syllabus Section */}
-          <div className="p-6 sm:p-8 border-b border-white/10 relative overflow-hidden bg-slate-950/60">
+          <div className="p-6 sm:p-8 border-b border-slate-800 relative overflow-hidden bg-slate-950">
             <div className={cn("absolute inset-0 opacity-15 bg-gradient-to-r", activeCourse.gradient)}></div>
             <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
@@ -547,7 +547,7 @@ export default function Courses() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="glass-card-interactive p-6 rounded-3xl border border-white/10 flex flex-col items-start">
+          <div className="solid-card-interactive p-6 rounded-3xl border border-slate-800 bg-slate-900 flex flex-col items-start shadow-xl">
             <div className="w-12 h-12 rounded-2xl bg-pink-500/20 border border-pink-500/40 text-pink-400 flex items-center justify-center mb-4">
               <Zap className="h-6 w-6" />
             </div>
@@ -557,7 +557,7 @@ export default function Courses() {
             </p>
           </div>
 
-          <div className="glass-card-interactive p-6 rounded-3xl border border-white/10 flex flex-col items-start">
+          <div className="solid-card-interactive p-6 rounded-3xl border border-slate-800 bg-slate-900 flex flex-col items-start shadow-xl">
             <div className="w-12 h-12 rounded-2xl bg-purple-500/20 border border-purple-500/40 text-purple-400 flex items-center justify-center mb-4">
               <BookOpen className="h-6 w-6" />
             </div>
@@ -567,7 +567,7 @@ export default function Courses() {
             </p>
           </div>
 
-          <div className="glass-card-interactive p-6 rounded-3xl border border-white/10 flex flex-col items-start">
+          <div className="solid-card-interactive p-6 rounded-3xl border border-slate-800 bg-slate-900 flex flex-col items-start shadow-xl">
             <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center mb-4">
               <Target className="h-6 w-6" />
             </div>
@@ -577,7 +577,7 @@ export default function Courses() {
             </p>
           </div>
 
-          <div className="glass-card-interactive p-6 rounded-3xl border border-white/10 flex flex-col items-start">
+          <div className="solid-card-interactive p-6 rounded-3xl border border-slate-800 bg-slate-900 flex flex-col items-start shadow-xl">
             <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mb-4">
               <ShieldCheck className="h-6 w-6" />
             </div>
@@ -591,7 +591,7 @@ export default function Courses() {
 
       {/* Direct Contact Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-card rounded-3xl p-8 sm:p-12 border border-white/15 relative overflow-hidden text-center bg-gradient-to-r from-pink-950/40 via-slate-900 to-indigo-950/40 shadow-2xl">
+        <div className="solid-card rounded-3xl p-8 sm:p-12 border border-slate-800 relative overflow-hidden text-center bg-gradient-to-r from-pink-950/80 via-slate-900 to-indigo-950/80 shadow-2xl">
           <div className="absolute -top-32 -right-32 w-80 h-80 bg-pink-600/20 rounded-full blur-[100px] pointer-events-none"></div>
           
           <span className="text-xs font-bold text-amber-300 uppercase tracking-widest bg-amber-400/10 border border-amber-400/30 px-3.5 py-1.5 rounded-full inline-block mb-4">
@@ -696,7 +696,7 @@ function ChapterAccordion({ chapter, index }: { chapter: Chapter; index: number;
             {/* Resources Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Lecture Notes Card */}
-              <div className="glass-card p-4 rounded-2xl border border-white/10">
+              <div className="solid-card p-4 rounded-2xl border border-slate-800 bg-slate-900">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-xs uppercase tracking-wider text-pink-400 flex items-center gap-1.5">
                     <FileText className="h-4 w-4" /> Handwritten Study Notes
@@ -704,14 +704,14 @@ function ChapterAccordion({ chapter, index }: { chapter: Chapter; index: number;
                   <span className="text-[10px] font-bold text-slate-400">{chapter.pdfCount} Files Available</span>
                 </div>
                 <ul className="space-y-2">
-                  <li className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/80 border border-white/5 text-xs text-slate-300 font-medium">
+                  <li className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 font-medium">
                     <span>Part 1: Concept & Fundamental Theorems</span>
                     <Link to="/notes" className="text-pink-400 hover:text-pink-300 font-bold text-[11px] flex items-center gap-1">
                       <span>View PDF</span>
                       <Download className="h-3.5 w-3.5" />
                     </Link>
                   </li>
-                  <li className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/80 border border-white/5 text-xs text-slate-300 font-medium">
+                  <li className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 font-medium">
                     <span>Part 2: Worked Examples & Shortcut Sheet</span>
                     <Link to="/notes" className="text-pink-400 hover:text-pink-300 font-bold text-[11px] flex items-center gap-1">
                       <span>View PDF</span>
@@ -722,14 +722,14 @@ function ChapterAccordion({ chapter, index }: { chapter: Chapter; index: number;
               </div>
 
               {/* Practice Tests Card */}
-              <div className="glass-card p-4 rounded-2xl border border-white/10">
+              <div className="solid-card p-4 rounded-2xl border border-slate-800 bg-slate-900">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-xs uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
                     <Target className="h-4 w-4" /> Chapter Mock Test
                   </h4>
                   <span className="text-[10px] font-bold text-slate-400">{chapter.mockCount} Tests Included</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-white/5 flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
                   <div>
                     <h5 className="text-xs font-bold text-white mb-0.5">Chapter Evaluation Test 01</h5>
                     <div className="flex gap-3 text-[10px] font-semibold text-slate-400">
