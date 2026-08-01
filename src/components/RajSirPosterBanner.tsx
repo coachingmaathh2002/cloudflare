@@ -244,11 +244,12 @@ export default function RajSirPosterBanner({ slide }: { slide?: BannerItemData }
             <div className="relative z-10 w-full max-w-[300px] sm:max-w-[340px]">
               <div className="relative rounded-3xl overflow-hidden border-2 border-amber-400/40 shadow-[0_0_40px_rgba(245,158,11,0.2)] bg-gradient-to-b from-blue-950/80 to-slate-950">
                 <img
-                  src="/src/assets/images/raj_sir_portrait_1785224254286.jpg"
+                  src="/src/assets/images/raj_sir_30yo_teacher_1785611994041.jpg"
                   alt="Raj Sir - Mathematics Educator"
+                  referrerPolicy="no-referrer"
                   className="w-full h-[350px] sm:h-[390px] object-cover object-top filter brightness-105 contrast-105"
                   onError={(e) => {
-                    e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop";
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=1000&auto=format&fit=crop";
                   }}
                 />
 

@@ -97,61 +97,253 @@ const EXAM_THEMES: Record<string, {
 
 // Vibrant Colorful Themes for Exam Module & Mock Test Cards Grid
 const MODULE_THEMES = [
+  // Theme 0: Pink/Magenta (Mock Test 1, 9, 17...)
   {
+    id: 'pink',
+    name: 'Pink Theme',
     gradient: 'from-[#ff1b8d] via-[#e013a7] to-[#7c11f7]',
     textColor: 'text-white',
     badgeBg: 'bg-black/60 border border-white/20',
     badgeText: 'text-pink-300',
-    btnBg: 'bg-white text-slate-950 hover:bg-slate-100'
+    btnBg: 'bg-white text-slate-950 hover:bg-slate-100',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'pink',
+    cardBg: 'bg-[#140616]/90 border-pink-500/30 shadow-[0_0_40px_rgba(236,72,153,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-pink-950/80 via-purple-950/60 to-slate-950/80 border-pink-500/40',
+    questionBoxBg: 'bg-[#1b0820]/90 border-pink-500/30 text-white',
+    ambientGlow: 'from-pink-600/20 via-purple-600/10 to-transparent',
+    headerBadgeBg: 'bg-pink-500/20',
+    headerBadgeText: 'text-pink-400',
+    headerBadgeBorder: 'border-pink-500/40',
+    timerColor: 'text-pink-400',
+    qBadgeBg: 'bg-pink-500/10',
+    qBadgeText: 'text-pink-400',
+    qBadgeBorder: 'border-pink-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-pink-500/25 via-purple-600/25 to-pink-500/25',
+    optionSelectedBorder: 'border-pink-500',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(236,72,153,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-pink-500 to-purple-600 text-white border-white/30',
+    checkColor: 'text-pink-400',
+    nextBtnBg: 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white shadow-md border border-white/20',
+    paletteCurrent: 'border-pink-400 ring-2 ring-pink-500/50 bg-pink-500 text-white font-black',
+    submitBtnBg: 'bg-gradient-to-r from-pink-500 via-purple-500 to-pink-600 hover:from-pink-400 hover:to-purple-400 text-white shadow-[0_0_20px_rgba(236,72,153,0.35)] border border-pink-300/40'
   },
+  // Theme 1: Emerald/Green (Mock Test 2, 10, 18...)
   {
-    gradient: 'from-[#00d2ff] via-[#00f2fe] to-[#38ef7d]',
-    textColor: 'text-slate-950',
-    badgeBg: 'bg-black/80 border border-white/20',
-    badgeText: 'text-cyan-300',
-    btnBg: 'bg-slate-950 text-white hover:bg-slate-900'
-  },
-  {
-    gradient: 'from-[#00c6ff] via-[#0072ff] to-[#4f46e5]',
-    textColor: 'text-white',
-    badgeBg: 'bg-black/60 border border-white/20',
-    badgeText: 'text-sky-300',
-    btnBg: 'bg-white text-slate-950 hover:bg-slate-100'
-  },
-  {
-    gradient: 'from-[#ff9966] via-[#ff7e5f] to-[#ff5e62]',
-    textColor: 'text-slate-950',
-    badgeBg: 'bg-black/80 border border-white/20',
-    badgeText: 'text-amber-300',
-    btnBg: 'bg-slate-950 text-white hover:bg-slate-900'
-  },
-  {
-    gradient: 'from-[#8A2387] via-[#E94057] to-[#F27121]',
-    textColor: 'text-white',
-    badgeBg: 'bg-black/60 border border-white/20',
-    badgeText: 'text-purple-300',
-    btnBg: 'bg-white text-slate-950 hover:bg-slate-100'
-  },
-  {
+    id: 'green',
+    name: 'Green Theme',
     gradient: 'from-[#11998e] via-[#10b981] to-[#38ef7d]',
     textColor: 'text-slate-950',
     badgeBg: 'bg-black/80 border border-white/20',
     badgeText: 'text-emerald-300',
-    btnBg: 'bg-slate-950 text-white hover:bg-slate-900'
+    btnBg: 'bg-slate-950 text-white hover:bg-slate-900',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'emerald',
+    cardBg: 'bg-[#041612]/90 border-emerald-500/30 shadow-[0_0_40px_rgba(16,185,129,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-emerald-950/80 via-teal-950/60 to-slate-950/80 border-emerald-500/40',
+    questionBoxBg: 'bg-[#07201a]/90 border-emerald-500/30 text-white',
+    ambientGlow: 'from-emerald-600/20 via-teal-600/10 to-transparent',
+    headerBadgeBg: 'bg-emerald-500/20',
+    headerBadgeText: 'text-emerald-400',
+    headerBadgeBorder: 'border-emerald-500/40',
+    timerColor: 'text-emerald-400',
+    qBadgeBg: 'bg-emerald-500/10',
+    qBadgeText: 'text-emerald-400',
+    qBadgeBorder: 'border-emerald-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-emerald-500/25 via-teal-600/25 to-emerald-500/25',
+    optionSelectedBorder: 'border-emerald-500',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(16,185,129,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black border-white/30',
+    checkColor: 'text-emerald-400',
+    nextBtnBg: 'bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black shadow-md border border-emerald-300/40',
+    paletteCurrent: 'border-emerald-400 ring-2 ring-emerald-500/50 bg-emerald-500 text-slate-950 font-black',
+    submitBtnBg: 'bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-teal-400 text-slate-950 font-black shadow-[0_0_20px_rgba(16,185,129,0.35)] border border-emerald-300/40'
   },
+  // Theme 2: Cyan/Sky (Mock Test 3, 11, 19...)
   {
+    id: 'cyan',
+    name: 'Cyan Theme',
+    gradient: 'from-[#00c6ff] via-[#0072ff] to-[#4f46e5]',
+    textColor: 'text-white',
+    badgeBg: 'bg-black/60 border border-white/20',
+    badgeText: 'text-cyan-300',
+    btnBg: 'bg-white text-slate-950 hover:bg-slate-100',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'cyan',
+    cardBg: 'bg-[#041422]/90 border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-cyan-950/80 via-blue-950/60 to-slate-950/80 border-cyan-500/40',
+    questionBoxBg: 'bg-[#071f33]/90 border-cyan-500/30 text-white',
+    ambientGlow: 'from-cyan-600/20 via-blue-600/10 to-transparent',
+    headerBadgeBg: 'bg-cyan-500/20',
+    headerBadgeText: 'text-cyan-400',
+    headerBadgeBorder: 'border-cyan-500/40',
+    timerColor: 'text-cyan-400',
+    qBadgeBg: 'bg-cyan-500/10',
+    qBadgeText: 'text-cyan-400',
+    qBadgeBorder: 'border-cyan-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-cyan-500/25 via-blue-600/25 to-cyan-500/25',
+    optionSelectedBorder: 'border-cyan-400',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(6,182,212,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black border-white/30',
+    checkColor: 'text-cyan-400',
+    nextBtnBg: 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-black shadow-md border border-white/20',
+    paletteCurrent: 'border-cyan-400 ring-2 ring-cyan-500/50 bg-cyan-500 text-slate-950 font-black',
+    submitBtnBg: 'bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 hover:from-cyan-300 hover:to-blue-400 text-white font-black shadow-[0_0_20px_rgba(6,182,212,0.35)] border border-cyan-300/40'
+  },
+  // Theme 3: Amber/Orange (Mock Test 4, 12, 20...)
+  {
+    id: 'amber',
+    name: 'Amber Theme',
+    gradient: 'from-[#ff9966] via-[#ff7e5f] to-[#ff5e62]',
+    textColor: 'text-slate-950',
+    badgeBg: 'bg-black/80 border border-white/20',
+    badgeText: 'text-amber-300',
+    btnBg: 'bg-slate-950 text-white hover:bg-slate-900',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'amber',
+    cardBg: 'bg-[#1c0f05]/90 border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-amber-950/80 via-orange-950/60 to-slate-950/80 border-amber-500/40',
+    questionBoxBg: 'bg-[#261508]/90 border-amber-500/30 text-white',
+    ambientGlow: 'from-amber-600/20 via-orange-600/10 to-transparent',
+    headerBadgeBg: 'bg-amber-500/20',
+    headerBadgeText: 'text-amber-400',
+    headerBadgeBorder: 'border-amber-500/40',
+    timerColor: 'text-amber-400',
+    qBadgeBg: 'bg-amber-500/10',
+    qBadgeText: 'text-amber-400',
+    qBadgeBorder: 'border-amber-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-amber-500/25 via-orange-600/25 to-amber-500/25',
+    optionSelectedBorder: 'border-amber-400',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(245,158,11,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 font-black border-white/30',
+    checkColor: 'text-amber-400',
+    nextBtnBg: 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black shadow-md border border-amber-300/40',
+    paletteCurrent: 'border-amber-400 ring-2 ring-amber-500/50 bg-amber-500 text-slate-950 font-black',
+    submitBtnBg: 'bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black shadow-[0_0_20px_rgba(245,158,11,0.35)] border border-amber-300/40'
+  },
+  // Theme 4: Purple/Violet (Mock Test 5, 13...)
+  {
+    id: 'purple',
+    name: 'Purple Theme',
+    gradient: 'from-[#8A2387] via-[#E94057] to-[#F27121]',
+    textColor: 'text-white',
+    badgeBg: 'bg-black/60 border border-white/20',
+    badgeText: 'text-purple-300',
+    btnBg: 'bg-white text-slate-950 hover:bg-slate-100',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'purple',
+    cardBg: 'bg-[#13061d]/90 border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-purple-950/80 via-fuchsia-950/60 to-slate-950/80 border-purple-500/40',
+    questionBoxBg: 'bg-[#1e082e]/90 border-purple-500/30 text-white',
+    ambientGlow: 'from-purple-600/20 via-fuchsia-600/10 to-transparent',
+    headerBadgeBg: 'bg-purple-500/20',
+    headerBadgeText: 'text-purple-400',
+    headerBadgeBorder: 'border-purple-500/40',
+    timerColor: 'text-purple-400',
+    qBadgeBg: 'bg-purple-500/10',
+    qBadgeText: 'text-purple-400',
+    qBadgeBorder: 'border-purple-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-purple-500/25 via-pink-600/25 to-purple-500/25',
+    optionSelectedBorder: 'border-purple-400',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(168,85,247,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-purple-500 to-pink-600 text-white font-black border-white/30',
+    checkColor: 'text-purple-400',
+    nextBtnBg: 'bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-400 hover:to-pink-500 text-white font-black shadow-md border border-white/20',
+    paletteCurrent: 'border-purple-400 ring-2 ring-purple-500/50 bg-purple-500 text-white font-black',
+    submitBtnBg: 'bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-600 hover:from-purple-400 hover:to-fuchsia-400 text-white font-black shadow-[0_0_20px_rgba(168,85,247,0.35)] border border-purple-300/40'
+  },
+  // Theme 5: Rose/Red (Mock Test 6, 14...)
+  {
+    id: 'rose',
+    name: 'Rose Theme',
     gradient: 'from-[#f43f5e] via-[#e11d48] to-[#9f1239]',
     textColor: 'text-white',
     badgeBg: 'bg-black/60 border border-white/20',
     badgeText: 'text-rose-300',
-    btnBg: 'bg-white text-slate-950 hover:bg-slate-100'
+    btnBg: 'bg-white text-slate-950 hover:bg-slate-100',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'rose',
+    cardBg: 'bg-[#1c050b]/90 border-rose-500/30 shadow-[0_0_40px_rgba(244,63,94,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-rose-950/80 via-red-950/60 to-slate-950/80 border-rose-500/40',
+    questionBoxBg: 'bg-[#280710]/90 border-rose-500/30 text-white',
+    ambientGlow: 'from-rose-600/20 via-red-600/10 to-transparent',
+    headerBadgeBg: 'bg-rose-500/20',
+    headerBadgeText: 'text-rose-400',
+    headerBadgeBorder: 'border-rose-500/40',
+    timerColor: 'text-rose-400',
+    qBadgeBg: 'bg-rose-500/10',
+    qBadgeText: 'text-rose-400',
+    qBadgeBorder: 'border-rose-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-rose-500/25 via-red-600/25 to-rose-500/25',
+    optionSelectedBorder: 'border-rose-400',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(244,63,94,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-rose-500 to-red-600 text-white font-black border-white/30',
+    checkColor: 'text-rose-400',
+    nextBtnBg: 'bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-400 hover:to-red-500 text-white font-black shadow-md border border-white/20',
+    paletteCurrent: 'border-rose-400 ring-2 ring-rose-500/50 bg-rose-500 text-white font-black',
+    submitBtnBg: 'bg-gradient-to-r from-rose-500 via-pink-600 to-red-600 hover:from-rose-400 hover:to-pink-500 text-white font-black shadow-[0_0_20px_rgba(244,63,94,0.35)] border border-rose-300/40'
   },
+  // Theme 6: Indigo/Fuchsia (Mock Test 7, 15...)
   {
+    id: 'indigo',
+    name: 'Indigo Theme',
     gradient: 'from-[#6366f1] via-[#8b5cf6] to-[#d946ef]',
     textColor: 'text-white',
     badgeBg: 'bg-black/60 border border-white/20',
     badgeText: 'text-indigo-300',
-    btnBg: 'bg-white text-slate-950 hover:bg-slate-100'
+    btnBg: 'bg-white text-slate-950 hover:bg-slate-100',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'indigo',
+    cardBg: 'bg-[#0a0822]/90 border-indigo-500/30 shadow-[0_0_40px_rgba(99,102,241,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-indigo-950/80 via-purple-950/60 to-slate-950/80 border-indigo-500/40',
+    questionBoxBg: 'bg-[#0f0c33]/90 border-indigo-500/30 text-white',
+    ambientGlow: 'from-indigo-600/20 via-fuchsia-600/10 to-transparent',
+    headerBadgeBg: 'bg-indigo-500/20',
+    headerBadgeText: 'text-indigo-400',
+    headerBadgeBorder: 'border-indigo-500/40',
+    timerColor: 'text-indigo-400',
+    qBadgeBg: 'bg-indigo-500/10',
+    qBadgeText: 'text-indigo-400',
+    qBadgeBorder: 'border-indigo-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-indigo-500/25 via-fuchsia-600/25 to-indigo-500/25',
+    optionSelectedBorder: 'border-indigo-400',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(99,102,241,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-indigo-500 to-fuchsia-600 text-white font-black border-white/30',
+    checkColor: 'text-indigo-400',
+    nextBtnBg: 'bg-gradient-to-r from-indigo-500 to-fuchsia-600 hover:from-indigo-400 hover:to-fuchsia-500 text-white font-black shadow-md border border-white/20',
+    paletteCurrent: 'border-indigo-400 ring-2 ring-indigo-500/50 bg-indigo-500 text-white font-black',
+    submitBtnBg: 'bg-gradient-to-r from-indigo-500 via-purple-600 to-fuchsia-600 hover:from-indigo-400 hover:to-purple-500 text-white font-black shadow-[0_0_20px_rgba(99,102,241,0.35)] border border-indigo-300/40'
+  },
+  // Theme 7: Teal/Lime (Mock Test 8, 16...)
+  {
+    id: 'teal',
+    name: 'Teal Theme',
+    gradient: 'from-[#00d2ff] via-[#00f2fe] to-[#38ef7d]',
+    textColor: 'text-slate-950',
+    badgeBg: 'bg-black/80 border border-white/20',
+    badgeText: 'text-teal-300',
+    btnBg: 'bg-slate-950 text-white hover:bg-slate-900',
+    // Dynamic Test View Deep Color Styles
+    accentName: 'teal',
+    cardBg: 'bg-[#031818]/90 border-teal-500/30 shadow-[0_0_40px_rgba(20,184,166,0.15)]',
+    cardHeaderBg: 'bg-gradient-to-r from-teal-950/80 via-emerald-950/60 to-slate-950/80 border-teal-500/40',
+    questionBoxBg: 'bg-[#042425]/90 border-teal-500/30 text-white',
+    ambientGlow: 'from-teal-600/20 via-emerald-600/10 to-transparent',
+    headerBadgeBg: 'bg-teal-500/20',
+    headerBadgeText: 'text-teal-400',
+    headerBadgeBorder: 'border-teal-500/40',
+    timerColor: 'text-teal-400',
+    qBadgeBg: 'bg-teal-500/10',
+    qBadgeText: 'text-teal-400',
+    qBadgeBorder: 'border-teal-500/30',
+    optionSelectedBg: 'bg-gradient-to-r from-teal-500/25 via-emerald-600/25 to-teal-500/25',
+    optionSelectedBorder: 'border-teal-400',
+    optionSelectedShadow: 'shadow-[0_0_20px_rgba(20,184,166,0.35)]',
+    optionLetterBg: 'bg-gradient-to-r from-teal-500 to-emerald-600 text-slate-950 font-black border-white/30',
+    checkColor: 'text-teal-400',
+    nextBtnBg: 'bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-slate-950 font-black shadow-md border border-teal-300/40',
+    paletteCurrent: 'border-teal-400 ring-2 ring-teal-500/50 bg-teal-500 text-slate-950 font-black',
+    submitBtnBg: 'bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-500 hover:from-teal-300 hover:to-emerald-300 text-slate-950 font-black shadow-[0_0_20px_rgba(20,184,166,0.35)] border border-teal-300/40'
   }
 ];
 
@@ -211,8 +403,9 @@ export default function MockTestApp() {
     setView('mocks');
   };
 
-  const startMockTest = (mock: any) => {
-    setSelectedMock(mock);
+  const startMockTest = (mock: any, theme?: any) => {
+    const chosenTheme = theme || mock.theme || MODULE_THEMES[0];
+    setSelectedMock({ ...mock, theme: chosenTheme });
     setCurrentQuestion(0);
     setSelectedAnswers({});
     setIsSubmitted(false);
@@ -220,14 +413,15 @@ export default function MockTestApp() {
     setView('test');
   };
 
-  const handleMockSelect = (mock: any) => {
+  const handleMockSelect = (mock: any, theme?: any) => {
+    const chosenTheme = theme || mock.theme || MODULE_THEMES[0];
     if (selectedCategory === 'slst') {
-      setPendingMock(mock);
+      setPendingMock({ ...mock, theme: chosenTheme });
       setShowCodeModal(true);
       setTestCodeInput('');
       setTestCodeError('');
     } else {
-      startMockTest(mock);
+      startMockTest(mock, chosenTheme);
     }
   };
 
@@ -235,7 +429,7 @@ export default function MockTestApp() {
     if (e) e.preventDefault();
     if (testCodeInput.trim() === 'raj@9167') {
       setShowCodeModal(false);
-      if (pendingMock) startMockTest(pendingMock);
+      if (pendingMock) startMockTest(pendingMock, pendingMock.theme);
     } else {
       setTestCodeError('Invalid passcode! Please enter the correct test code.');
     }
@@ -921,7 +1115,7 @@ export default function MockTestApp() {
                 </div>
 
                 <button 
-                  onClick={() => handleMockSelect(mock)}
+                  onClick={() => handleMockSelect(mock, mockTheme)}
                   className={cn(
                     "w-full py-3 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all shadow-xl flex items-center justify-center gap-2 border border-white/20 z-10 relative group-hover:scale-[1.02]",
                     mockTheme.btnBg
@@ -1009,6 +1203,7 @@ export default function MockTestApp() {
 
   // VIEW 4: LIVE CBT EXAMINATION
   if (view === 'test') {
+    const activeTheme = selectedMock?.theme || MODULE_THEMES[0];
     const q = selectedMock.questions[currentQuestion];
     const isAnswered = selectedAnswers[currentQuestion] !== undefined;
 
@@ -1017,22 +1212,28 @@ export default function MockTestApp() {
         "w-full py-4 sm:py-6 px-3 sm:px-6 flex-1 flex flex-col items-center relative z-20 min-h-screen bg-[#050508] overflow-x-hidden",
         focusMode ? "fixed inset-0 overflow-y-auto z-[100]" : ""
       )}>
-        <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-5 sm:gap-6 flex-1">
+        {/* Deep Color Backdrop Ambient Radial Glow */}
+        <div className={cn(
+          "absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b opacity-40 blur-3xl pointer-events-none -z-10",
+          activeTheme.ambientGlow || 'from-pink-600/20 via-purple-600/10 to-transparent'
+        )} />
+
+        <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-5 sm:gap-6 flex-1 relative z-10">
           
           {/* Main Question Body */}
           <div className="flex-1 flex flex-col gap-4 sm:gap-5 min-w-0">
             
             {/* Test Top Header */}
-            <div className="bg-[#111218] p-3.5 sm:p-5 rounded-3xl border border-white/15 flex items-center justify-between shadow-xl">
+            <div className={cn("p-3.5 sm:p-5 rounded-3xl border flex items-center justify-between shadow-2xl backdrop-blur-md transition-all", activeTheme.cardHeaderBg || "bg-[#111218] border-white/15")}>
               <div className="flex items-center gap-3 min-w-0 pr-2">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-pink-500/20 border border-pink-500/30 text-pink-400 flex items-center justify-center shrink-0 font-bold text-xs sm:text-sm">
+                <div className={cn("w-9 h-9 sm:w-10 sm:h-10 rounded-2xl border flex items-center justify-center shrink-0 font-bold text-xs sm:text-sm", activeTheme.headerBadgeBg, activeTheme.headerBadgeText, activeTheme.headerBadgeBorder)}>
                   {currentQuestion + 1}
                 </div>
                 <div className="min-w-0">
                   <h2 className="font-bold text-white text-xs sm:text-base font-display truncate">
                     {selectedMock.title}
                   </h2>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                  <p className="text-[10px] font-bold text-slate-300/80 uppercase tracking-widest">
                     Question {currentQuestion + 1} of {selectedMock.questions.length}
                   </p>
                 </div>
@@ -1041,7 +1242,7 @@ export default function MockTestApp() {
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                 <button 
                   onClick={() => setFocusMode(!focusMode)} 
-                  className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white bg-slate-900 border border-white/10 px-3 py-2 rounded-xl transition-colors"
+                  className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white bg-black/40 border border-white/15 px-3 py-2 rounded-xl transition-colors backdrop-blur-sm"
                   title="Toggle Focus Mode"
                 >
                   {focusMode ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
@@ -1049,10 +1250,10 @@ export default function MockTestApp() {
                 </button>
 
                 <div className={cn(
-                  "flex items-center gap-1.5 sm:gap-2 font-mono font-bold px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl border text-xs shadow-inner",
+                  "flex items-center gap-1.5 sm:gap-2 font-mono font-bold px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-2xl border text-xs shadow-inner backdrop-blur-md",
                   timeLeft < 300 
                     ? "bg-rose-500/20 border-rose-500/50 text-rose-300 animate-pulse" 
-                    : "bg-slate-900 border-white/15 text-pink-400"
+                    : cn("bg-black/40 border-white/20", activeTheme.timerColor)
                 )}>
                   <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   <span>{formatTime(timeLeft)}</span>
@@ -1061,10 +1262,10 @@ export default function MockTestApp() {
             </div>
 
             {/* Question Display Card */}
-            <div className="bg-[#111218] p-4 sm:p-8 rounded-3xl border border-white/15 flex-1 flex flex-col justify-between shadow-2xl min-w-0">
+            <div className={cn("p-4 sm:p-8 rounded-3xl border flex-1 flex flex-col justify-between shadow-2xl min-w-0 backdrop-blur-md transition-all", activeTheme.cardBg || "bg-[#111218] border-white/15")}>
               <div>
                 <div className="flex items-center justify-between mb-4 sm:mb-6 border-b border-white/10 pb-3 sm:pb-4">
-                  <span className="text-[10px] sm:text-xs font-bold text-pink-400 uppercase tracking-widest bg-pink-500/10 border border-pink-500/30 px-2.5 sm:px-3 py-1 rounded-full">
+                  <span className={cn("text-[10px] sm:text-xs font-bold uppercase tracking-widest px-2.5 sm:px-3 py-1 rounded-full border", activeTheme.qBadgeBg, activeTheme.qBadgeText, activeTheme.qBadgeBorder)}>
                     QUESTION {currentQuestion + 1}
                   </span>
                   <div className="flex gap-1.5 sm:gap-2 text-[10px] font-bold uppercase tracking-wider">
@@ -1078,7 +1279,7 @@ export default function MockTestApp() {
                 </div>
 
                 {/* Question Latex */}
-                <div className="text-sm sm:text-lg mb-6 sm:mb-8 p-3.5 sm:p-5 rounded-2xl bg-slate-950 border border-white/10 text-white leading-relaxed font-medium overflow-x-auto">
+                <div className={cn("text-sm sm:text-lg mb-6 sm:mb-8 p-3.5 sm:p-5 rounded-2xl border leading-relaxed font-medium overflow-x-auto shadow-inner", activeTheme.questionBoxBg || "bg-slate-950 border-white/10 text-white")}>
                   <MixedLatex content={q.question} className="text-white" />
                 </div>
 
@@ -1094,17 +1295,17 @@ export default function MockTestApp() {
                           setSelectedAnswers(prev => ({ ...prev, [currentQuestion]: i }));
                         }}
                         className={cn(
-                          "w-full text-left p-3.5 sm:p-4.5 rounded-2xl border transition-all flex items-center gap-3 sm:gap-4 group min-w-0",
+                          "w-full text-left p-3.5 sm:p-4.5 rounded-2xl border transition-all flex items-center gap-3 sm:gap-4 group min-w-0 backdrop-blur-sm",
                           isSelected
-                            ? "bg-gradient-to-r from-pink-500/20 to-purple-600/20 border-pink-500 shadow-[0_0_20px_rgba(236,72,153,0.3)] text-white"
-                            : "bg-slate-900 border-white/10 hover:border-white/30 text-slate-200 hover:bg-slate-800"
+                            ? cn(activeTheme.optionSelectedBg, activeTheme.optionSelectedBorder, activeTheme.optionSelectedShadow, "text-white font-bold")
+                            : "bg-black/40 border-white/10 hover:border-white/30 text-slate-200 hover:bg-black/60"
                         )}
                       >
                         <div className={cn(
                           "w-7 h-7 sm:w-8 sm:h-8 rounded-xl border font-black text-xs flex items-center justify-center shrink-0 transition-all",
                           isSelected 
-                            ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white border-white/30" 
-                            : "bg-slate-950 border-white/15 text-slate-400 group-hover:text-white"
+                            ? activeTheme.optionLetterBg 
+                            : "bg-black/60 border-white/15 text-slate-400 group-hover:text-white"
                         )}>
                           {String.fromCharCode(65 + i)}
                         </div>
@@ -1113,7 +1314,7 @@ export default function MockTestApp() {
                           <MixedLatex content={opt} className={isSelected ? 'text-white' : 'text-slate-200'} />
                         </div>
 
-                        {isSelected && <Check className="h-4 w-4 text-pink-400 shrink-0" />}
+                        {isSelected && <Check className={cn("h-4 w-4 shrink-0", activeTheme.checkColor)} />}
                       </button>
                     );
                   })}
@@ -1125,7 +1326,7 @@ export default function MockTestApp() {
                 <button
                   onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
                   disabled={currentQuestion === 0}
-                  className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/10 disabled:opacity-40 transition-all flex items-center gap-1"
+                  className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-black/40 hover:bg-black/70 text-slate-300 hover:text-white border border-white/15 disabled:opacity-40 transition-all flex items-center gap-1"
                 >
                   <ChevronLeft className="h-4 w-4" /> Prev
                 </button>
@@ -1146,7 +1347,10 @@ export default function MockTestApp() {
                 <button
                   onClick={() => setCurrentQuestion(Math.min(selectedMock.questions.length - 1, currentQuestion + 1))}
                   disabled={currentQuestion === selectedMock.questions.length - 1}
-                  className="px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white shadow-md border border-white/20 disabled:opacity-40 transition-all flex items-center gap-1"
+                  className={cn(
+                    "px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider disabled:opacity-40 transition-all flex items-center gap-1",
+                    activeTheme.nextBtnBg
+                  )}
                 >
                   Next <ChevronRight className="h-4 w-4" />
                 </button>
@@ -1157,7 +1361,7 @@ export default function MockTestApp() {
 
           {/* Right Question Index Map */}
           <div className="w-full lg:w-80 shrink-0">
-            <div className="bg-[#111218] p-4 sm:p-6 rounded-3xl border border-white/15 lg:sticky top-8 shadow-2xl">
+            <div className={cn("p-4 sm:p-6 rounded-3xl border lg:sticky top-8 shadow-2xl backdrop-blur-md transition-all", activeTheme.cardBg || "bg-[#111218] border-white/15")}>
               <h3 className="font-bold text-white text-xs uppercase tracking-widest font-display mb-3 sm:mb-4 border-b border-white/10 pb-2.5 sm:pb-3">
                 Question Palette
               </h3>
@@ -1174,10 +1378,10 @@ export default function MockTestApp() {
                       className={cn(
                         "h-8 sm:h-9 w-full rounded-xl font-bold text-xs transition-all border flex items-center justify-center",
                         isCurrent 
-                          ? "border-pink-400 ring-2 ring-pink-500/50 bg-pink-500 text-white font-black" 
+                          ? activeTheme.paletteCurrent 
                           : isAns
-                            ? "bg-emerald-500/20 border-emerald-500/50 text-emerald-300 hover:bg-emerald-500/30"
-                            : "bg-slate-900 border-white/10 text-slate-400 hover:text-white"
+                            ? "bg-emerald-500/25 border-emerald-500/60 text-emerald-300 hover:bg-emerald-500/40"
+                            : "bg-black/40 border-white/15 text-slate-400 hover:text-white hover:border-white/30"
                       )}
                     >
                       {i + 1}
@@ -1186,20 +1390,23 @@ export default function MockTestApp() {
                 })}
               </div>
 
-              <div className="space-y-2 text-[11px] font-semibold text-slate-400 mb-5 sm:mb-6 bg-slate-950 p-3 sm:p-3.5 rounded-2xl border border-white/10">
+              <div className="space-y-2 text-[11px] font-semibold text-slate-300 mb-5 sm:mb-6 bg-black/40 p-3 sm:p-3.5 rounded-2xl border border-white/10">
                 <div className="flex items-center gap-2">
                   <div className="w-3.5 h-3.5 rounded bg-emerald-500/30 border border-emerald-500/60"></div>
                   <span>Answered ({Object.keys(selectedAnswers).length})</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3.5 h-3.5 rounded bg-slate-900 border border-white/20"></div>
+                  <div className="w-3.5 h-3.5 rounded bg-black/60 border border-white/20"></div>
                   <span>Unanswered ({selectedMock.questions.length - Object.keys(selectedAnswers).length})</span>
                 </div>
               </div>
 
               <button
                 onClick={() => setShowConfirmSubmit(true)}
-                className="w-full py-3 sm:py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider text-slate-950 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 hover:from-emerald-300 hover:to-teal-400 shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2 border border-emerald-300/40"
+                className={cn(
+                  "w-full py-3 sm:py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 border shadow-lg",
+                  activeTheme.submitBtnBg
+                )}
               >
                 <CheckCircle2 className="h-4 w-4" />
                 <span>Submit Exam Now</span>

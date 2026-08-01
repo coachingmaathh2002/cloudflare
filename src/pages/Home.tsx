@@ -862,8 +862,9 @@ export default function Home() {
                 <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full p-1.5 bg-gradient-to-tr from-pink-500 via-purple-500 to-amber-400 shadow-[0_0_40px_rgba(219,39,119,0.4)] mb-6 z-10 group-hover:scale-105 transition-transform duration-500">
                   <div className="w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden border-4 border-slate-950">
                     <img
-                      src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=400&auto=format&fit=crop"
+                      src="/src/assets/images/raj_sir_30yo_teacher_1785611994041.jpg"
                       alt="Raj Sir"
+                      referrerPolicy="no-referrer"
                       className="w-full h-full object-cover transition-all duration-500"
                     />
                   </div>
