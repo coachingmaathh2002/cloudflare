@@ -63,8 +63,8 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center gap-2.5">
             <Link
               to="/free-daily-test"
-              style={{ backgroundColor: '#f00b0b' }}
-              className="relative group overflow-hidden hover:brightness-110 text-white font-black text-xs px-3.5 py-1.5 rounded-lg transition-all shadow-[0_0_15px_rgba(240,11,11,0.4)] hover:shadow-[0_0_25px_rgba(240,11,11,0.7)] hover:-translate-y-0.5 flex items-center gap-1.5 border border-red-400/40"
+              style={{ backgroundColor: '#e00303' }}
+              className="relative group overflow-hidden hover:brightness-110 text-white font-black text-xs px-3.5 py-1.5 rounded-lg transition-all shadow-[0_0_15px_rgba(224,3,3,0.4)] hover:shadow-[0_0_25px_rgba(224,3,3,0.7)] hover:-translate-y-0.5 flex items-center gap-1.5 border border-red-400/40"
             >
               <Flame className="h-3.5 w-3.5 text-white animate-bounce" />
               <span>FREE DAILY TEST</span>
