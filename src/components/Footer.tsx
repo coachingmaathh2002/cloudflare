@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 border-t border-white/10 text-slate-400 text-xs w-full relative z-20">
+    <footer className="bg-[#111317] border-t border-white/10 text-slate-400 text-xs w-full relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
           <div className="col-span-1 md:col-span-1 pr-4">
             <Link to="/" className="flex items-center gap-3 mb-4 group">
-              <div className="w-9 h-9 bg-gradient-to-br from-pink-600 to-indigo-600 rounded-lg flex items-center justify-center font-bold text-lg italic border border-white/20 text-slate-50 shadow-[0_0_15px_rgba(219,39,119,0.4)]">
+              <div className="w-9 h-9 bg-gradient-glow rounded-lg flex items-center justify-center font-black text-lg italic border border-white/20 text-[#111317] shadow-[0_0_15px_rgba(240,144,56,0.35)]">
                 Σ
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-medium text-sm tracking-tight uppercase text-white group-hover:text-pink-400 transition-colors">
+                <span className="font-extrabold text-sm tracking-tight uppercase text-white group-hover:text-[#ffb77e] transition-colors">
                   RAJ SIR MATH CLASSES
                 </span>
-                <span className="text-[10px] text-pink-400/80 font-bold tracking-widest uppercase">
+                <span className="text-[10px] text-[#f09038] font-bold tracking-widest uppercase">
                   WEST BENGAL'S NO. 1
                 </span>
               </div>
@@ -29,7 +29,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-900 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-pink-600 hover:border-pink-500 transition-all"
+                className="w-8 h-8 rounded-lg bg-[#1e2024] border border-white/10 flex items-center justify-center text-slate-400 hover:text-[#111317] hover:bg-[#f09038] hover:border-[#f09038] transition-all"
                 aria-label="Facebook"
               >
                 <Facebook className="h-4 w-4" />
@@ -38,7 +38,7 @@ export default function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-900 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-rose-600 hover:border-rose-500 transition-all"
+                className="w-8 h-8 rounded-lg bg-[#1e2024] border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-rose-600 hover:border-rose-500 transition-all"
                 aria-label="YouTube"
               >
                 <Youtube className="h-4 w-4" />
@@ -47,7 +47,7 @@ export default function Footer() {
                 href="https://wa.me/918345819377"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-900 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-emerald-600 hover:border-emerald-500 transition-all"
+                className="w-8 h-8 rounded-lg bg-[#1e2024] border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-emerald-600 hover:border-emerald-500 transition-all"
                 aria-label="Telegram / WhatsApp"
               >
                 <Send className="h-4 w-4" />
@@ -56,7 +56,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-xs border-b border-white/10 pb-2">
+            <h3 className="text-[#f09038] font-extrabold mb-4 uppercase tracking-wider text-xs border-b border-white/10 pb-2">
               Explore Programs
             </h3>
             <ul className="space-y-2.5 text-xs font-medium">
@@ -67,22 +67,22 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/courses" className="hover:text-pink-400 transition-colors">
+                <Link to="/courses" className="hover:text-[#ffb77e] transition-colors">
                   SLST Mathematics Batch
                 </Link>
               </li>
               <li>
-                <Link to="/upper-primary" className="hover:text-pink-400 transition-colors">
+                <Link to="/upper-primary" className="hover:text-[#ffb77e] transition-colors">
                   Upper Primary TET Prep
                 </Link>
               </li>
               <li>
-                <Link to="/notes" className="hover:text-pink-400 transition-colors">
+                <Link to="/notes" className="hover:text-[#ffb77e] transition-colors">
                   Free PDF Study Materials
                 </Link>
               </li>
               <li>
-                <Link to="/mock-test" className="hover:text-pink-400 transition-colors">
+                <Link to="/mock-test" className="hover:text-[#ffb77e] transition-colors">
                   Full Mock Test Portal
                 </Link>
               </li>
@@ -90,27 +90,27 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-xs border-b border-white/10 pb-2">
+            <h3 className="text-[#f09038] font-extrabold mb-4 uppercase tracking-wider text-xs border-b border-white/10 pb-2">
               Student Support
             </h3>
             <ul className="space-y-2.5 text-xs font-medium">
               <li>
-                <Link to="/pricing" className="hover:text-pink-400 transition-colors">
+                <Link to="/pricing" className="hover:text-[#ffb77e] transition-colors">
                   Course Fee & Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="hover:text-pink-400 transition-colors">
+                <Link to="/dashboard" className="hover:text-[#ffb77e] transition-colors">
                   Student Login Portal
                 </Link>
               </li>
               <li>
-                <a href="https://wa.me/918345819377" className="hover:text-pink-400 transition-colors">
+                <a href="https://wa.me/918345819377" className="hover:text-[#ffb77e] transition-colors">
                   Admission Guidance
                 </a>
               </li>
               <li>
-                <a href="#faq" className="hover:text-pink-400 transition-colors">
+                <a href="#faq" className="hover:text-[#ffb77e] transition-colors">
                   Frequently Asked Questions
                 </a>
               </li>
@@ -118,24 +118,24 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-xs border-b border-white/10 pb-2">
+            <h3 className="text-[#f09038] font-extrabold mb-4 uppercase tracking-wider text-xs border-b border-white/10 pb-2">
               Contact Us
             </h3>
             <ul className="space-y-3 text-xs font-medium">
               <li className="flex items-center gap-2.5">
-                <Phone className="h-4 w-4 text-pink-400 shrink-0" />
+                <Phone className="h-4 w-4 text-[#f09038] shrink-0" />
                 <a href="tel:918345819377" className="hover:text-white transition-colors">
                   +91 83458 19377
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="h-4 w-4 text-pink-400 shrink-0" />
+                <Mail className="h-4 w-4 text-[#f09038] shrink-0" />
                 <a href="mailto:info@rajsirmathclasses.com" className="hover:text-white transition-colors">
                   info@rajsirmathclasses.com
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
-                <MapPin className="h-4 w-4 text-pink-400 shrink-0 mt-0.5" />
+                <MapPin className="h-4 w-4 text-[#f09038] shrink-0 mt-0.5" />
                 <span>Kolkata & Midnapore, West Bengal</span>
               </li>
               <li className="pt-2">

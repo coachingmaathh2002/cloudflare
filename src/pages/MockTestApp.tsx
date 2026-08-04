@@ -367,6 +367,7 @@ export default function MockTestApp() {
 
   const [focusMode, setFocusMode] = useState(false);
   const [reviewFilter, setReviewFilter] = useState<'all' | 'correct' | 'incorrect' | 'unattempted'>('all');
+  const [solutionIndex, setSolutionIndex] = useState(0);
 
   const [showCodeModal, setShowCodeModal] = useState(false);
   const [pendingMock, setPendingMock] = useState<any | null>(null);
@@ -374,6 +375,25 @@ export default function MockTestApp() {
   const [testCodeError, setTestCodeError] = useState('');
 
   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
+
+  // Filtered solution indices calculation for one-by-one solutions review
+  const filteredSolutionIndices = useMemo(() => {
+    if (!selectedMock?.questions) return [];
+    return selectedMock.questions
+      .map((q: any, i: number) => {
+        const isAttempted = selectedAnswers[i] !== undefined;
+        const isCorrect = isAttempted && selectedAnswers[i] === q.correctAnswer;
+        const isIncorrect = isAttempted && !isCorrect;
+
+        if (reviewFilter === 'correct' && !isCorrect) return -1;
+        if (reviewFilter === 'incorrect' && !isIncorrect) return -1;
+        if (reviewFilter === 'unattempted' && isAttempted) return -1;
+        return i;
+      })
+      .filter((idx: number) => idx !== -1);
+  }, [selectedMock, selectedAnswers, reviewFilter]);
+
+  const currentSolutionQuestionIdx = filteredSolutionIndices[solutionIndex] ?? filteredSolutionIndices[0] ?? 0;
 
   // Timer effect
   useEffect(() => {
@@ -407,6 +427,7 @@ export default function MockTestApp() {
     const chosenTheme = theme || mock.theme || MODULE_THEMES[0];
     setSelectedMock({ ...mock, theme: chosenTheme });
     setCurrentQuestion(0);
+    setSolutionIndex(0);
     setSelectedAnswers({});
     setIsSubmitted(false);
     setTimeLeft(mock.duration || 3600);
@@ -438,6 +459,7 @@ export default function MockTestApp() {
   const submitTest = () => {
     setShowConfirmSubmit(false);
     setIsSubmitted(true);
+    setSolutionIndex(0);
     setView('results');
   };
 
@@ -1594,15 +1616,15 @@ export default function MockTestApp() {
           </div>
         </div>
 
-        {/* Detailed Solutions Section */}
+        {/* Detailed Solutions Section - Single Question View */}
         <div className="bg-[#111218] rounded-3xl p-4 sm:p-8 border border-white/15 shadow-xl">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 border-b border-white/10 pb-4 sm:pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-white/10 pb-4">
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-white font-display">
-                Step-by-Step Solutions & LaTeX Explanations
+              <h2 className="text-lg sm:text-xl font-bold text-white font-display flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-pink-400" /> Step-by-Step Solutions & LaTeX Explanations
               </h2>
               <p className="text-xs text-slate-400 mt-1 font-medium">
-                Review detailed mathematical steps for every question in this mock test.
+                Review detailed mathematical steps for each question one by one.
               </p>
             </div>
 
@@ -1615,7 +1637,10 @@ export default function MockTestApp() {
               ].map(f => (
                 <button
                   key={f.id}
-                  onClick={() => setReviewFilter(f.id as any)}
+                  onClick={() => {
+                    setReviewFilter(f.id as any);
+                    setSolutionIndex(0);
+                  }}
                   className={cn(
                     "px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0",
                     reviewFilter === f.id
@@ -1629,84 +1654,186 @@ export default function MockTestApp() {
             </div>
           </div>
 
-          <div className="space-y-4 sm:space-y-6">
-            {selectedMock.questions.map((q: any, i: number) => {
-              const isAttempted = selectedAnswers[i] !== undefined;
-              const isCorrect = isAttempted && selectedAnswers[i] === q.correctAnswer;
-              const isIncorrect = isAttempted && !isCorrect;
+          {/* Question Map Pills Navigation */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between text-xs text-slate-400 font-bold mb-2.5">
+              <span>Select Question to View Solution:</span>
+              <span className="text-pink-400 font-mono">{filteredSolutionIndices.length} Question{filteredSolutionIndices.length !== 1 ? 's' : ''} Listed</span>
+            </div>
+            <div className="flex flex-wrap gap-2 p-3 bg-slate-950/80 rounded-2xl border border-white/10 max-h-40 overflow-y-auto">
+              {selectedMock.questions.map((q: any, i: number) => {
+                const isAttempted = selectedAnswers[i] !== undefined;
+                const isCorrect = isAttempted && selectedAnswers[i] === q.correctAnswer;
+                const isIncorrect = isAttempted && !isCorrect;
 
-              if (reviewFilter === 'correct' && !isCorrect) return null;
-              if (reviewFilter === 'incorrect' && !isIncorrect) return null;
-              if (reviewFilter === 'unattempted' && isAttempted) return null;
+                if (reviewFilter === 'correct' && !isCorrect) return null;
+                if (reviewFilter === 'incorrect' && !isIncorrect) return null;
+                if (reviewFilter === 'unattempted' && isAttempted) return null;
 
-              return (
-                <div 
-                  key={i} 
-                  className={cn(
-                    "p-4 sm:p-6 rounded-2xl border transition-all bg-slate-950",
-                    isCorrect ? "border-emerald-500/40" : isIncorrect ? "border-rose-500/40" : "border-white/10"
-                  )}
-                >
-                  <div className="flex items-start justify-between gap-3 mb-4">
-                    <span className="text-[10px] sm:text-xs font-bold text-pink-400 uppercase tracking-widest bg-pink-500/10 border border-pink-500/30 px-2.5 sm:px-3 py-1 rounded-full">
-                      QUESTION {i + 1}
-                    </span>
+                const filteredPos = filteredSolutionIndices.indexOf(i);
+                const isActive = currentSolutionQuestionIdx === i;
 
-                    {isCorrect ? (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 sm:px-2.5 py-1 rounded-full">
-                        <CheckCircle2 className="w-3.5 h-3.5" /> Correct (+4)
-                      </span>
-                    ) : isIncorrect ? (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-rose-400 bg-rose-500/10 border border-rose-500/30 px-2 sm:px-2.5 py-1 rounded-full">
-                        <XCircle className="w-3.5 h-3.5" /> Incorrect (-1)
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400 bg-slate-900 border border-white/10 px-2 sm:px-2.5 py-1 rounded-full">
-                        Unattempted (0)
-                      </span>
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setSolutionIndex(filteredPos !== -1 ? filteredPos : 0)}
+                    className={cn(
+                      "w-9 h-9 rounded-xl font-black text-xs transition-all flex items-center justify-center border",
+                      isActive ? "ring-2 ring-pink-400 scale-105 shadow-lg z-10" : "opacity-80 hover:opacity-100",
+                      isCorrect ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/50" :
+                      isIncorrect ? "bg-rose-500/20 text-rose-300 border-rose-500/50" :
+                      "bg-slate-900 text-slate-300 border-white/10"
                     )}
-                  </div>
+                    title={`Question ${i + 1} (${isCorrect ? 'Correct' : isIncorrect ? 'Incorrect' : 'Unattempted'})`}
+                  >
+                    {i + 1}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-                  <div className="text-xs sm:text-sm font-semibold text-slate-100 p-3 sm:p-4 rounded-xl bg-slate-900 border border-white/10 mb-4 overflow-x-auto">
-                    <MixedLatex content={q.question} className="text-white" />
-                  </div>
+          {filteredSolutionIndices.length === 0 ? (
+            <div className="p-8 text-center bg-slate-950 rounded-2xl border border-white/10">
+              <p className="text-sm text-slate-400 font-semibold mb-3">No questions match the "{reviewFilter}" filter.</p>
+              <button
+                onClick={() => { setReviewFilter('all'); setSolutionIndex(0); }}
+                className="px-4 py-2 bg-pink-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider"
+              >
+                Show All Questions
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* Top Navigation Control Bar */}
+              <div className="flex items-center justify-between gap-3 mb-5 bg-slate-900/90 p-3 rounded-2xl border border-white/10">
+                <button
+                  onClick={() => setSolutionIndex(prev => Math.max(0, prev - 1))}
+                  disabled={solutionIndex <= 0}
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-white transition-all flex items-center gap-1.5"
+                >
+                  <ChevronLeft className="w-4 h-4" /> Previous
+                </button>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-xs font-medium">
-                    <div className="p-3 rounded-xl bg-slate-900 border border-white/10">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
-                        Your Selected Option:
+                <div className="text-center">
+                  <span className="text-xs sm:text-sm font-black text-white uppercase tracking-wider block">
+                    Question {solutionIndex + 1} of {filteredSolutionIndices.length}
+                  </span>
+                  <span className="text-[10px] text-pink-400 font-semibold">
+                    (Question #{currentSolutionQuestionIdx + 1} in exam)
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => setSolutionIndex(prev => Math.min(filteredSolutionIndices.length - 1, prev + 1))}
+                  disabled={solutionIndex >= filteredSolutionIndices.length - 1}
+                  className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 disabled:opacity-40 text-white shadow-md transition-all flex items-center gap-1.5"
+                >
+                  Next <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Single Active Solution Display Card */}
+              {(() => {
+                const i = currentSolutionQuestionIdx;
+                const q = selectedMock.questions[i];
+                if (!q) return null;
+
+                const isAttempted = selectedAnswers[i] !== undefined;
+                const isCorrect = isAttempted && selectedAnswers[i] === q.correctAnswer;
+                const isIncorrect = isAttempted && !isCorrect;
+
+                return (
+                  <div className={cn(
+                    "p-4 sm:p-6 rounded-2xl border transition-all bg-slate-950",
+                    isCorrect ? "border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.1)]" :
+                    isIncorrect ? "border-rose-500/40 shadow-[0_0_20px_rgba(244,63,94,0.1)]" :
+                    "border-white/10"
+                  )}>
+                    <div className="flex items-start justify-between gap-3 mb-4">
+                      <span className="text-[10px] sm:text-xs font-bold text-pink-400 uppercase tracking-widest bg-pink-500/10 border border-pink-500/30 px-2.5 sm:px-3 py-1 rounded-full">
+                        QUESTION {i + 1}
                       </span>
-                      {isAttempted ? (
-                        <div className={cn("font-semibold overflow-x-auto", isCorrect ? "text-emerald-400" : "text-rose-400")}>
-                          <MixedLatex content={q.options[selectedAnswers[i]]} />
-                        </div>
+
+                      {isCorrect ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 sm:px-2.5 py-1 rounded-full">
+                          <CheckCircle2 className="w-3.5 h-3.5" /> Correct (+4)
+                        </span>
+                      ) : isIncorrect ? (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-rose-400 bg-rose-500/10 border border-rose-500/30 px-2 sm:px-2.5 py-1 rounded-full">
+                          <XCircle className="w-3.5 h-3.5" /> Incorrect (-1)
+                        </span>
                       ) : (
-                        <span className="text-slate-500 italic">No option selected</span>
+                        <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400 bg-slate-900 border border-white/10 px-2 sm:px-2.5 py-1 rounded-full">
+                          Unattempted (0)
+                        </span>
                       )}
                     </div>
 
-                    <div className="p-3 rounded-xl bg-slate-900 border border-emerald-500/30">
-                      <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block mb-1">
-                        Correct Option:
-                      </span>
-                      <div className="font-semibold text-emerald-300 overflow-x-auto">
-                        <MixedLatex content={q.options[q.correctAnswer]} />
+                    <div className="text-xs sm:text-sm font-semibold text-slate-100 p-3.5 sm:p-4 rounded-xl bg-slate-900 border border-white/10 mb-4 overflow-x-auto">
+                      <MixedLatex content={q.question} className="text-white" />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-xs font-medium">
+                      <div className="p-3 rounded-xl bg-slate-900 border border-white/10">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                          Your Selected Option:
+                        </span>
+                        {isAttempted ? (
+                          <div className={cn("font-semibold overflow-x-auto", isCorrect ? "text-emerald-400" : "text-rose-400")}>
+                            <MixedLatex content={q.options[selectedAnswers[i]]} />
+                          </div>
+                        ) : (
+                          <span className="text-slate-500 italic">No option selected</span>
+                        )}
+                      </div>
+
+                      <div className="p-3 rounded-xl bg-slate-900 border border-emerald-500/30">
+                        <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block mb-1">
+                          Correct Option:
+                        </span>
+                        <div className="font-semibold text-emerald-300 overflow-x-auto">
+                          <MixedLatex content={q.options[q.correctAnswer]} />
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="p-3.5 sm:p-4 rounded-xl bg-pink-500/5 border border-pink-500/20 text-xs">
-                    <span className="font-bold text-pink-400 uppercase tracking-widest text-[10px] block mb-2 flex items-center gap-1.5">
-                      <BookOpen className="w-3.5 h-3.5" /> Step-by-Step Explanation
-                    </span>
-                    <div className="text-slate-200 leading-relaxed overflow-x-auto">
-                      <MixedLatex content={q.explanation} className="text-slate-200" />
+                    <div className="p-3.5 sm:p-4 rounded-xl bg-pink-500/5 border border-pink-500/20 text-xs mb-5">
+                      <span className="font-bold text-pink-400 uppercase tracking-widest text-[10px] mb-2 flex items-center gap-1.5">
+                        <BookOpen className="w-3.5 h-3.5" /> Step-by-Step Explanation
+                      </span>
+                      <div className="text-slate-200 leading-relaxed overflow-x-auto">
+                        <MixedLatex content={q.explanation} className="text-slate-200" />
+                      </div>
+                    </div>
+
+                    {/* Bottom Navigation Control Bar */}
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                      <button
+                        onClick={() => setSolutionIndex(prev => Math.max(0, prev - 1))}
+                        disabled={solutionIndex <= 0}
+                        className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 border border-white/10 disabled:opacity-40 text-slate-300 transition-all flex items-center gap-1.5"
+                      >
+                        <ChevronLeft className="w-4 h-4" /> Previous Question
+                      </button>
+
+                      <span className="text-xs font-bold text-slate-400">
+                        {solutionIndex + 1} / {filteredSolutionIndices.length}
+                      </span>
+
+                      <button
+                        onClick={() => setSolutionIndex(prev => Math.min(filteredSolutionIndices.length - 1, prev + 1))}
+                        disabled={solutionIndex >= filteredSolutionIndices.length - 1}
+                        className="px-4 py-2 rounded-xl text-xs font-bold bg-pink-500 hover:bg-pink-400 disabled:opacity-40 text-white shadow-md transition-all flex items-center gap-1.5"
+                      >
+                        Next Question <ChevronRight className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })()}
+            </>
+          )}
         </div>
 
       </>

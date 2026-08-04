@@ -188,6 +188,7 @@ export default function FreeDailyTest() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [timeLeft, setTimeLeft] = useState(DAILY_TEST.duration);
   const [score, setScore] = useState(0);
+  const [solutionViewIndex, setSolutionViewIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const hasSubmittedRef = useRef(false);
 
@@ -262,6 +263,7 @@ export default function FreeDailyTest() {
     if (hasSubmittedRef.current) return;
     hasSubmittedRef.current = true;
     setIsSubmitting(true);
+    setSolutionViewIndex(0);
     
     let newScore = 0;
     DAILY_TEST.questions.forEach((q, index) => {
@@ -746,20 +748,81 @@ export default function FreeDailyTest() {
                 </div>
               </div>
 
-              {/* Detailed Solutions Section */}
-              <div className="space-y-6 text-left border-t border-slate-800 pt-10">
-                <h3 className="text-xl font-black text-white uppercase tracking-wider mb-6 flex items-center gap-2.5">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Detailed Question Solutions
-                </h3>
+              {/* Detailed Solutions Section - One by One View */}
+              <div className="space-y-6 text-left border-t border-slate-800 pt-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <h3 className="text-xl font-black text-white uppercase tracking-wider flex items-center gap-2.5">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Detailed Question Solutions
+                  </h3>
+                  <span className="text-xs text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full w-fit">
+                    Question {solutionViewIndex + 1} of {DAILY_TEST.questions.length}
+                  </span>
+                </div>
 
-                {DAILY_TEST.questions.map((q, idx) => {
+                {/* Question Map Pills */}
+                <div className="bg-slate-950/90 p-3 rounded-2xl border border-slate-800">
+                  <p className="text-[11px] text-slate-400 font-bold uppercase tracking-widest mb-2.5">Select Question to Review:</p>
+                  <div className="flex flex-wrap gap-2 max-h-36 overflow-y-auto">
+                    {DAILY_TEST.questions.map((q, idx) => {
+                      const userAnswer = answers[idx];
+                      const isCorrect = userAnswer === q.correctAnswer;
+                      const isUnanswered = userAnswer === undefined;
+                      const isActive = solutionViewIndex === idx;
+
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => setSolutionViewIndex(idx)}
+                          className={`w-9 h-9 rounded-xl font-black text-xs transition-all border flex items-center justify-center ${
+                            isActive ? 'ring-2 ring-emerald-400 scale-105 shadow-lg z-10' : 'opacity-80 hover:opacity-100'
+                          } ${
+                            isCorrect ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/60' :
+                            isUnanswered ? 'bg-amber-950/40 text-amber-300 border-amber-500/40' :
+                            'bg-rose-950/80 text-rose-300 border-rose-500/60'
+                          }`}
+                        >
+                          {idx + 1}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Top Navigation Bar */}
+                <div className="flex items-center justify-between bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+                  <button
+                    onClick={() => setSolutionViewIndex(prev => Math.max(0, prev - 1))}
+                    disabled={solutionViewIndex <= 0}
+                    className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white disabled:opacity-40 transition-all flex items-center gap-1.5"
+                  >
+                    <ChevronLeft className="w-4 h-4" /> Previous Question
+                  </button>
+
+                  <span className="text-xs font-bold text-slate-300">
+                    Question {solutionViewIndex + 1} / {DAILY_TEST.questions.length}
+                  </span>
+
+                  <button
+                    onClick={() => setSolutionViewIndex(prev => Math.min(DAILY_TEST.questions.length - 1, prev + 1))}
+                    disabled={solutionViewIndex >= DAILY_TEST.questions.length - 1}
+                    className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-slate-950 hover:bg-emerald-400 disabled:opacity-40 transition-all flex items-center gap-1.5 shadow-md"
+                  >
+                    Next Question <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Active Single Question Solution Card */}
+                {(() => {
+                  const idx = solutionViewIndex;
+                  const q = DAILY_TEST.questions[idx];
+                  if (!q) return null;
+
                   const userAnswer = answers[idx];
                   const isCorrect = userAnswer === q.correctAnswer;
                   const isUnanswered = userAnswer === undefined;
-                  
+
                   return (
                     <div 
-                      key={idx} 
                       className={`p-6 rounded-2xl border transition-all ${
                         isCorrect 
                           ? 'bg-emerald-950/20 border-emerald-800/60' 
@@ -797,15 +860,38 @@ export default function FreeDailyTest() {
                             ))}
                           </div>
 
-                          <div className="bg-slate-950/90 p-4 rounded-xl border border-slate-800">
+                          <div className="bg-slate-950/90 p-4 rounded-xl border border-slate-800 mb-4">
                             <p className="text-[11px] text-emerald-400 font-black uppercase tracking-widest mb-1.5">Explanation & Method</p>
                             <div className="text-sm text-slate-300 leading-relaxed font-medium"><MixedLatex content={q.explanation} /></div>
+                          </div>
+
+                          {/* Bottom Navigation Control */}
+                          <div className="flex items-center justify-between pt-3 border-t border-slate-800">
+                            <button
+                              onClick={() => setSolutionViewIndex(prev => Math.max(0, prev - 1))}
+                              disabled={solutionViewIndex <= 0}
+                              className="px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 border border-slate-700 hover:bg-slate-800 text-white disabled:opacity-40 transition-all flex items-center gap-1.5"
+                            >
+                              <ChevronLeft className="w-4 h-4" /> Previous
+                            </button>
+
+                            <span className="text-xs font-bold text-slate-400">
+                              Question {solutionViewIndex + 1} of {DAILY_TEST.questions.length}
+                            </span>
+
+                            <button
+                              onClick={() => setSolutionViewIndex(prev => Math.min(DAILY_TEST.questions.length - 1, prev + 1))}
+                              disabled={solutionViewIndex >= DAILY_TEST.questions.length - 1}
+                              className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-slate-950 hover:bg-emerald-400 disabled:opacity-40 transition-all flex items-center gap-1.5 shadow-md"
+                            >
+                              Next <ChevronRight className="w-4 h-4" />
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
                   );
-                })}
+                })()}
               </div>
 
               <div className="mt-10 pt-6 border-t border-slate-800 flex justify-center">
