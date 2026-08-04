@@ -1,5 +1,6 @@
 export const EXAM_CATEGORIES = [
   { id: 'slst', name: 'SLST Mathematics', description: 'Master WB SLST Class IX-X & XI-XII with chapter-wise and full-length CBT mock tests.' },
+  { id: 'tgtpgt', name: 'TGT PGT Math Mock Test', description: 'Comprehensive CBT Mock Series for UP TGT/PGT, KVS, NVS, EMRS, DSSSB & State TGT/PGT Mathematics exams.' },
   { id: 'jee', name: 'JEE Advanced', description: 'Tough level multi-correct & numerical mock tests curated for IIT JEE Advanced aspirants.' },
   { id: 'jeemains', name: 'JEE Mains', description: 'Topic-wise mock tests perfectly aligned with the latest NTA computer based exam pattern.' },
   { id: 'wbjee', name: 'WBJEE Mathematics', description: 'High-yield Category 1, 2 & 3 mock tests tailored for WBJEE engineering aspirants.' },
@@ -21,8 +22,24 @@ export const SLST_TOPICS = [
   "Linear Programming",
 ];
 
+export const TGT_PGT_TOPICS = [
+  "TGT PGT Full Syllabus Mock",
+  "Real Analysis & Calculus",
+  "Classical Algebra & Polynomials",
+  "Abstract Algebra & Group Theory",
+  "Linear Algebra & Matrices",
+  "Analytical Geometry (2D & 3D Conics)",
+  "Vector Algebra & 3D Geometry",
+  "Differential Equations & Mechanics",
+  "Trigonometry & Complex Numbers",
+  "Statics, Dynamics & Hydrostatics",
+  "Probability & Statistics",
+  "Linear Programming & Numerical Analysis"
+];
+
 export const TOPICS_BY_CATEGORY: Record<string, string[]> = {
   slst: SLST_TOPICS,
+  tgtpgt: TGT_PGT_TOPICS,
   jee: ["Complex Numbers", "Conic Sections", "Definite Integration", "Probability", "Vectors & 3D Geometry"],
   jeemains: ["Binomial Theorem", "Sequence & Series", "Matrices & Determinants", "Limits", "Application of Derivatives"],
   wbjee: [
@@ -983,9 +1000,103 @@ const DEFAULT_POOL = [
   }
 ];
 
+const TGT_PGT_MOCK_POOL: Question[] = [
+  {
+    question: "The order of the element $3$ in the multiplicative group $(\\mathbb{Z}_{11}^*, \\cdot)$ is:",
+    options: ["$5$", "$10$", "$4$", "$2$"],
+    correctAnswer: 0,
+    explanation: "$3^1 = 3, 3^2 = 9, 3^3 = 27 \\equiv 5, 3^4 \\equiv 4, 3^5 \\equiv 12 \\equiv 1 \\pmod{11}$. Thus, $\\text{order}(3) = 5$."
+  },
+  {
+    question: "The general solution of the differential equation $\\frac{d^2y}{dx^2} + y = 0$ is:",
+    options: ["$y = C_1 \\cos x + C_2 \\sin x$", "$y = C_1 e^x + C_2 e^{-x}$", "$y = C_1 x + C_2$", "$y = C_1 \\tan x + C_2$"],
+    correctAnswer: 0,
+    explanation: "Auxiliary equation $m^2 + 1 = 0 \\implies m = \\pm i$. Solution is $y = C_1 \\cos x + C_2 \\sin x$."
+  },
+  {
+    question: "If $\\vec{a} = 2\\hat{i} + \hat{j} - \hat{k}$ and $\\vec{b} = \\hat{i} - \hat{j} + 2\\hat{k}$, the vector projection of $\\vec{a}$ on $\\vec{b}$ is:",
+    options: ["$\\frac{-1}{\\sqrt{6}}(\\hat{i} - \\hat{j} + 2\\hat{k})$", "$\\frac{1}{6}(\\hat{i} - \\hat{j} + 2\\hat{k})$", "$\\frac{-1}{6}(\\hat{i} - \\hat{j} + 2\\hat{k})$", "$\\sqrt{6}(\\hat{i} - \\hat{j} + 2\\hat{k})$"],
+    correctAnswer: 2,
+    explanation: "$\\text{Proj}_{\\vec{b}}\\vec{a} = \\left(\\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{b}|^2}\\right)\\vec{b}$. $\\vec{a} \\cdot \\vec{b} = 2(1) + 1(-1) + (-1)(2) = -1$. $|\\vec{b}|^2 = 6$. So $-\\frac{1}{6}(\\hat{i} - \\hat{j} + 2\\hat{k})$."
+  },
+  {
+    question: "The radius of curvature of the curve $r = a(1 + \\cos\\theta)$ at $\\theta = 0$ is:",
+    options: ["$\\frac{4}{3}a$", "$\\frac{2}{3}a$", "$a$", "$2a$"],
+    correctAnswer: 0,
+    explanation: "For cardioid $r = a(1+\\cos\\theta)$, $\\rho = \\frac{4}{3}a \\cos(\\theta/2)$. At $\\theta = 0$, $\\rho = \\frac{4}{3}a$."
+  },
+  {
+    question: "If the matrix $A = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}$ satisfies $A^2 - 5A - kI = 0$, then $k$ equals:",
+    options: ["$2$", "$-2$", "$5$", "$-5$"],
+    correctAnswer: 0,
+    explanation: "Characteristic equation: $|A - \\lambda I| = (1-\\lambda)(4-\\lambda) - 6 = \\lambda^2 - 5\\lambda - 2 = 0$. By Cayley-Hamilton, $A^2 - 5A - 2I = 0 \\implies k = 2$."
+  },
+  {
+    question: "The eccentricity of the hyperbola $9x^2 - 16y^2 = 144$ is:",
+    options: ["$\\frac{5}{4}$", "$\\frac{5}{3}$", "$\\frac{4}{3}$", "$\\frac{3}{5}$"],
+    correctAnswer: 0,
+    explanation: "$\cfrac{x^2}{16} - \cfrac{y^2}{9} = 1 \\implies a^2=16, b^2=9$. Eccentricity $e = \\sqrt{1 + b^2/a^2} = \\sqrt{1 + 9/16} = \\frac{5}{4}$."
+  },
+  {
+    question: "The degree of the differential equation $\\left[1 + \\left(\\frac{dy}{dx}\\right)^2\\right]^{3/2} = k \\frac{d^2y}{dx^2}$ is:",
+    options: ["$2$", "$3$", "$1$", "$6$"],
+    correctAnswer: 0,
+    explanation: "Squaring both sides gives $\\left[1 + \\left(\\frac{dy}{dx}\\right)^2\\right]^3 = k^2 \\left(\\frac{d^2y}{dx^2}\\right)^2$. The highest order derivative is $\\frac{d^2y}{dx^2}$ with exponent $2$."
+  },
+  {
+    question: "The value of $\\int_0^{\\pi/2} \\log(\\sin x) dx$ is equal to:",
+    options: ["$-\\frac{\\pi}{2} \\log 2$", "$\\frac{\\pi}{2} \\log 2$", "$-\\pi \\log 2$", "0"],
+    correctAnswer: 0,
+    explanation: "Euler's standard integral: $\\int_0^{\\pi/2} \\log(\\sin x) dx = -\\frac{\\pi}{2} \\log 2$."
+  },
+  {
+    question: "If $\\alpha, \\beta, \\gamma$ are the roots of $x^3 - 6x^2 + 11x - 6 = 0$, then $\\alpha^2 + \\beta^2 + \\gamma^2$ is:",
+    options: ["$14$", "$36$", "$22$", "$12$"],
+    correctAnswer: 0,
+    explanation: "$\\sum \\alpha = 6, \\sum \\alpha\\beta = 11$. $\\sum \\alpha^2 = (\\sum \\alpha)^2 - 2\\sum \\alpha\\beta = 36 - 22 = 14$."
+  },
+  {
+    question: "Which of the following groups is non-abelian?",
+    options: ["Quaternion group $Q_8$", "Cyclic group $Z_6$", "Klein 4-group $V_4$", "$(\\mathbb{R}, +)$"],
+    correctAnswer: 0,
+    explanation: "Quaternion group $Q_8 = \\{\\pm 1, \\pm i, \\pm j, \\pm k\\}$ is non-abelian because $ij = k \\neq ji = -k$."
+  },
+  {
+    question: "The condition for two vectors $\\vec{a}$ and $\\vec{b}$ to be perpendicular is:",
+    options: ["$\\vec{a} \\cdot \\vec{b} = 0$", "$\\vec{a} \\times \\vec{b} = 0$", "$\\vec{a} + \\vec{b} = 0$", "$|\\vec{a}| = |\\vec{b}|$"],
+    correctAnswer: 0,
+    explanation: "Two non-zero vectors are perpendicular if and only if their dot product is zero."
+  },
+  {
+    question: "The total number of subgroups of the cyclic group $\\mathbb{Z}_{30}$ is:",
+    options: ["$8$", "$6$", "$10$", "$4$"],
+    correctAnswer: 0,
+    explanation: "The number of subgroups of $\\mathbb{Z}_n$ is equal to the number of positive divisors $\\tau(n)$. $\\tau(30) = \\tau(2^1 \\cdot 3^1 \\cdot 5^1) = 2 \\times 2 \\times 2 = 8$."
+  },
+  {
+    question: "If $f(z) = u + iv$ is an analytic function in a domain $D$, then $u$ and $v$ satisfy:",
+    options: ["Laplace Equation $\\nabla^2 u = 0, \\nabla^2 v = 0$", "Wave Equation", "Heat Equation", "Poisson Equation"], correctAnswer: 0,
+    explanation: "Real and imaginary parts of an analytic function are harmonic, satisfying $\\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} = 0$."
+  },
+  {
+    question: "The asymptote of the curve $y^3 - x^2 y + 2x = 0$ parallel to the y-axis is:",
+    options: ["$x = 0$", "$y = 0$", "$x = 1$", "No vertical asymptote"],
+    correctAnswer: 3,
+    explanation: "Highest power of $y$ is $y^3$ whose coefficient is $1$ (constant), so there is no asymptote parallel to the y-axis."
+  },
+  {
+    question: "The probability of getting a total of 7 in a single throw of two dice is:",
+    options: ["$\\frac{1}{6}$", "$\\frac{1}{12}$", "$\\frac{5}{36}$", "$\\frac{1}{36}$"],
+    correctAnswer: 0,
+    explanation: "Favorable outcomes: $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1) \\implies 6$. Total = $36$. Probability = $6/36 = 1/6$."
+  }
+];
+
 export function generateQuestionSet(topic: string, count: number = 30, mockIndex: number = 0) {
   let pool = DEFAULT_POOL;
-  if (topic === "Real Analysis") {
+  if (topic.toLowerCase().includes("tgt") || topic.toLowerCase().includes("pgt")) {
+    pool = TGT_PGT_MOCK_POOL;
+  } else if (topic === "Real Analysis") {
     const poolForMock = REAL_ANALYSIS_POOLS[mockIndex] || REAL_ANALYSIS_POOLS[mockIndex % REAL_ANALYSIS_POOLS.length];
     pool = poolForMock && poolForMock.length > 0 ? poolForMock : DEFAULT_POOL;
   } else if (topic === "Classical Algebra") {
@@ -1020,6 +1131,37 @@ export function generateQuestionSet(topic: string, count: number = 30, mockIndex
   return questions;
 }
 
+export const GOOGLE_SHEETS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwkh00sQ791MsKpDFFZFtWsyrOQwpwovut_aTzEp9KcbdVQa_xuIi7nkG-cm5jydhXd-w/exec";
+
+export async function fetchLiveMockTestQuestions(url: string = GOOGLE_SHEETS_SCRIPT_URL) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Network response was not ok");
+    const data = await res.json();
+    
+    if (data && Array.isArray(data.questions)) {
+      return {
+        testId: data.testId || 'google-sheet-test',
+        title: data.title || 'Live Google Sheets Mock Test',
+        questions: data.questions,
+        duration: (data.durationMinutes || 60) * 60,
+        isLiveGoogleSheet: true
+      };
+    } else if (Array.isArray(data)) {
+      return {
+        testId: 'google-sheet-test',
+        title: 'Live Google Sheets Mock Test',
+        questions: data,
+        duration: 3600,
+        isLiveGoogleSheet: true
+      };
+    }
+  } catch (err) {
+    console.error("Error fetching live Google Sheets questions:", err);
+  }
+  return null;
+}
+
 export function generateMocksForTopic(topic: string, count: number = 20) {
   return Array.from({ length: count }, (_, i) => {
     const qList = generateQuestionSet(topic, 30, i);
@@ -1033,3 +1175,4 @@ export function generateMocksForTopic(topic: string, count: number = 20) {
     };
   });
 }
+

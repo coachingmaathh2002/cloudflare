@@ -11,6 +11,8 @@ import {
   Award,
   Zap,
   Flame,
+  Sparkles,
+  GraduationCap,
   Plus,
   Minus
 } from "lucide-react";
@@ -26,6 +28,17 @@ const mockTestCategories = [
     icon: Calculator,
     link: "/free-daily-test",
     badge: "Free Daily Test"
+  },
+  {
+    id: "tgtpgt",
+    title: "TGT PGT Math",
+    subtitle: "UP TGT/PGT, KVS, NVS & EMRS",
+    gradient: "from-[#d90429] via-[#ff2a00] to-[#ff7e5f]",
+    shadow: "shadow-[0_12px_35px_rgba(217,4,41,0.45)]",
+    glow: "group-hover:shadow-[0_16px_45px_rgba(217,4,41,0.7)]",
+    icon: GraduationCap,
+    link: "/mock-test",
+    badge: "TGT/PGT CBT"
   },
   {
     id: "wbjee",
@@ -178,73 +191,99 @@ export default function Home() {
         {/* Hero Section */}
         <section className="flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-20 relative">
           {/* Background ambient glow */}
-          <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#f09038]/10 rounded-full blur-[100px] pointer-events-none"></div>
+          <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#f09038]/15 rounded-full blur-[120px] pointer-events-none"></div>
 
           <div className="flex-1 text-center md:text-left z-10">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
+            {/* Top Status Eyebrow Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-badge-3d text-xs font-black uppercase tracking-wider text-amber-300 border border-amber-400/40 shadow-xl mb-6 backdrop-blur-xl animate-float-slow">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+              <Sparkles className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <span>Bengal's #1 Math Platform • Raj Sir Classes</span>
+            </div>
+
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-6 leading-[1.08] tracking-tight font-display">
               Master <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f09038] via-[#ffb77e] to-[#c5c0ff]">
-                Mathematics
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff8800] via-[#ff007f] to-[#00f2fe] drop-shadow-[0_10px_25px_rgba(255,0,127,0.35)]">
+                Higher Mathematics
               </span> <br />
-              &amp; Secure Your Future
+              With Unmatched Precision.
             </h1>
-            <p className="text-slate-300 text-base md:text-lg mb-8 max-w-xl mx-auto md:mx-0 font-normal leading-relaxed">
-              High-quality math coaching designed to simplify complex concepts. Build a strong foundation and excel in your academic journey with expert guidance.
+
+            <p className="text-slate-200 text-base sm:text-lg md:text-xl mb-8 max-w-2xl mx-auto md:mx-0 font-medium leading-relaxed drop-shadow-sm">
+              Empowering <span className="text-amber-300 font-bold">10,000+ aspirants</span> to conquer <span className="text-pink-400 font-bold">SLST Math (IX-XII)</span>, <span className="text-cyan-400 font-bold">WBJEE</span> & <span className="text-purple-400 font-bold">JEE Mains</span> through Raj Sir's shortcut formulas, chapterwise handwritten notes, and full-length CBT mock tests.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 mb-10">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 sm:gap-6 mb-10">
               <Link
                 to="/courses"
-                className="bg-gradient-glow text-[#111317] font-bold px-8 py-4 rounded-full hover:brightness-110 active:scale-95 transition-all text-lg shadow-[0_8px_32px_rgba(240,144,56,0.35)] flex items-center gap-2"
+                className="shimmer-card bg-gradient-to-r from-amber-500 via-orange-500 to-pink-500 text-white font-black px-8 py-4 rounded-2xl hover:brightness-110 active:scale-95 transition-all text-base sm:text-lg shadow-[0_10px_35px_rgba(240,144,56,0.45)] flex items-center gap-2.5 border border-white/20 group"
               >
-                Enroll Now <ChevronRight className="w-5 h-5" />
+                <span>Enroll in Batch</span> 
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <div className="flex gap-8">
-                <div className="text-left">
-                  <p className="text-2xl font-black text-white">10K+</p>
-                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Students</p>
-                </div>
-                <div className="text-left">
-                  <p className="text-2xl font-black text-white">50+</p>
-                  <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Courses</p>
-                </div>
+              <Link
+                to="/free-daily-test"
+                className="bg-white/10 hover:bg-white/15 text-white font-extrabold px-6 py-4 rounded-2xl border border-white/20 hover:border-emerald-400/50 transition-all text-base flex items-center gap-2 backdrop-blur-md shadow-lg"
+              >
+                <Zap className="w-5 h-5 text-emerald-400 fill-emerald-400" />
+                <span>Free Daily Mock Test</span>
+              </Link>
+            </div>
+
+            <div className="flex items-center justify-center md:justify-start gap-8 pt-4 border-t border-white/10">
+              <div className="text-left">
+                <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">10K+</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Enrolled Students</p>
+              </div>
+              <div className="h-8 w-[1px] bg-white/15"></div>
+              <div className="text-left">
+                <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">98.4%</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Success Rate</p>
+              </div>
+              <div className="h-8 w-[1px] bg-white/15"></div>
+              <div className="text-left">
+                <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">50+</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">CBT Series</p>
               </div>
             </div>
           </div>
 
           <div className="flex-1 relative w-full max-w-md mx-auto md:max-w-none mt-4 md:mt-0">
             {/* Hero Image Container */}
-            <div className="relative w-full aspect-square rounded-[3rem] bg-[#1e2024] overflow-hidden border border-white/10 shadow-2xl">
+            <div className="relative w-full aspect-square rounded-[3rem] bg-[#1e2024] overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] group">
               {/* Decorational background shape */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#f09038]/20 to-transparent"></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#f09038] rounded-full opacity-70 blur-md"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#f09038]/25 via-pink-500/10 to-transparent"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#f09038] rounded-full opacity-60 blur-2xl"></div>
               <img
-                className="absolute inset-0 w-full h-full object-cover object-top drop-shadow-2xl z-10"
+                className="absolute inset-0 w-full h-full object-cover object-top drop-shadow-2xl z-10 group-hover:scale-105 transition-transform duration-700"
                 alt="Raj Sir Math Student"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGE5XUoMktB2Q7bTljhSDLBgs2N0aDB_UKufnPN73u4JsUl9FUWk-DUB7Dsh_5QcJtA9siLsc-JAgF_PYiwjcWOrW-fvE4QcryD2zkiaIxGXFkWIh-8zQfskSpnbH9BL-Hg99CDx9daaTL1naNIDMc4q5D1sk9vt2c5nfZ3n66Dx9ktUUdN2pcItcsyiMa6igwsHClp9vmZQ9mPCOJsWJNK142EUtTF_SOWkdPu7L5nSBNUvW5FDAXMA"
               />
 
-              {/* Floating Widgets */}
-              <div className="absolute top-12 -left-4 md:left-4 z-20 glass-panel p-3.5 pr-6 rounded-2xl flex items-center gap-3 shadow-2xl border border-white/10">
-                <div className="w-10 h-10 rounded-full bg-[#ff7ea1]/20 flex items-center justify-center text-[#ff7ea1]">
+              {/* Floating Widgets with 3D Glassmorphism */}
+              <div className="absolute top-8 left-4 md:left-6 z-20 glass-badge-3d animate-float-slow p-3.5 pr-6 rounded-2xl flex items-center gap-3 shadow-2xl border border-white/30 backdrop-blur-xl">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white shadow-lg">
                   <Users className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-extrabold text-white leading-tight">10K+</p>
-                  <p className="text-[10px] text-slate-300 font-medium">Assisted Students</p>
+                  <p className="text-base font-black text-white leading-tight">10,000+</p>
+                  <p className="text-[10px] text-amber-300 font-extrabold uppercase tracking-wider">Top Math Rankers</p>
                 </div>
               </div>
 
-              <div className="absolute bottom-8 -right-2 md:right-8 z-20 glass-panel p-4 rounded-2xl w-48 shadow-2xl border border-white/10">
-                <p className="text-xs font-bold text-white mb-3">Performance Chart</p>
-                <div className="flex items-end gap-2 h-16 w-full">
-                  <div className="w-full bg-white/20 rounded-t-sm h-[30%]"></div>
-                  <div className="w-full bg-[#ff7ea1] rounded-t-sm h-[50%]"></div>
-                  <div className="w-full bg-white/20 rounded-t-sm h-[40%]"></div>
-                  <div className="w-full bg-white/20 rounded-t-sm h-[70%]"></div>
-                  <div className="w-full bg-[#f09038] rounded-t-sm h-[90%]"></div>
-                  <div className="w-full bg-[#4034ae] rounded-t-sm h-[60%]"></div>
+              <div className="absolute bottom-8 right-4 md:right-8 z-20 glass-badge-3d animate-float-delayed p-4 rounded-2xl w-52 shadow-2xl border border-white/30 backdrop-blur-xl">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs font-black text-white">Score Growth</p>
+                  <span className="text-[10px] font-black text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-500/30">+42% Avg</span>
+                </div>
+                <div className="flex items-end gap-2 h-14 w-full">
+                  <div className="w-full bg-white/20 rounded-t-sm h-[35%]"></div>
+                  <div className="w-full bg-pink-500 rounded-t-sm h-[55%]"></div>
+                  <div className="w-full bg-white/20 rounded-t-sm h-[45%]"></div>
+                  <div className="w-full bg-cyan-400 rounded-t-sm h-[75%]"></div>
+                  <div className="w-full bg-amber-400 rounded-t-sm h-[95%]"></div>
+                  <div className="w-full bg-purple-500 rounded-t-sm h-[70%]"></div>
                 </div>
               </div>
             </div>
@@ -272,24 +311,24 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-            {mockTestCategories.map((item) => {
+            {mockTestCategories.map((item, idx) => {
               const IconComp = item.icon;
               return (
                 <Link
                   key={item.id}
                   to={item.link}
-                  className={`bg-gradient-to-br ${item.gradient} rounded-[28px] p-6 sm:p-7 flex flex-col justify-between min-h-[220px] sm:min-h-[240px] hover:-translate-y-2 transition-all duration-300 ${item.shadow} ${item.glow} group relative overflow-hidden border border-white/30`}
+                  className={`shimmer-card bg-gradient-to-br ${item.gradient} rounded-[28px] p-6 sm:p-7 flex flex-col justify-between min-h-[220px] sm:min-h-[240px] hover:-translate-y-2 transition-all duration-300 ${item.shadow} ${item.glow} group relative overflow-hidden border border-white/30`}
                 >
-                  <div className="flex justify-between items-start gap-2">
+                  <div className="flex justify-between items-start gap-2 z-10">
                     <div className="w-12 h-12 rounded-2xl bg-white/25 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform shadow-md border border-white/30 shrink-0">
                       <IconComp className="w-6 h-6 text-white drop-shadow-md" />
                     </div>
-                    <span className="text-[10px] sm:text-xs uppercase font-black tracking-wider bg-black/35 text-white px-3 py-1 rounded-full backdrop-blur-md border border-white/30 shadow-sm shrink-0 whitespace-nowrap">
+                    <span className={`glass-badge-3d ${idx % 2 === 0 ? 'animate-float-slow' : 'animate-float-delayed'} text-[10px] sm:text-xs uppercase font-black tracking-wider text-white px-3 py-1 rounded-full border border-white/40 shadow-md shrink-0 whitespace-nowrap`}>
                       {item.badge}
                     </span>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-4 z-10">
                     <h3 className="text-white text-xl sm:text-2xl font-black mb-1.5 leading-tight drop-shadow-sm tracking-tight">
                       {item.title}
                     </h3>

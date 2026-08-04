@@ -28,9 +28,17 @@ import {
   Home,
   GraduationCap,
   Layers,
-  Star
+  Star,
+  RefreshCw,
+  Database
 } from 'lucide-react';
-import { EXAM_CATEGORIES, TOPICS_BY_CATEGORY, generateMocksForTopic } from '../data/mockTestData';
+import { 
+  EXAM_CATEGORIES, 
+  TOPICS_BY_CATEGORY, 
+  generateMocksForTopic, 
+  fetchLiveMockTestQuestions,
+  GOOGLE_SHEETS_SCRIPT_URL 
+} from '../data/mockTestData';
 import { useSEO } from '../lib/useSEO';
 import { cn } from '../lib/utils';
 
@@ -51,6 +59,14 @@ const EXAM_THEMES: Record<string, {
     badgeBg: 'bg-black/70',
     badgeText: 'text-pink-300',
     students: '12,450 students',
+    ratingDots: '•••••'
+  },
+  tgtpgt: {
+    gradient: 'from-[#ff0055] via-[#ff2a00] to-[#800080]',
+    textColor: 'text-white',
+    badgeBg: 'bg-black/70',
+    badgeText: 'text-rose-300',
+    students: '11,850 students',
     ratingDots: '•••••'
   },
   jee: {
@@ -375,6 +391,8 @@ export default function MockTestApp() {
   const [testCodeError, setTestCodeError] = useState('');
 
   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
+  const [isSyncingLiveSheet, setIsSyncingLiveSheet] = useState(false);
+  const [liveSheetStatus, setLiveSheetStatus] = useState<string | null>(null);
 
   // Filtered solution indices calculation for one-by-one solutions review
   const filteredSolutionIndices = useMemo(() => {
@@ -412,6 +430,30 @@ export default function MockTestApp() {
     return () => clearInterval(timer);
   }, [view, isSubmitted]);
 
+  // Scroll to top on view changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [view, selectedCategory, selectedTopic]);
+
+  // Scroll to top on question change
+  useEffect(() => {
+    if (view === 'test') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }, [currentQuestion, view]);
+
+  // Lock body scroll when focus mode is active
+  useEffect(() => {
+    if (focusMode) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [focusMode]);
+
   const handleCategorySelect = (categoryId: string) => {
     setSelectedCategory(categoryId);
     setTopicSearchQuery('');
@@ -423,20 +465,140 @@ export default function MockTestApp() {
     setView('mocks');
   };
 
-  const startMockTest = (mock: any, theme?: any) => {
+  const isExactMatchForGoogleSheet = (mock: any, liveData: any) => {
+    if (!liveData) return false;
+    if (mock.isLiveGoogleSheet) return true;
+
+    const mockIdStr = String(mock.id || '').toLowerCase();
+    const mockTopicStr = String(mock.topic || '').toLowerCase();
+    const mockTitleStr = String(mock.title || '').toLowerCase();
+
+    const sheetTestId = String(liveData.testId || '').toLowerCase();
+    const sheetTitle = String(liveData.title || '').toLowerCase();
+
+    // Direct ID match
+    if (sheetTestId && (mockIdStr === sheetTestId || mockIdStr.includes(sheetTestId) || sheetTestId.includes(mockIdStr))) {
+      return true;
+    }
+
+    // Extract numbers
+    const extractNum = (s: string) => {
+      const match = s.match(/(?:mock|test)[_\s-]*(\d+)/i) || s.match(/(\d+)/);
+      return match ? match[1] : null;
+    };
+
+    const mockNum = extractNum(mockIdStr) || extractNum(mockTitleStr);
+    const sheetNum = extractNum(sheetTestId) || extractNum(sheetTitle);
+
+    // If numbers exist and do not match, it's a different mock test
+    if (mockNum && sheetNum && mockNum !== sheetNum) {
+      return false;
+    }
+
+    // Check topic keyword overlap
+    const topics = [
+      'real analysis', 'calculus', 'linear algebra', 'abstract algebra', 
+      'differential equations', 'complex analysis', 'topology', 'set theory', 
+      'vectors', 'mechanics', 'statics', 'dynamics', 'probability', 
+      'statistics', 'trigonometry', 'coordinate geometry', 'numerical analysis'
+    ];
+
+    for (const t of topics) {
+      if (mockTopicStr.includes(t) && (sheetTitle.includes(t) || sheetTestId.includes(t))) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
+  const startMockTest = async (mock: any, theme?: any) => {
     const chosenTheme = theme || mock.theme || MODULE_THEMES[0];
-    setSelectedMock({ ...mock, theme: chosenTheme });
+    let activeTestData = { ...mock, theme: chosenTheme };
+
+    if (mock.isLiveGoogleSheet || mock.id === 'google-sheets-live-test') {
+      setIsSyncingLiveSheet(true);
+      setLiveSheetStatus('Syncing live test data from Google Sheets...');
+      try {
+        const liveData = await fetchLiveMockTestQuestions();
+        if (liveData && liveData.questions && liveData.questions.length > 0) {
+          activeTestData = {
+            ...activeTestData,
+            title: liveData.title || activeTestData.title,
+            questions: liveData.questions,
+            totalQuestions: liveData.questions.length,
+            duration: liveData.duration || activeTestData.duration,
+            isLiveGoogleSheet: true
+          };
+          setLiveSheetStatus('Live Google Sheets JSON DB synced successfully!');
+        }
+      } catch (err) {
+        console.error("Using local fallback questions:", err);
+      } finally {
+        setIsSyncingLiveSheet(false);
+      }
+    } else {
+      // Check if live sheet data matches this mock test specifically
+      try {
+        const liveData = await fetchLiveMockTestQuestions();
+        if (liveData && liveData.questions && liveData.questions.length > 0 && isExactMatchForGoogleSheet(mock, liveData)) {
+          setIsSyncingLiveSheet(true);
+          setLiveSheetStatus('Matched & Synced Live Google Sheet Data!');
+          activeTestData = {
+            ...activeTestData,
+            title: liveData.title || activeTestData.title,
+            questions: liveData.questions,
+            totalQuestions: liveData.questions.length,
+            duration: liveData.duration || activeTestData.duration,
+            isLiveGoogleSheet: true
+          };
+          setTimeout(() => setLiveSheetStatus(null), 3000);
+          setIsSyncingLiveSheet(false);
+        }
+      } catch (err) {
+        // Fallback to local topic questions
+      }
+    }
+
+    setSelectedMock(activeTestData);
     setCurrentQuestion(0);
     setSolutionIndex(0);
     setSelectedAnswers({});
     setIsSubmitted(false);
-    setTimeLeft(mock.duration || 3600);
+    setTimeLeft(activeTestData.duration || 3600);
     setView('test');
   };
 
-  const handleMockSelect = (mock: any, theme?: any) => {
+  const handleSyncGoogleSheet = async () => {
+    setIsSyncingLiveSheet(true);
+    setLiveSheetStatus('Syncing latest questions from Google Sheets...');
+    try {
+      const liveData = await fetchLiveMockTestQuestions();
+      if (liveData && liveData.questions && liveData.questions.length > 0) {
+        setSelectedMock((prev: any) => ({
+          ...prev,
+          title: liveData.title || prev.title,
+          questions: liveData.questions,
+          totalQuestions: liveData.questions.length,
+          duration: liveData.duration || prev.duration,
+          isLiveGoogleSheet: true
+        }));
+        setLiveSheetStatus('Updated from Google Sheets!');
+        setTimeout(() => setLiveSheetStatus(null), 3000);
+      }
+    } catch (e) {
+      setLiveSheetStatus('Sync failed, using cached data.');
+      setTimeout(() => setLiveSheetStatus(null), 3000);
+    } finally {
+      setIsSyncingLiveSheet(false);
+    }
+  };
+
+  const handleMockSelect = (mock: any, theme?: any, index?: number) => {
     const chosenTheme = theme || mock.theme || MODULE_THEMES[0];
-    if (selectedCategory === 'slst') {
+    const isFree = index !== undefined ? (index < 2) : false;
+    
+    if ((selectedCategory === 'slst' || selectedCategory === 'tgtpgt') && !isFree) {
       setPendingMock({ ...mock, theme: chosenTheme });
       setShowCodeModal(true);
       setTestCodeInput('');
@@ -448,11 +610,12 @@ export default function MockTestApp() {
 
   const handleCodeSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (testCodeInput.trim() === 'raj@9167') {
+    const cleanInput = testCodeInput.trim().toLowerCase();
+    if (cleanInput === 'raj@9167' || cleanInput === 'test@547' || cleanInput === 'slst2026') {
       setShowCodeModal(false);
       if (pendingMock) startMockTest(pendingMock, pendingMock.theme);
     } else {
-      setTestCodeError('Invalid passcode! Please enter the correct test code.');
+      setTestCodeError('Invalid passcode! Enter raj@9167 or test@547 to unlock.');
     }
   };
 
@@ -835,6 +998,7 @@ export default function MockTestApp() {
               {[
                 { id: 'all', label: 'All Exams' },
                 { id: 'slst', label: 'SLST Math' },
+                { id: 'tgtpgt', label: 'TGT PGT Math' },
                 { id: 'jee', label: 'JEE Adv' },
                 { id: 'jeemains', label: 'JEE Mains' },
                 { id: 'wbjee', label: 'WBJEE' },
@@ -888,6 +1052,7 @@ export default function MockTestApp() {
                 <div className="flex items-center justify-between gap-2 mb-6 sm:mb-8 z-10">
                   <div className={cn("w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white shadow-xl border border-white/20 shrink-0", theme.badgeBg)}>
                     {cat.id === 'slst' && <BrainCircuit className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400" />}
+                    {cat.id === 'tgtpgt' && <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-rose-400" />}
                     {cat.id === 'jee' && <Target className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />}
                     {cat.id === 'jeemains' && <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-sky-400" />}
                     {cat.id === 'wbjee' && <Layers className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400" />}
@@ -1078,17 +1243,17 @@ export default function MockTestApp() {
               </h1>
 
               <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold text-slate-300 mt-3">
-                <span className="bg-black/50 border border-white/15 px-3 py-1 rounded-full backdrop-blur-md flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-pink-400" /> 20 CBT Mocks
+                <span className="bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 px-3 py-1 rounded-full backdrop-blur-md flex items-center gap-1.5 shadow-md">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-400" /> Tests 1 & 2: 100% FREE
+                </span>
+                <span className="bg-amber-500/20 border border-amber-500/40 text-amber-300 px-3 py-1 rounded-full backdrop-blur-md flex items-center gap-1.5 shadow-md">
+                  <Lock className="w-3.5 h-3.5 text-amber-400" /> Tests 3–20: 18 Locked
                 </span>
                 <span className="bg-black/50 border border-white/15 px-3 py-1 rounded-full backdrop-blur-md flex items-center gap-1.5">
                   <Target className="w-3.5 h-3.5 text-cyan-400" /> 30 MCQs Each
                 </span>
                 <span className="bg-black/50 border border-white/15 px-3 py-1 rounded-full backdrop-blur-md flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-amber-400" /> 60 Mins Timer
-                </span>
-                <span className="bg-black/50 border border-white/15 px-3 py-1 rounded-full backdrop-blur-md flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> LaTeX Explanations
                 </span>
               </div>
             </div>
@@ -1106,45 +1271,73 @@ export default function MockTestApp() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
           {mocks.map((mock, idx) => {
             const mockTheme = MODULE_THEMES[idx % MODULE_THEMES.length];
+            const isFree = idx < 2;
+            const isLocked = (selectedCategory === 'slst' || selectedCategory === 'tgtpgt') ? !isFree : false;
+
             return (
               <motion.div 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.25, delay: idx * 0.03 }}
                 key={idx} 
+                onClick={() => handleMockSelect(mock, mockTheme, idx)}
                 className={cn(
-                  "group relative rounded-[28px] p-6 flex flex-col justify-between min-h-[210px] cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.02] shadow-2xl bg-gradient-to-br",
+                  "shimmer-card group relative rounded-[28px] p-6 flex flex-col justify-between min-h-[220px] cursor-pointer overflow-hidden transition-all duration-300 hover:scale-[1.02] shadow-2xl bg-gradient-to-br border",
+                  isLocked ? "border-amber-500/40" : "border-emerald-500/40",
                   mockTheme.gradient
                 )}
               >
                 <div>
                   <div className="flex items-center justify-between mb-4 z-10 relative">
-                    <span className={cn("w-10 h-10 rounded-2xl font-black text-sm flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-md", mockTheme.badgeBg, mockTheme.textColor)}>
+                    <span className={cn("glass-badge-3d w-10 h-10 rounded-2xl font-black text-sm flex items-center justify-center shadow-lg border border-white/30 backdrop-blur-md", mockTheme.badgeBg, mockTheme.textColor)}>
                       #{idx + 1}
                     </span>
-                    <span className={cn("inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider backdrop-blur-md shadow-md", mockTheme.badgeBg, mockTheme.badgeText)}>
-                      <CheckCircle2 className="w-3 h-3" /> CBT Ready
-                    </span>
+                    {isFree ? (
+                      <span className="glass-badge-3d animate-float-slow inline-flex items-center gap-1 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider bg-emerald-500/30 text-emerald-200 border border-emerald-300/50 backdrop-blur-md shadow-lg">
+                        <Sparkles className="w-3 h-3 text-emerald-300 animate-pulse" /> FREE TEST
+                      </span>
+                    ) : (
+                      <span className="glass-badge-3d animate-float-delayed inline-flex items-center gap-1 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider bg-amber-500/30 text-amber-200 border border-amber-300/50 backdrop-blur-md shadow-lg">
+                        <Lock className="w-3 h-3 text-amber-300" /> LOCKED
+                      </span>
+                    )}
                   </div>
 
-                  <h3 className={cn("font-black text-xl mb-1 font-display leading-snug drop-shadow-sm z-10 relative", mockTheme.textColor)}>
-                    Mock Test {idx + 1}
-                  </h3>
+                  <div className="flex items-center gap-2 mb-1 z-10 relative">
+                    <h3 className={cn("font-black text-xl font-display leading-snug drop-shadow-sm", mockTheme.textColor)}>
+                      Mock Test {idx + 1}
+                    </h3>
+                    {isLocked && <Lock className="w-4 h-4 text-amber-400 shrink-0 animate-pulse" />}
+                  </div>
 
                   <p className={cn("text-xs font-semibold opacity-90 mb-5 z-10 relative", mockTheme.textColor)}>
-                    {mock.totalQuestions} MCQs • {mock.duration / 60} Minutes
+                    {mock.totalQuestions} MCQs • {mock.duration / 60} Mins {isFree ? "• Free Access" : "• Access Code Required"}
                   </p>
                 </div>
 
                 <button 
-                  onClick={() => handleMockSelect(mock, mockTheme)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMockSelect(mock, mockTheme, idx);
+                  }}
                   className={cn(
-                    "w-full py-3 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all shadow-xl flex items-center justify-center gap-2 border border-white/20 z-10 relative group-hover:scale-[1.02]",
-                    mockTheme.btnBg
+                    "w-full py-3 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all shadow-xl flex items-center justify-center gap-2 border z-10 relative group-hover:scale-[1.02]",
+                    isFree 
+                      ? cn("border-emerald-400/40 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 text-emerald-100 hover:from-emerald-500/40 hover:to-teal-500/40", mockTheme.btnBg)
+                      : "border-amber-400/40 bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-amber-600/30 text-amber-100 hover:from-amber-500/40 hover:to-orange-500/40"
                   )}
                 >
-                  <Target className="h-4 w-4" />
-                  <span>Start CBT Test</span>
+                  {isFree ? (
+                    <>
+                      <Target className="h-4 w-4 text-emerald-300" />
+                      <span>Start Free Test</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="h-4 w-4 text-amber-300" />
+                      <span>Unlock Test</span>
+                    </>
+                  )}
                 </button>
 
                 {/* Glass Hover Overlay */}
@@ -1245,6 +1438,26 @@ export default function MockTestApp() {
           {/* Main Question Body */}
           <div className="flex-1 flex flex-col gap-4 sm:gap-5 min-w-0">
             
+            {/* Google Sheets DB Live Indicator */}
+            {selectedMock?.isLiveGoogleSheet && (
+              <div className="flex flex-wrap items-center justify-between gap-2 bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 px-4 py-2.5 rounded-2xl text-xs font-bold backdrop-blur-md shadow-xl">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                  <Database className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Google Sheets Single-Cell JSON DB Active</span>
+                </div>
+                <button 
+                  onClick={handleSyncGoogleSheet}
+                  disabled={isSyncingLiveSheet}
+                  className="flex items-center gap-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 active:scale-95 text-emerald-200 border border-emerald-400/40 px-3 py-1 rounded-xl transition-all text-xs font-bold disabled:opacity-50"
+                  title="Click to fetch latest JSON data from Google Sheets"
+                >
+                  <RefreshCw className={cn("w-3.5 h-3.5 text-emerald-300", isSyncingLiveSheet ? "animate-spin" : "")} />
+                  <span>{isSyncingLiveSheet ? "Syncing..." : "Sync Sheet Data"}</span>
+                </button>
+              </div>
+            )}
+
             {/* Test Top Header */}
             <div className={cn("p-3.5 sm:p-5 rounded-3xl border flex items-center justify-between shadow-2xl backdrop-blur-md transition-all", activeTheme.cardHeaderBg || "bg-[#111218] border-white/15")}>
               <div className="flex items-center gap-3 min-w-0 pr-2">
@@ -1383,7 +1596,7 @@ export default function MockTestApp() {
 
           {/* Right Question Index Map */}
           <div className="w-full lg:w-80 shrink-0">
-            <div className={cn("p-4 sm:p-6 rounded-3xl border lg:sticky top-8 shadow-2xl backdrop-blur-md transition-all", activeTheme.cardBg || "bg-[#111218] border-white/15")}>
+            <div className={cn("p-4 sm:p-6 rounded-3xl border lg:sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl backdrop-blur-md transition-all", activeTheme.cardBg || "bg-[#111218] border-white/15")}>
               <h3 className="font-bold text-white text-xs uppercase tracking-widest font-display mb-3 sm:mb-4 border-b border-white/10 pb-2.5 sm:pb-3">
                 Question Palette
               </h3>

@@ -169,6 +169,7 @@ export default function FreeDailyTest() {
     "Free Daily Math Mock Test | SLST, JEE & WBJEE",
     "Participate in our free daily mathematics mock tests for SLST and JEE Mains. Solve 30 challenging equations, view instant score reports, and access detailed explanation guides."
   );
+
   const [formData, setFormData] = useState(() => {
     const saved = localStorage.getItem('dailyTestRegistration');
     if (saved) {
@@ -182,12 +183,22 @@ export default function FreeDailyTest() {
     return { name: '', mobile: '', district: '', code: '' };
   });
   const [error, setError] = useState('');
-  
+
   // Test state
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [timeLeft, setTimeLeft] = useState(DAILY_TEST.duration);
   const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [viewState]);
+
+  useEffect(() => {
+    if (viewState === 'test') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }, [currentQuestionIndex, viewState]);
   const [solutionViewIndex, setSolutionViewIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const hasSubmittedRef = useRef(false);

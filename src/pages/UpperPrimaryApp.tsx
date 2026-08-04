@@ -20,6 +20,7 @@ export default function UpperPrimaryApp() {
     "Upper Primary TET Math Coaching & Mocks | Raj Sir",
     "Prepare for the West Bengal Upper Primary TET Mathematics examination with Raj Sir's specialized topic tests, free assessments, and structured study modules."
   );
+
   const [isVerified, setIsVerified] = useState(false);
   const [verifyName, setVerifyName] = useState('');
   const [verifyMobile, setVerifyMobile] = useState('');
@@ -36,6 +37,16 @@ export default function UpperPrimaryApp() {
   const [timeLeft, setTimeLeft] = useState(3600);
   const [focusMode, setFocusMode] = useState(false);
   const [solutionViewIndex, setSolutionViewIndex] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [view]);
+
+  useEffect(() => {
+    if (view === 'test') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }, [currentQuestion, view]);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();

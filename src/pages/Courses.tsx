@@ -387,10 +387,10 @@ export default function Courses() {
                   animate={{ opacity: 1, y: 0 }}
                   key={course.id}
                   className={cn(
-                    "solid-card-interactive rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border bg-slate-900",
+                    "shimmer-card solid-card-interactive rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden group border bg-slate-900 transition-all duration-300",
                     isSelected 
-                      ? "border-pink-500 shadow-[0_0_30px_rgba(219,39,119,0.3)] ring-1 ring-pink-500/50" 
-                      : "border-slate-800 hover:border-pink-500/50"
+                      ? "border-pink-500 shadow-[0_0_35px_rgba(219,39,119,0.35)] ring-1 ring-pink-500/50" 
+                      : "border-slate-800 hover:border-pink-500/50 hover:shadow-[0_15px_35px_rgba(219,39,119,0.15)]"
                   )}
                 >
                   {/* Subtle Background Glow */}
@@ -399,11 +399,11 @@ export default function Courses() {
                   {/* Top Badge & Rating */}
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-900/90 border border-white/15 text-[10px] font-bold uppercase tracking-wider text-amber-300 shadow-md">
-                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                        {course.badge}
+                      <span className="glass-badge-3d animate-float-slow inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-amber-300 shadow-lg border border-white/30 backdrop-blur-md">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400 drop-shadow-sm" />
+                        <span>{course.badge}</span>
                       </span>
-                      <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
+                      <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1 bg-black/40 border border-white/10 px-2.5 py-1 rounded-full backdrop-blur-md">
                         <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
                         <span className="text-white font-bold">{course.rating}</span> ({course.studentsCount})
                       </span>
