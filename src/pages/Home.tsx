@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSEO } from "../lib/useSEO";
+import heroMathStudentImg from "../assets/images/my_hero_image.webp";
 import {
   Calculator,
   Target,
@@ -258,7 +259,8 @@ export default function Home() {
               <img
                 className="absolute inset-0 w-full h-full object-cover object-top drop-shadow-2xl z-10 group-hover:scale-105 transition-transform duration-700"
                 alt="Raj Sir Math Student"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGE5XUoMktB2Q7bTljhSDLBgs2N0aDB_UKufnPN73u4JsUl9FUWk-DUB7Dsh_5QcJtA9siLsc-JAgF_PYiwjcWOrW-fvE4QcryD2zkiaIxGXFkWIh-8zQfskSpnbH9BL-Hg99CDx9daaTL1naNIDMc4q5D1sk9vt2c5nfZ3n66Dx9ktUUdN2pcItcsyiMa6igwsHClp9vmZQ9mPCOJsWJNK142EUtTF_SOWkdPu7L5nSBNUvW5FDAXMA"
+                src={heroMathStudentImg}
+                referrerPolicy="no-referrer"
               />
 
               {/* Floating Widgets with 3D Glassmorphism */}

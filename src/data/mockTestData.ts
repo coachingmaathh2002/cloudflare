@@ -1093,10 +1093,17 @@ const TGT_PGT_MOCK_POOL: Question[] = [
 ];
 
 export function generateQuestionSet(topic: string, count: number = 30, mockIndex: number = 0) {
+  // Return empty array for TGT PGT section so real Google Sheets data is used or "Question is coming" is shown
+  if (
+    topic.toLowerCase().includes("tgt") || 
+    topic.toLowerCase().includes("pgt") ||
+    TGT_PGT_TOPICS.some(t => t.toLowerCase() === topic.toLowerCase())
+  ) {
+    return [];
+  }
+
   let pool = DEFAULT_POOL;
-  if (topic.toLowerCase().includes("tgt") || topic.toLowerCase().includes("pgt")) {
-    pool = TGT_PGT_MOCK_POOL;
-  } else if (topic === "Real Analysis") {
+  if (topic === "Real Analysis") {
     const poolForMock = REAL_ANALYSIS_POOLS[mockIndex] || REAL_ANALYSIS_POOLS[mockIndex % REAL_ANALYSIS_POOLS.length];
     pool = poolForMock && poolForMock.length > 0 ? poolForMock : DEFAULT_POOL;
   } else if (topic === "Classical Algebra") {
@@ -1133,37 +1140,90 @@ export function generateQuestionSet(topic: string, count: number = 30, mockIndex
 
 export const GOOGLE_SHEETS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwkh00sQ791MsKpDFFZFtWsyrOQwpwovut_aTzEp9KcbdVQa_xuIi7nkG-cm5jydhXd-w/exec";
 
-export async function fetchLiveMockTestQuestions(url: string = GOOGLE_SHEETS_SCRIPT_URL) {
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error("Network response was not ok");
-    const data = await res.json();
-    
-    if (data && Array.isArray(data.questions)) {
-      return {
-        testId: data.testId || 'google-sheet-test',
-        title: data.title || 'Live Google Sheets Mock Test',
-        questions: data.questions,
-        duration: (data.durationMinutes || 60) * 60,
-        isLiveGoogleSheet: true
-      };
-    } else if (Array.isArray(data)) {
-      return {
-        testId: 'google-sheet-test',
-        title: 'Live Google Sheets Mock Test',
-        questions: data,
-        duration: 3600,
-        isLiveGoogleSheet: true
-      };
-    }
-  } catch (err) {
-    console.error("Error fetching live Google Sheets questions:", err);
+let liveMockQuestionsCache: { data: any; timestamp: number } | null = null;
+let activeFetchPromise: Promise<any> | null = null;
+
+export async function fetchLiveMockTestQuestions(url: string = GOOGLE_SHEETS_SCRIPT_URL, forceRefresh = false) {
+  const CACHE_DURATION = 3 * 60 * 1000; // 3 minutes cache
+  const now = Date.now();
+
+  if (!forceRefresh && liveMockQuestionsCache && (now - liveMockQuestionsCache.timestamp < CACHE_DURATION)) {
+    return liveMockQuestionsCache.data;
   }
-  return null;
+
+  if (!forceRefresh) {
+    try {
+      const stored = sessionStorage.getItem('cached_live_mock_test');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (now - parsed.timestamp < CACHE_DURATION) {
+          liveMockQuestionsCache = parsed;
+          return parsed.data;
+        }
+      }
+    } catch (e) {
+      // Ignore storage errors
+    }
+  }
+
+  if (activeFetchPromise && !forceRefresh) {
+    return activeFetchPromise;
+  }
+
+  activeFetchPromise = (async () => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Network response was not ok");
+      const data = await res.json();
+      
+      let result = null;
+      if (data && Array.isArray(data.questions)) {
+        result = {
+          testId: data.testId || 'google-sheet-test',
+          title: data.title || 'Live Google Sheets Mock Test',
+          questions: data.questions,
+          duration: (data.durationMinutes || 60) * 60,
+          isLiveGoogleSheet: true
+        };
+      } else if (Array.isArray(data)) {
+        result = {
+          testId: 'google-sheet-test',
+          title: 'Live Google Sheets Mock Test',
+          questions: data,
+          duration: 3600,
+          isLiveGoogleSheet: true
+        };
+      }
+
+      if (result) {
+        liveMockQuestionsCache = { data: result, timestamp: Date.now() };
+        try {
+          sessionStorage.setItem('cached_live_mock_test', JSON.stringify(liveMockQuestionsCache));
+        } catch (e) {
+          // Ignore
+        }
+      }
+      return result;
+    } catch (err) {
+      console.error("Error fetching live Google Sheets questions:", err);
+      return null;
+    } finally {
+      activeFetchPromise = null;
+    }
+  })();
+
+  return activeFetchPromise;
 }
 
+const generatedTopicMocksCache = new Map<string, any[]>();
+
 export function generateMocksForTopic(topic: string, count: number = 20) {
-  return Array.from({ length: count }, (_, i) => {
+  const cacheKey = `${topic}-${count}`;
+  if (generatedTopicMocksCache.has(cacheKey)) {
+    return generatedTopicMocksCache.get(cacheKey)!;
+  }
+
+  const mocks = Array.from({ length: count }, (_, i) => {
     const qList = generateQuestionSet(topic, 30, i);
     return {
       id: `${topic.replace(/\s+/g, '-').toLowerCase()}-mock-${i + 1}`,
@@ -1174,5 +1234,8 @@ export function generateMocksForTopic(topic: string, count: number = 20) {
       questions: qList
     };
   });
+
+  generatedTopicMocksCache.set(cacheKey, mocks);
+  return mocks;
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { BookOpen, Target, ChevronRight, ChevronLeft, Award, Star, ArrowLeft, CheckCircle2, XCircle, Clock, Maximize, Minimize, UserCheck, ShieldAlert, Key, LogOut } from 'lucide-react';
+import { BookOpen, Target, ChevronRight, ChevronLeft, Award, Star, ArrowLeft, CheckCircle2, XCircle, Clock, Maximize, Minimize, UserCheck, ShieldAlert, Key, LogOut, Layers } from 'lucide-react';
 import { MixedLatex } from '../components/LatexRenderer';
 import { UPPER_PRIMARY_TOPICS, CDP_MOCKS } from '../data/upperPrimaryData';
 import { useSEO } from '../lib/useSEO';
@@ -36,6 +36,7 @@ export default function UpperPrimaryApp() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(3600);
   const [focusMode, setFocusMode] = useState(false);
+  const [showPalette, setShowPalette] = useState(false);
   const [solutionViewIndex, setSolutionViewIndex] = useState(0);
 
   useEffect(() => {
@@ -600,7 +601,15 @@ export default function UpperPrimaryApp() {
           {/* Header */}
           <div className="bg-white/[0.03] backdrop-blur-[40px] shadow-[0_8px_32px_0_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.1)] p-4 sm:p-5 rounded-[32px] border border-white/[0.08] flex justify-between items-center z-10 relative">
             <h2 className="font-bold text-white text-sm sm:text-base font-display whitespace-nowrap overflow-hidden text-ellipsis mr-4">{selectedMock.title}</h2>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <button 
+                onClick={() => setShowPalette(!showPalette)} 
+                className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors text-xs font-bold bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl"
+                title="Toggle Question Palette"
+              >
+                <Layers className="h-4 w-4 text-green-400" />
+                <span>{showPalette ? "Hide Palette" : "Show Palette"}</span>
+              </button>
               <button 
                 onClick={() => setFocusMode(!focusMode)} 
                 className="hidden sm:flex items-center gap-2 text-slate-400 hover:text-white transition-colors"
@@ -680,63 +689,73 @@ export default function UpperPrimaryApp() {
             >
               <ChevronLeft className="h-4 w-4" /> Prev
             </button>
-            <button 
-              onClick={() => setCurrentQuestion(Math.min(selectedMock.questions.length - 1, currentQuestion + 1))}
-              disabled={currentQuestion === selectedMock.questions.length - 1}
-              className="px-6 py-3 rounded-[20px] font-bold bg-green-500/[0.15] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] text-green-400 border border-green-500/30 hover:bg-green-500/30 hover:text-white disabled:opacity-50 flex items-center gap-2 text-xs uppercase tracking-wider transition-colors"
-            >
-              Next <ChevronRight className="h-4 w-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setCurrentQuestion(Math.min(selectedMock.questions.length - 1, currentQuestion + 1))}
+                disabled={currentQuestion === selectedMock.questions.length - 1}
+                className="px-6 py-3 rounded-[20px] font-bold bg-green-500/[0.15] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] text-green-400 border border-green-500/30 hover:bg-green-500/30 hover:text-white disabled:opacity-50 flex items-center gap-2 text-xs uppercase tracking-wider transition-colors"
+              >
+                Next <ChevronRight className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => submitTest()}
+                className="px-5 py-3 rounded-[20px] font-bold bg-green-600 hover:bg-green-500 text-white shadow-md transition-all flex items-center gap-1.5 text-xs uppercase tracking-wider"
+              >
+                <CheckCircle2 className="h-4 w-4" /> Submit
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Side Panel: Palette */}
-        <div className="w-full lg:w-80 flex flex-col gap-5">
-          <div className="bg-white/[0.03] backdrop-blur-[40px] shadow-[0_8px_32px_0_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.1)] p-6 sm:p-8 rounded-[40px] border border-white/[0.08] lg:sticky top-20">
-            <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-              <h3 className="font-bold text-white text-sm uppercase tracking-widest font-display drop-shadow-sm">Question Map</h3>
-            </div>
-            
-            <div className="grid grid-cols-5 gap-3 mb-8">
-              {selectedMock.questions.map((_: any, i: number) => {
-                const isAttempted = selectedAnswers[i] !== undefined;
-                const isCurrent = currentQuestion === i;
-                
-                return (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentQuestion(i)}
-                    className={`h-10 w-10 flex items-center justify-center rounded-xl font-bold text-xs transition-all border shadow-inner ${
-                      isCurrent 
-                        ? 'border-green-500 ring-2 ring-green-500/30 ' + (isAttempted ? 'bg-green-500/30 text-white' : 'bg-white/20 backdrop-blur-md text-white')
-                        : isAttempted 
-                          ? 'border-green-500/40 bg-green-500/20 text-green-300 hover:bg-green-500/30' 
-                          : 'border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="space-y-3 text-[10px] font-bold uppercase tracking-wider mb-8 bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-inner">
-              <div className="flex items-center gap-3 text-slate-300">
-                <div className="w-4 h-4 bg-green-500/30 border border-green-500/50 rounded-md shadow-inner"></div> Answered
+        {showPalette && (
+          <div className="w-full lg:w-80 flex flex-col gap-5">
+            <div className="bg-white/[0.03] backdrop-blur-[40px] shadow-[0_8px_32px_0_rgba(0,0,0,0.4),inset_0_1px_0_0_rgba(255,255,255,0.1)] p-6 sm:p-8 rounded-[40px] border border-white/[0.08] lg:sticky top-20">
+              <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                <h3 className="font-bold text-white text-sm uppercase tracking-widest font-display drop-shadow-sm">Question Map</h3>
               </div>
-              <div className="flex items-center gap-3 text-slate-300 mt-3">
-                <div className="w-4 h-4 bg-white/5 border border-white/20 rounded-md shadow-inner"></div> Not Answered
+              
+              <div className="grid grid-cols-5 gap-3 mb-8">
+                {selectedMock.questions.map((_: any, i: number) => {
+                  const isAttempted = selectedAnswers[i] !== undefined;
+                  const isCurrent = currentQuestion === i;
+                  
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentQuestion(i)}
+                      className={`h-10 w-10 flex items-center justify-center rounded-xl font-bold text-xs transition-all border shadow-inner ${
+                        isCurrent 
+                          ? 'border-green-500 ring-2 ring-green-500/30 ' + (isAttempted ? 'bg-green-500/30 text-white' : 'bg-white/20 backdrop-blur-md text-white')
+                          : isAttempted 
+                            ? 'border-green-500/40 bg-green-500/20 text-green-300 hover:bg-green-500/30' 
+                            : 'border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      {i + 1}
+                    </button>
+                  );
+                })}
               </div>
-            </div>
 
-            <button 
-              onClick={submitTest}
-              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-widest border border-green-400/50"
-            >
-              <CheckCircle2 className="h-5 w-5" /> Submit Exam
-            </button>
+              <div className="space-y-3 text-[10px] font-bold uppercase tracking-wider mb-8 bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-inner">
+                <div className="flex items-center gap-3 text-slate-300">
+                  <div className="w-4 h-4 bg-green-500/30 border border-green-500/50 rounded-md shadow-inner"></div> Answered
+                </div>
+                <div className="flex items-center gap-3 text-slate-300 mt-3">
+                  <div className="w-4 h-4 bg-white/5 border border-white/20 rounded-md shadow-inner"></div> Not Answered
+                </div>
+              </div>
+
+              <button 
+                onClick={submitTest}
+                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(34,197,94,0.4)] transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-widest border border-green-400/50"
+              >
+                <CheckCircle2 className="h-5 w-5" /> Submit Exam
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
     </div>

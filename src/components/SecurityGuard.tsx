@@ -12,12 +12,12 @@ export default function SecurityGuard({ children }: { children: React.ReactNode 
       triggerWarning("🛡️ Right-Click & Content Copying are Disabled for Copyright Protection.");
     };
 
-    // 2. Keyboard Shortcuts Protection (PrintScreen, F12, DevTools, Ctrl+P, Mac Screenshots)
+    // 2. Screenshot & Screen Recording Detection (PrintScreen, Cmd+Shift+3/4/5/6, Win+Shift+S)
     const handleKeyDown = (e: KeyboardEvent) => {
       const isMac = navigator.platform.toUpperCase().indexOf("MAC") >= 0;
       const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
 
-      // PrintScreen Key
+      // PrintScreen Key (Windows / Linux)
       if (e.key === "PrintScreen" || e.keyCode === 44) {
         e.preventDefault();
         try {
@@ -25,22 +25,22 @@ export default function SecurityGuard({ children }: { children: React.ReactNode 
         } catch (err) {
           // ignore
         }
-        triggerWarning("🚫 Screenshot Captured Blocked! Watermark and Copyright Protection Active.");
+        triggerWarning("🚫 Screenshot Blocked! Copyright & Watermark Protection Active.");
         setIsScreenHidden(true);
         setTimeout(() => setIsScreenHidden(false), 2500);
         return;
       }
 
-      // macOS Screenshot shortcuts: Cmd+Shift+3, Cmd+Shift+4, Cmd+Shift+5
-      if (isMac && e.metaKey && e.shiftKey && ["3", "4", "5", "6"].includes(e.key)) {
+      // Screenshot shortcuts: Cmd+Shift+3/4/5/6 (Mac) or Win+Shift+S / Cmd+Shift+S (Snipping tool)
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && ["3", "4", "5", "6", "s", "S"].includes(e.key)) {
         e.preventDefault();
-        triggerWarning("🚫 macOS Screenshot Shortcut Blocked!");
+        triggerWarning("🚫 Screenshot Shortcut Blocked!");
         setIsScreenHidden(true);
         setTimeout(() => setIsScreenHidden(false), 2500);
         return;
       }
 
-      // F12 or DevTools: Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
+      // F12 or DevTools Inspection: Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U
       if (
         e.key === "F12" ||
         (cmdOrCtrl && e.shiftKey && ["I", "J", "C", "i", "j", "c"].includes(e.key)) ||
@@ -51,46 +51,21 @@ export default function SecurityGuard({ children }: { children: React.ReactNode 
         return;
       }
 
-      // Print & Save: Ctrl+P / Cmd+P, Ctrl+S / Cmd+S
-      if (cmdOrCtrl && ["p", "P", "s", "S"].includes(e.key)) {
+      // Print Page: Ctrl+P / Cmd+P
+      if (cmdOrCtrl && ["p", "P"].includes(e.key)) {
         e.preventDefault();
-        triggerWarning("🖨️ Printing or Saving Page is Disabled.");
+        triggerWarning("🖨️ Printing Page is Disabled.");
         return;
       }
-    };
-
-    // 3. Screen Recording / Window Focus Lost Shield
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setIsScreenHidden(true);
-      } else {
-        // Small delay to restore smoothly
-        setTimeout(() => setIsScreenHidden(false), 300);
-      }
-    };
-
-    const handleBlur = () => {
-      // When window loses focus (e.g. snippet tool opened)
-      setIsScreenHidden(true);
-    };
-
-    const handleFocus = () => {
-      setIsScreenHidden(false);
     };
 
     // Attach event listeners
     document.addEventListener("contextmenu", handleContextMenu);
     document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("blur", handleBlur);
-    window.addEventListener("focus", handleFocus);
 
     return () => {
       document.removeEventListener("contextmenu", handleContextMenu);
       document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("blur", handleBlur);
-      window.removeEventListener("focus", handleFocus);
     };
   }, []);
 
@@ -111,21 +86,21 @@ export default function SecurityGuard({ children }: { children: React.ReactNode 
         {children}
       </div>
 
-      {/* Blackout Shield Overlay when Screen Recording / Snipper / Focus is active */}
+      {/* Blackout Shield Overlay when Screenshot / Screen Capture Attempt is Detected */}
       {isScreenHidden && (
         <div className="fixed inset-0 z-50 bg-[#0a0b0e]/98 backdrop-blur-2xl flex flex-col items-center justify-center text-center p-6 select-none animate-in fade-in duration-150">
           <div className="w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-6 shadow-[0_0_50px_rgba(240,144,56,0.3)] animate-pulse">
             <EyeOff className="w-10 h-10" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-white mb-3 tracking-tight">
-            🛡️ SECURITY PROTECTION ACTIVE
+            🛡️ SCREENSHOT / RECORDING BLOCKED
           </h2>
           <p className="text-slate-300 text-sm sm:text-base max-w-md mx-auto mb-6 leading-relaxed">
-            Content is hidden while screen capture, screenshot tool, or external recording window is active.
+            Screen capturing or screenshot shortcut was detected. Content is protected by Raj Sir Math Classes.
           </p>
           <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs font-bold text-amber-300">
             <Lock className="w-4 h-4 text-amber-400" />
-            Raj Sir Math Classes • Anti-Piracy Protection
+            Raj Sir Math Classes • Anti-Piracy Protection Active
           </div>
         </div>
       )}
@@ -140,11 +115,12 @@ export default function SecurityGuard({ children }: { children: React.ReactNode 
         </div>
       )}
 
-      {/* Small subtle active protection indicator at bottom corner */}
+      {/* Subtle active protection indicator at bottom corner */}
       <div className="fixed bottom-3 left-3 z-30 pointer-events-none hidden sm:flex items-center gap-1.5 bg-black/60 border border-white/10 px-2.5 py-1 rounded-full text-[10px] font-bold text-slate-400 backdrop-blur-md opacity-75">
         <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-        <span>Anti-Screen Capture Active</span>
+        <span>Screenshot Protection Active</span>
       </div>
     </div>
   );
 }
+

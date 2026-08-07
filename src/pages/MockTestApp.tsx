@@ -382,6 +382,7 @@ export default function MockTestApp() {
   const [timeLeft, setTimeLeft] = useState(3600);
 
   const [focusMode, setFocusMode] = useState(false);
+  const [showPalette, setShowPalette] = useState(false);
   const [reviewFilter, setReviewFilter] = useState<'all' | 'correct' | 'incorrect' | 'unattempted'>('all');
   const [solutionIndex, setSolutionIndex] = useState(0);
 
@@ -412,6 +413,10 @@ export default function MockTestApp() {
   }, [selectedMock, selectedAnswers, reviewFilter]);
 
   const currentSolutionQuestionIdx = filteredSolutionIndices[solutionIndex] ?? filteredSolutionIndices[0] ?? 0;
+
+  const topicMocks = useMemo(() => {
+    return generateMocksForTopic(selectedTopic || 'Mathematics');
+  }, [selectedTopic]);
 
   // Timer effect
   useEffect(() => {
@@ -537,36 +542,39 @@ export default function MockTestApp() {
       } finally {
         setIsSyncingLiveSheet(false);
       }
+      setSelectedMock(activeTestData);
+      setCurrentQuestion(0);
+      setSolutionIndex(0);
+      setSelectedAnswers({});
+      setIsSubmitted(false);
+      setTimeLeft(activeTestData.duration || 3600);
+      setView('test');
     } else {
-      // Check if live sheet data matches this mock test specifically
-      try {
-        const liveData = await fetchLiveMockTestQuestions();
+      // INSTANT 0ms LAUNCH for local mock tests
+      setSelectedMock(activeTestData);
+      setCurrentQuestion(0);
+      setSolutionIndex(0);
+      setSelectedAnswers({});
+      setIsSubmitted(false);
+      setTimeLeft(activeTestData.duration || 3600);
+      setView('test');
+
+      // Check live sheet match asynchronously in background without blocking test load
+      fetchLiveMockTestQuestions().then(liveData => {
         if (liveData && liveData.questions && liveData.questions.length > 0 && isExactMatchForGoogleSheet(mock, liveData)) {
-          setIsSyncingLiveSheet(true);
-          setLiveSheetStatus('Matched & Synced Live Google Sheet Data!');
-          activeTestData = {
-            ...activeTestData,
-            title: liveData.title || activeTestData.title,
+          setSelectedMock((prev: any) => ({
+            ...prev,
+            title: liveData.title || prev?.title,
             questions: liveData.questions,
             totalQuestions: liveData.questions.length,
-            duration: liveData.duration || activeTestData.duration,
+            duration: liveData.duration || prev?.duration,
             isLiveGoogleSheet: true
-          };
+          }));
+          setLiveSheetStatus('Matched & Synced Live Google Sheet Data!');
           setTimeout(() => setLiveSheetStatus(null), 3000);
-          setIsSyncingLiveSheet(false);
         }
-      } catch (err) {
-        // Fallback to local topic questions
-      }
+      }).catch(() => {});
     }
-
-    setSelectedMock(activeTestData);
-    setCurrentQuestion(0);
-    setSolutionIndex(0);
-    setSelectedAnswers({});
-    setIsSubmitted(false);
-    setTimeLeft(activeTestData.duration || 3600);
-    setView('test');
   };
 
   const handleSyncGoogleSheet = async () => {
@@ -1218,7 +1226,7 @@ export default function MockTestApp() {
 
   // VIEW 3: MOCKS LIST FOR SELECTED TOPIC
   if (view === 'mocks') {
-    const mocks = generateMocksForTopic(selectedTopic || 'Mathematics');
+    const mocks = topicMocks;
 
     return renderPageLayout(
       <>
@@ -1419,6 +1427,46 @@ export default function MockTestApp() {
   // VIEW 4: LIVE CBT EXAMINATION
   if (view === 'test') {
     const activeTheme = selectedMock?.theme || MODULE_THEMES[0];
+
+    // Fallback when no questions are present
+    if (!selectedMock?.questions || selectedMock.questions.length === 0) {
+      return (
+        <div className="w-full min-h-screen bg-[#050508] py-12 px-4 flex flex-col items-center justify-center relative overflow-hidden">
+          {/* Deep Color Backdrop Ambient Radial Glow */}
+          <div className={cn(
+            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-gradient-to-b opacity-40 blur-3xl pointer-events-none -z-10",
+            activeTheme.ambientGlow || 'from-cyan-600/20 via-purple-600/10 to-transparent'
+          )} />
+
+          <div className="max-w-md w-full bg-[#111218]/90 border border-white/15 rounded-[32px] p-8 sm:p-10 text-center shadow-2xl backdrop-blur-xl relative z-10 flex flex-col items-center">
+            <div className="w-20 h-20 rounded-3xl bg-gradient-to-tr from-cyan-500/20 via-purple-500/20 to-pink-500/20 border border-cyan-400/40 text-cyan-300 flex items-center justify-center mb-6 shadow-xl animate-pulse">
+              <Clock className="w-10 h-10" />
+            </div>
+
+            <span className="text-[11px] font-black tracking-widest uppercase px-3.5 py-1.5 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 mb-4 shadow-sm">
+              {selectedTopic || selectedMock?.title || 'TGT PGT Mock Test'}
+            </span>
+
+            <h2 className="text-2xl sm:text-3xl font-black text-white font-display mb-3 tracking-tight">
+              Questions Coming Soon!
+            </h2>
+
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-8">
+              This mock test paper is currently being updated by our expert faculty. Please check back shortly or explore our other available mock tests.
+            </p>
+
+            <button
+              onClick={() => setView('mocks')}
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-black py-3.5 px-6 rounded-2xl text-xs uppercase tracking-wider shadow-lg border border-cyan-300/40 transition-all hover:scale-[1.02] active:scale-95"
+            >
+              <ArrowLeft className="w-4 h-4 text-cyan-200" />
+              <span>Back to Mock Tests</span>
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     const q = selectedMock.questions[currentQuestion];
     const isAnswered = selectedAnswers[currentQuestion] !== undefined;
 
@@ -1475,6 +1523,15 @@ export default function MockTestApp() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <button 
+                  onClick={() => setShowPalette(!showPalette)} 
+                  className="flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white bg-black/40 border border-white/15 px-3 py-2 rounded-xl transition-colors backdrop-blur-sm"
+                  title="Toggle Question Palette"
+                >
+                  <Layers className="h-4 w-4 text-purple-400" />
+                  <span>{showPalette ? "Hide Palette" : "Show Palette"}</span>
+                </button>
+
                 <button 
                   onClick={() => setFocusMode(!focusMode)} 
                   className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white bg-black/40 border border-white/15 px-3 py-2 rounded-xl transition-colors backdrop-blur-sm"
@@ -1579,75 +1636,88 @@ export default function MockTestApp() {
                   </button>
                 )}
 
-                <button
-                  onClick={() => setCurrentQuestion(Math.min(selectedMock.questions.length - 1, currentQuestion + 1))}
-                  disabled={currentQuestion === selectedMock.questions.length - 1}
-                  className={cn(
-                    "px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider disabled:opacity-40 transition-all flex items-center gap-1",
-                    activeTheme.nextBtnBg
-                  )}
-                >
-                  Next <ChevronRight className="h-4 w-4" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentQuestion(Math.min(selectedMock.questions.length - 1, currentQuestion + 1))}
+                    disabled={currentQuestion === selectedMock.questions.length - 1}
+                    className={cn(
+                      "px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider disabled:opacity-40 transition-all flex items-center gap-1",
+                      activeTheme.nextBtnBg
+                    )}
+                  >
+                    Next <ChevronRight className="h-4 w-4" />
+                  </button>
+
+                  <button
+                    onClick={() => setShowConfirmSubmit(true)}
+                    className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-400/30 transition-all flex items-center gap-1 shadow-md"
+                    title="Submit Test"
+                  >
+                    <CheckCircle2 className="h-4 w-4" />
+                    <span>Submit</span>
+                  </button>
+                </div>
               </div>
 
             </div>
           </div>
 
           {/* Right Question Index Map */}
-          <div className="w-full lg:w-80 shrink-0">
-            <div className={cn("p-4 sm:p-6 rounded-3xl border lg:sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl backdrop-blur-md transition-all", activeTheme.cardBg || "bg-[#111218] border-white/15")}>
-              <h3 className="font-bold text-white text-xs uppercase tracking-widest font-display mb-3 sm:mb-4 border-b border-white/10 pb-2.5 sm:pb-3">
-                Question Palette
-              </h3>
+          {showPalette && (
+            <div className="w-full lg:w-80 shrink-0">
+              <div className={cn("p-4 sm:p-6 rounded-3xl border lg:sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl backdrop-blur-md transition-all", activeTheme.cardBg || "bg-[#111218] border-white/15")}>
+                <h3 className="font-bold text-white text-xs uppercase tracking-widest font-display mb-3 sm:mb-4 border-b border-white/10 pb-2.5 sm:pb-3">
+                  Question Palette
+                </h3>
 
-              <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 sm:gap-2.5 mb-5 sm:mb-6">
-                {selectedMock.questions.map((_: any, i: number) => {
-                  const isCurrent = currentQuestion === i;
-                  const isAns = selectedAnswers[i] !== undefined;
+                <div className="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 sm:gap-2.5 mb-5 sm:mb-6">
+                  {selectedMock.questions.map((_: any, i: number) => {
+                    const isCurrent = currentQuestion === i;
+                    const isAns = selectedAnswers[i] !== undefined;
 
-                  return (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentQuestion(i)}
-                      className={cn(
-                        "h-8 sm:h-9 w-full rounded-xl font-bold text-xs transition-all border flex items-center justify-center",
-                        isCurrent 
-                          ? activeTheme.paletteCurrent 
-                          : isAns
-                            ? "bg-emerald-500/25 border-emerald-500/60 text-emerald-300 hover:bg-emerald-500/40"
-                            : "bg-black/40 border-white/15 text-slate-400 hover:text-white hover:border-white/30"
-                      )}
-                    >
-                      {i + 1}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="space-y-2 text-[11px] font-semibold text-slate-300 mb-5 sm:mb-6 bg-black/40 p-3 sm:p-3.5 rounded-2xl border border-white/10">
-                <div className="flex items-center gap-2">
-                  <div className="w-3.5 h-3.5 rounded bg-emerald-500/30 border border-emerald-500/60"></div>
-                  <span>Answered ({Object.keys(selectedAnswers).length})</span>
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentQuestion(i)}
+                        className={cn(
+                          "h-8 sm:h-9 w-full rounded-xl font-bold text-xs transition-all border flex items-center justify-center",
+                          isCurrent 
+                            ? activeTheme.paletteCurrent 
+                            : isAns
+                              ? "bg-emerald-500/25 border-emerald-500/60 text-emerald-300 hover:bg-emerald-500/40"
+                              : "bg-black/40 border-white/15 text-slate-400 hover:text-white hover:border-white/30"
+                        )}
+                      >
+                        {i + 1}
+                      </button>
+                    );
+                  })}
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3.5 h-3.5 rounded bg-black/60 border border-white/20"></div>
-                  <span>Unanswered ({selectedMock.questions.length - Object.keys(selectedAnswers).length})</span>
-                </div>
-              </div>
 
-              <button
-                onClick={() => setShowConfirmSubmit(true)}
-                className={cn(
-                  "w-full py-3 sm:py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 border shadow-lg",
-                  activeTheme.submitBtnBg
-                )}
-              >
-                <CheckCircle2 className="h-4 w-4" />
-                <span>Submit Exam Now</span>
-              </button>
+                <div className="space-y-2 text-[11px] font-semibold text-slate-300 mb-5 sm:mb-6 bg-black/40 p-3 sm:p-3.5 rounded-2xl border border-white/10">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3.5 h-3.5 rounded bg-emerald-500/30 border border-emerald-500/60"></div>
+                    <span>Answered ({Object.keys(selectedAnswers).length})</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3.5 h-3.5 rounded bg-black/60 border border-white/20"></div>
+                    <span>Unanswered ({selectedMock.questions.length - Object.keys(selectedAnswers).length})</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setShowConfirmSubmit(true)}
+                  className={cn(
+                    "w-full py-3 sm:py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 border shadow-lg",
+                    activeTheme.submitBtnBg
+                  )}
+                >
+                  <CheckCircle2 className="h-4 w-4" />
+                  <span>Submit Exam Now</span>
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
 

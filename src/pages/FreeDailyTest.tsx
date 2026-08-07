@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Target, CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, ArrowLeft, PlayCircle, Lock, User, Phone, MapPin, Key, Sparkles, Star, BookOpen, Award, Zap } from 'lucide-react';
+import { Target, CheckCircle2, XCircle, Clock, ChevronRight, ChevronLeft, ArrowLeft, PlayCircle, Lock, User, Phone, MapPin, Key, Sparkles, Star, BookOpen, Award, Zap, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MixedLatex } from '../components/LatexRenderer';
 import { useSEO } from '../lib/useSEO';
@@ -189,6 +189,7 @@ export default function FreeDailyTest() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [timeLeft, setTimeLeft] = useState(DAILY_TEST.duration);
   const [score, setScore] = useState(0);
+  const [showPalette, setShowPalette] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -609,41 +610,54 @@ export default function FreeDailyTest() {
                   ></div>
                 </div>
 
-                <div className={`flex items-center gap-2.5 px-5 py-2 rounded-xl border font-mono text-lg font-black transition-all ${
-                  timeLeft < 300 
-                    ? 'bg-rose-950/90 border-rose-600 text-rose-200 animate-pulse shadow-md' 
-                    : timeLeft < 600
-                      ? 'bg-amber-950/80 border-amber-600/80 text-amber-300'
-                      : 'bg-slate-950 border-emerald-800/60 text-emerald-400'
-                }`}>
-                  <Clock className="h-5 w-5" />
-                  <span>{formatTime(timeLeft)}</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setShowPalette(!showPalette)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-all shadow-sm"
+                    title="Toggle Question Palette"
+                  >
+                    <Layers className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>{showPalette ? "Hide Palette" : "Show Palette"}</span>
+                  </button>
+
+                  <div className={`flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-xl border font-mono text-base sm:text-lg font-black transition-all ${
+                    timeLeft < 300 
+                      ? 'bg-rose-950/90 border-rose-600 text-rose-200 animate-pulse shadow-md' 
+                      : timeLeft < 600
+                        ? 'bg-amber-950/80 border-amber-600/80 text-amber-300'
+                        : 'bg-slate-950 border-emerald-800/60 text-emerald-400'
+                  }`}>
+                    <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <span>{formatTime(timeLeft)}</span>
+                  </div>
                 </div>
               </div>
 
               {/* Question Navigation Drawer Palette */}
-              <div className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-3 flex flex-wrap gap-1.5 justify-center max-h-28 overflow-y-auto custom-scrollbar">
-                {DAILY_TEST.questions.map((_, idx) => {
-                  const isCurrent = idx === currentQuestionIndex;
-                  const isAnswered = answers[idx] !== undefined;
+              {showPalette && (
+                <div className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-3 flex flex-wrap gap-1.5 justify-center max-h-28 overflow-y-auto custom-scrollbar">
+                  {DAILY_TEST.questions.map((_, idx) => {
+                    const isCurrent = idx === currentQuestionIndex;
+                    const isAnswered = answers[idx] !== undefined;
 
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentQuestionIndex(idx)}
-                      className={`w-8 h-8 rounded-lg text-xs font-black transition-all border ${
-                        isCurrent
-                          ? 'bg-emerald-400 text-slate-950 border-emerald-300 ring-2 ring-emerald-400/40 shadow-md scale-110'
-                          : isAnswered
-                            ? 'bg-emerald-950 text-emerald-300 border-emerald-800'
-                            : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700'
-                      }`}
-                    >
-                      {idx + 1}
-                    </button>
-                  );
-                })}
-              </div>
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentQuestionIndex(idx)}
+                        className={`w-8 h-8 rounded-lg text-xs font-black transition-all border ${
+                          isCurrent
+                            ? 'bg-emerald-400 text-slate-950 border-emerald-300 ring-2 ring-emerald-400/40 shadow-md scale-110'
+                            : isAnswered
+                              ? 'bg-emerald-950 text-emerald-300 border-emerald-800'
+                              : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700'
+                        }`}
+                      >
+                        {idx + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* Main Question Card */}
               <div className="bg-slate-900/95 border border-slate-800/90 rounded-[28px] p-6 sm:p-10 shadow-2xl relative">
